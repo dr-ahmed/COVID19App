@@ -1,58 +1,54 @@
 package com.infectdistrack.presenter;
 
-import android.widget.EditText;
-
 import com.infectdistrack.model.LoginAsyncTask;
 import com.infectdistrack.model.SharedPrefsManager;
 import com.infectdistrack.model.User;
-import com.infectdistrack.model.Util;
+import com.infectdistrack.model.Utilities;
 import com.infectdistrack.view.LoginActivity;
+
+import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
+import static com.infectdistrack.presenter.UIBasicController.isFieldEmpty;
+import static com.infectdistrack.presenter.UIBasicController.showMessage;
+import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
 
 public class LoginController {
 
-    private LoginActivity view;
+    private LoginActivity loginActivity;
 
-    public LoginController(LoginActivity view) {
-        this.view = view;
-    }
-
-    private boolean isFieldEmpty(EditText editText) {
-        if (editText.getText().toString().trim().length() == 0) {
-            editText.requestFocus();
-            editText.setError("Champ obligatoire !");
-            return true;
-        }
-        return false;
+    public LoginController(LoginActivity loginActivity) {
+        this.loginActivity = loginActivity;
     }
 
     public void onClickConnectButtonController() {
-        if (isFieldEmpty(view.getLoginEdt()) || isFieldEmpty(view.getPasswordEdt()))
+        if (isFieldEmpty(loginActivity.getEmailEdt()) || isFieldEmpty(loginActivity.getPasswordEdt()))
             return;
 
-        view.showProgressDialog();
+        showProgressDialog(loginActivity, "Vérification des informations en cours ...");
 
         verifyUser();
     }
 
     private void verifyUser() {
         LoginAsyncTask loginAsyncTask = new LoginAsyncTask(this);
-        String login = view.getLoginEdt().getText().toString(), password = view.getPasswordEdt().getText().toString();
-        loginAsyncTask.execute(login, password);
+        String email = loginActivity.getEmailEdt().getText().toString(), password = loginActivity.getPasswordEdt().getText().toString();
+        loginAsyncTask.execute(email, password);
     }
 
     public void onLoginResponse(User user, String exceptionInfo, boolean userIsConfirmed) {
+        hideProgressDialog();
         if (exceptionInfo.isEmpty()) {
             if (userIsConfirmed) {
-                SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(view);
+                SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(loginActivity);
                 sharedPrefsManager.saveUserInfo(user);
-                view.openHomeActivity(user);
+                loginActivity.openHomeActivity(user);
             } else
-                view.showMessage("Informations incorrectes", "Login ou mot de passe incorrect !");
+                showMessage(loginActivity, "Informations incorrectes", "Email ou mot de passe incorrect !");
         } else {
-            if (!Util.isInternetAvailable())
-                view.showMessage("Pas de connexion internet", "Merci de vérifier votre connexion internet!");
+            if (!Utilities.isInternetAvailable())
+                showMessage(loginActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
-                view.showMessage("Exception", "Désolé, une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
+                showMessage(loginActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 001)");
+            //showMessageUsingDialogFragment(newUserActivity, "Exception", "Désolé, une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
         }
     }
 }

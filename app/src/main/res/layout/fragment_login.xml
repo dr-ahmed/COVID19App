@@ -11,7 +11,7 @@
     tools:context=".view.LoginFrag">
 
     <TextView
-        android:id="@+id/email_edt"
+        android:id="@+id/flkjsklfjelkjflke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="test framgnet .." />

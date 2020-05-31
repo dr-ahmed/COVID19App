@@ -3,7 +3,7 @@ package com.infectdistrack.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import static com.infectdistrack.model.Util.*;
+import static com.infectdistrack.model.Constants.*;
 
 public class SharedPrefsManager {
 
@@ -18,12 +18,13 @@ public class SharedPrefsManager {
     public void saveUserInfo(User user) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(prefsTag, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(USER_NAME_TAG, user.getName());
+        editor.putInt(USER_ID_TAG, user.getId());
+        editor.putString(USER_FULL_NAME_TAG, user.getFullName());
         editor.putString(USER_EMAIL_TAG, user.getEmail());
         editor.putString(USER_PASSWORD_TAG, user.getPassword());
         editor.putString(USER_CATEGORY_TAG, user.getCategory());
-        editor.putString(USER_ASSOCIATE_ADMIN_TAG, user.getAssociateAdmin());
-        editor.putString(USER_LOCATION_TAG, user.getLocation());
+        editor.putInt(USER_ASSOCIATE_ADMIN_TAG, user.getAssociateAdmin());
+        editor.putString(USER_WILAYA_TAG, user.getWilaya());
         editor.putString(USER_ESTABLISHMENT_TAG, user.getEstablishment());
         editor.apply();
     }
@@ -32,24 +33,26 @@ public class SharedPrefsManager {
         return sharedPreferences.getString(dataTag, DEFAULT_VALUE);
     }
 
-    public User isUserLogedIn() {
+    public User isUserLoggedIn() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(prefsTag, Context.MODE_PRIVATE);
-        boolean isNameEmpty = getDataByTag(sharedPreferences, USER_NAME_TAG).equals(DEFAULT_VALUE),
+        boolean isIdEmpty = sharedPreferences.getInt(USER_ID_TAG, -1) == -1,
+                isNameEmpty = getDataByTag(sharedPreferences, USER_FULL_NAME_TAG).equals(DEFAULT_VALUE),
                 isEmailEmpty = getDataByTag(sharedPreferences, USER_EMAIL_TAG).equals(DEFAULT_VALUE),
                 isPasswordEmpty = getDataByTag(sharedPreferences, USER_PASSWORD_TAG).equals(DEFAULT_VALUE),
                 isCategoryEmpty = getDataByTag(sharedPreferences, USER_CATEGORY_TAG).equals(DEFAULT_VALUE),
-                isAssociateAdminEmpty = getDataByTag(sharedPreferences, USER_ASSOCIATE_ADMIN_TAG).equals(DEFAULT_VALUE),
-                isLocationEmpty = getDataByTag(sharedPreferences, USER_LOCATION_TAG).equals(DEFAULT_VALUE),
+                isAssociateAdminEmpty = sharedPreferences.getInt(USER_ASSOCIATE_ADMIN_TAG, -1) == -1,
+                isLocationEmpty = getDataByTag(sharedPreferences, USER_WILAYA_TAG).equals(DEFAULT_VALUE),
                 isEstablishmentEmpty = getDataByTag(sharedPreferences, USER_ESTABLISHMENT_TAG).equals(DEFAULT_VALUE);
 
         User user = null;
-        if (!isNameEmpty && !isEmailEmpty && !isPasswordEmpty && !isCategoryEmpty && !isAssociateAdminEmpty && !isLocationEmpty && !isEstablishmentEmpty)
-            user = new User(getDataByTag(sharedPreferences, USER_NAME_TAG),
+        if (!isIdEmpty && !isNameEmpty && !isEmailEmpty && !isPasswordEmpty && !isCategoryEmpty && !isAssociateAdminEmpty && !isLocationEmpty && !isEstablishmentEmpty)
+            user = new User(sharedPreferences.getInt(USER_ID_TAG, -1),
+                    getDataByTag(sharedPreferences, USER_FULL_NAME_TAG),
                     getDataByTag(sharedPreferences, USER_EMAIL_TAG),
                     getDataByTag(sharedPreferences, USER_PASSWORD_TAG),
                     getDataByTag(sharedPreferences, USER_CATEGORY_TAG),
-                    getDataByTag(sharedPreferences, USER_ASSOCIATE_ADMIN_TAG),
-                    getDataByTag(sharedPreferences, USER_LOCATION_TAG),
+                    sharedPreferences.getInt(USER_ASSOCIATE_ADMIN_TAG, -1),
+                    getDataByTag(sharedPreferences, USER_WILAYA_TAG),
                     getDataByTag(sharedPreferences, USER_ESTABLISHMENT_TAG));
         return user;
     }

@@ -31,7 +31,7 @@
         android:padding="20dp">
 
         <Button
-            android:id="@+id/add_user_btn"
+            android:id="@+id/new_user_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/transparent_bg_bordered_button"
@@ -147,7 +147,7 @@
             android:id="@+id/logout_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/colored_bg_bordered_button"
+            android:background="@drawable/white_bg_bordered_button"
             android:padding="20dp"
             android:text="Déconnexion"
             android:textAllCaps="false"

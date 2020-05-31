@@ -4,25 +4,32 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class User implements Parcelable {
-    private String name, email, password, category, associate_admin, location, establishment;
+    private Integer id, associate_admin;
+    private String fullName, email, password, category, wilaya, establishment;
 
-    public User(String name, String email, String password, String category, String associate_admin, String location, String establishment) {
-        this.name = name;
+    public User(Integer id, String fullName, String email, String password, String category, Integer associate_admin, String wilaya, String establishment) {
+        this.id = id;
+        this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.category = category;
         this.associate_admin = associate_admin;
-        this.location = location;
+        this.wilaya = wilaya;
         this.establishment = establishment;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     protected User(Parcel in) {
-        name = in.readString();
+        id = in.readInt();
+        fullName = in.readString();
         email = in.readString();
         password = in.readString();
         category = in.readString();
-        associate_admin = in.readString();
-        location = in.readString();
+        associate_admin = in.readInt();
+        wilaya = in.readString();
         establishment = in.readString();
     }
 
@@ -46,20 +53,20 @@ public class User implements Parcelable {
         this.category = category;
     }
 
-    public String getAssociateAdmin() {
+    public Integer getAssociateAdmin() {
         return associate_admin;
     }
 
-    public void setAssociateAdmin(String associate_admin) {
+    public void setAssociateAdmin(Integer associate_admin) {
         this.associate_admin = associate_admin;
     }
 
-    public String getLocation() {
-        return location;
+    public String getWilaya() {
+        return wilaya;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setWilaya(String wilaya) {
+        this.wilaya = wilaya;
     }
 
     public String getEstablishment() {
@@ -70,12 +77,12 @@ public class User implements Parcelable {
         this.establishment = establishment;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -101,12 +108,13 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
+        dest.writeInt(id);
+        dest.writeString(fullName);
         dest.writeString(email);
         dest.writeString(password);
         dest.writeString(category);
-        dest.writeString(associate_admin);
-        dest.writeString(location);
+        dest.writeInt(associate_admin);
+        dest.writeString(wilaya);
         dest.writeString(establishment);
     }
 }

@@ -10,7 +10,7 @@
     tools:context=".view.LoginActivity">
 
     <EditText
-        android:id="@+id/email_edt"
+        android:id="@+id/login_email_edt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -19,14 +19,17 @@
         android:drawableLeft="@drawable/custom_email_icon"
         android:drawablePadding="10dp"
         android:hint="Email"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress"
         android:padding="10dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp" />
 
     <EditText
-        android:id="@+id/password_edt"
+        android:id="@+id/login_password_edt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/custom_icone_state_color_edittext"
         android:drawableStart="@drawable/custom_password_icone"
         android:drawableLeft="@drawable/custom_password_icone"
@@ -38,7 +41,7 @@
         android:paddingEnd="10dp" />
 
     <Button
-        android:id="@+id/connect_btn"
+        android:id="@+id/login_connect_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

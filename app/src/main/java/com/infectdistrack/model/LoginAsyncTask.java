@@ -11,7 +11,8 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.*;
 
-import static com.infectdistrack.model.Util.*;
+import static com.infectdistrack.model.Constants.*;
+import static com.infectdistrack.model.Utilities.removeApostrophe;
 
 public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
 
@@ -68,15 +69,17 @@ public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
                 if (!response.isNull(JSON_HEADER_TAG)) {
                     JSONArray userData = response.getJSONArray(JSON_HEADER_TAG);
                     userIsConfirmed = true;
-                    String name = userData.getJSONObject(0).getString(USER_NAME_TAG),
+
+                    Integer id = Integer.parseInt(userData.getJSONObject(0).getString(USER_ID_TAG));
+                    String full_name = removeApostrophe(userData.getJSONObject(0).getString(USER_FULL_NAME_TAG)),
                             email = userData.getJSONObject(0).getString(USER_EMAIL_TAG),
                             password = userData.getJSONObject(0).getString(USER_PASSWORD_TAG),
                             category = userData.getJSONObject(0).getString(USER_CATEGORY_TAG),
                             associate_admin = userData.getJSONObject(0).getString(USER_ASSOCIATE_ADMIN_TAG),
-                            location = userData.getJSONObject(0).getString(USER_LOCATION_TAG),
-                            establishment = userData.getJSONObject(0).getString(USER_ESTABLISHMENT_TAG);
+                            wilaya = userData.getJSONObject(0).getString(USER_WILAYA_TAG),
+                            establishment = removeApostrophe(userData.getJSONObject(0).getString(USER_ESTABLISHMENT_TAG));
 
-                    user = new User(name, email, password, category, associate_admin, location, establishment);
+                    user = new User(id, full_name, email, password, category, Integer.parseInt(associate_admin), wilaya, establishment);
                 } else {
                     Log.e(TAG, result.toString());
                     return result.toString();
