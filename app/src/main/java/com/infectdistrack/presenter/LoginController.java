@@ -6,6 +6,9 @@ import com.infectdistrack.model.User;
 import com.infectdistrack.model.Utilities;
 import com.infectdistrack.view.LoginActivity;
 
+import java.security.NoSuchAlgorithmException;
+
+import static com.infectdistrack.model.Utilities.SHA256;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 import static com.infectdistrack.presenter.UIBasicController.isFieldEmpty;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
@@ -31,7 +34,11 @@ public class LoginController {
     private void verifyUser() {
         LoginAsyncTask loginAsyncTask = new LoginAsyncTask(this);
         String email = loginActivity.getEmailEdt().getText().toString(), password = loginActivity.getPasswordEdt().getText().toString();
-        loginAsyncTask.execute(email, password);
+        try {
+            loginAsyncTask.execute(email, SHA256(password));
+        } catch (NoSuchAlgorithmException e) {
+            showMessage(loginActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 001)");
+        }
     }
 
     public void onLoginResponse(User user, String exceptionInfo, boolean userIsConfirmed) {
@@ -47,8 +54,8 @@ public class LoginController {
             if (!Utilities.isInternetAvailable())
                 showMessage(loginActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
-                showMessage(loginActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 001)");
-            //showMessageUsingDialogFragment(newUserActivity, "Exception", "Désolé, une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
+                showMessage(loginActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 002)");
+            //showMessageUsingDialogFragment(newUserActivity, "Exception", "Une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
         }
     }
 }

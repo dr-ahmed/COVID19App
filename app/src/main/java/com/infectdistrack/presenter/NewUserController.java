@@ -10,9 +10,11 @@ import com.infectdistrack.view.NewUserActivity;
 import java.security.NoSuchAlgorithmException;
 
 import static com.infectdistrack.model.Constants.ADMIN;
+import static com.infectdistrack.model.Constants.ADMIN_LABEL;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
 import static com.infectdistrack.model.Constants.USER;
+import static com.infectdistrack.model.Constants.USER_LABEL;
 import static com.infectdistrack.model.Utilities.SHA256;
 import static com.infectdistrack.model.Utilities.isEmailValid;
 import static com.infectdistrack.model.Utilities.replaceApostrophe;
@@ -72,7 +74,7 @@ public class NewUserController {
                     establishment = replaceApostrophe(newUserActivity.getEstablishmentType());
             loginAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, establishment);
         } catch (NoSuchAlgorithmException e) {
-            showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 002)");
+            showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 003)");
         }
     }
 
@@ -80,16 +82,16 @@ public class NewUserController {
         hideProgressDialog();
         if (isUserAdded) {
             showMessage(newUserActivity, "Opération réussie", "Le compte de l'"
-                    + (isSuperAdmin ? "administrateur " : "utilisateur ") + newUserActivity.getNewUserFullNameEdt().getText().toString()
-                    + " a été créé avec succès. Veuillez choisir le moyen que vous voulez l'utiliser pour lui envoyer les informations du compte.");
+                    + (isSuperAdmin ? ADMIN_LABEL : USER_LABEL) + newUserActivity.getNewUserFullNameEdt().getText().toString()
+                    + " a été créé avec succès. Voulez-vous lui envoyer les informations du compte ?");
             newUserActivity.resetUIComponents();
-            Log.e(TAG, "onNewUserAdded: afficher un AltertDialog de trois choix : Email, Partage, Rien.");
+            Log.e(TAG, "onNewUserAdded: afficher un AltertDialog de trois choix : Par Email, Partager, Non.");
         } else {
             if (!Utilities.isInternetAvailable())
                 showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
-                showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 003)");
-            //showMessageUsingDialogFragment(newUserActivity, "Exception", "Désolé, une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
+                showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 004)");
+            //showMessageUsingDialogFragment(newUserActivity, "Exception", "Une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
         }
     }
 }

@@ -19,14 +19,15 @@ public class Constants {
             CHAR_SET_NAME = "iso-8859-1",
             JSON_HEADER_TAG = "User",
             SUCCEESSFUL = "succeessful",
-            ALLOWED_NUMBERS = "7826345901",
             ALLOWED_CHARACTERS = "789tuvwxyzIJKLMNOPQRabcde01234fghijkABCDEqrs56STUVFGHlmnopWXYZ";
 
     public static final String DEFAULT_WILAYA = "Choisir la Wilaya";
 
     public static final String SUPER_ADMIN = "SUPER_ADMIN",
             ADMIN = "ADMIN",
-            USER = "USER";
+            USER = "USER",
+            ADMIN_LABEL = "administrateur ",
+            USER_LABEL = "utilisateur ";
 
     public static final String[] WILAYAS = new String[]{DEFAULT_WILAYA, "Nouakchott-Sud", "Nouakchott-Ouest",
             "Nouakchott-Nord", "Hodh Ech-Chargui", "Hodh El Gharbi", "Assaba", "Brakna", "Gorgol", "Guidimakha",

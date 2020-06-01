@@ -35,13 +35,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         connectBtn.setOnClickListener(this);
     }
 
+    private String isUserJustLoggedOut() {
+        if (getIntent().hasExtra("userloggedOutBundle")) {
+            try {
+                Bundle bundle = getIntent().getBundleExtra("userloggedOutBundle");
+                User user = bundle.getParcelable("userloggedOut");
+                return user.getEmail();
+            } catch (NullPointerException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
     private void checkUserSessionData() {
         SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(this);
         User user = sharedPrefsManager.isUserLoggedIn();
         if (user != null)
             openHomeActivity(user);
-        else
-            Log.e(TAG, "checkUserPrefs: empty session data !");
+        else {
+            if (isUserJustLoggedOut() != null) {
+                emailEdt.setText(isUserJustLoggedOut());
+                passwordEdt.requestFocus();
+            } else
+                Log.e(TAG, "checkUserPrefs: empty session data !");
+        }
     }
 
     public EditText getEmailEdt() {

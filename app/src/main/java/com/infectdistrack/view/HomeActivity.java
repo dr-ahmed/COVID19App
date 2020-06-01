@@ -19,6 +19,11 @@ import com.infectdistrack.model.ViewPagerAdapter;
 
 import java.util.ArrayList;
 
+import static com.infectdistrack.model.Constants.ADMIN_LABEL;
+import static com.infectdistrack.model.Constants.SUPER_ADMIN;
+import static com.infectdistrack.model.Constants.USER;
+import static com.infectdistrack.model.Constants.USER_LABEL;
+
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "HomeActivity";
@@ -61,6 +66,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         welcomeLabelTxt = findViewById(R.id.welcome_label_txt);
         getUserDataFromLoginActivity();
         addUserBtn = findViewById(R.id.new_user_btn);
+        if (currentUser.getCategory().equals(USER))
+            addUserBtn.setVisibility(View.GONE);
+        else
+            addUserBtn.setText("Ajouter un ".concat(currentUser.getCategory().equals(SUPER_ADMIN) ? ADMIN_LABEL : USER_LABEL));
         makeActionBtn = findViewById(R.id.make_action_btn);
         logoutBtn = findViewById(R.id.logout_btn);
     }
@@ -77,11 +86,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         welcomeLabelTxt.setText("Bienvenue " + currentUser.getFullName());
     }
 
+    private void launchActivityWithBundle(Class<?> cls, String userTag, String bundleTag) {
+        Intent intent = new Intent(HomeActivity.this, cls);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(userTag, currentUser);
+        intent.putExtra(bundleTag, bundle);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.new_user_btn:
-                openNewUserActivity();
+                launchActivityWithBundle(NewUserActivity.class, "parentUser", "parentUserBundle");
                 break;
             case R.id.make_action_btn:
                 break;
@@ -93,24 +110,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void openNewUserActivity() {
-        Intent intent = new Intent(this, NewUserActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("parentUser", currentUser);
-        intent.putExtra("parentUserBundle", bundle);
-        startActivity(intent);
-    }
-
     private void doYouWantToExit() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         DialogFragmentForExitConfirmation dialog = new DialogFragmentForExitConfirmation(this);
 
         Bundle args = new Bundle();
-        args.putString("title", "Demande de vérification");
+        args.putString("title", "Demande de confirmation");
         args.putString("message", "Êtes-vous sûr de vouloir vous déconnecter ?");
         dialog.setArguments(args);
 
-        ft.add(dialog, "oooo");
+        ft.add(dialog, "dialogFragmentForExitConfirmation");
         ft.commit();
     }
 
@@ -119,8 +128,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(HomeActivity.this);
         sharedPrefsManager.clearUserData();
 
-        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(intent);
+        launchActivityWithBundle(LoginActivity.class, "userloggedOut", "userloggedOutBundle");
         finish();
     }
 }

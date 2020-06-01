@@ -20,6 +20,7 @@ public class UIBasicController {
     static void showProgressDialog(AppCompatActivity appCompatActivity, String message) {
         progressDialog = new ProgressDialog(appCompatActivity, R.style.CustomProgressDialogStyle);
         progressDialog.setMessage(message);
+        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 

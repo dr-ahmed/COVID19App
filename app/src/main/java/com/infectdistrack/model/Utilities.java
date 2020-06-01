@@ -9,7 +9,6 @@ import java.security.SecureRandom;
 import java.util.concurrent.TimeUnit;
 
 import static com.infectdistrack.model.Constants.ALLOWED_CHARACTERS;
-import static com.infectdistrack.model.Constants.ALLOWED_NUMBERS;
 
 public class Utilities {
 
@@ -38,7 +37,7 @@ public class Utilities {
         final SecureRandom random = new SecureRandom();
         final StringBuilder sb = new StringBuilder(size);
         for (int i = 0; i < size; ++i)
-            sb.append((ALLOWED_CHARACTERS.concat(ALLOWED_NUMBERS)).charAt(random.nextInt((ALLOWED_CHARACTERS.concat(ALLOWED_NUMBERS)).length())));
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
         return sb.toString();
     }
 

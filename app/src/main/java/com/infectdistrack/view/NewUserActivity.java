@@ -16,6 +16,10 @@ import com.infectdistrack.R;
 import com.infectdistrack.model.User;
 import com.infectdistrack.presenter.NewUserController;
 
+import static com.infectdistrack.model.Constants.ADMIN_LABEL;
+import static com.infectdistrack.model.Constants.SUPER_ADMIN;
+import static com.infectdistrack.model.Constants.USER;
+import static com.infectdistrack.model.Constants.USER_LABEL;
 import static com.infectdistrack.model.Constants.WILAYAS;
 
 public class NewUserActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -63,13 +67,13 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
 
-        initViews();
         getUserDataFromHomeActivity();
+        initViews();
     }
 
     private void initViews() {
         newUserLabelTxt = findViewById(R.id.new_user_label_txt);
-        newUserLabelTxt.setText("Informations du nouvel utilisateur");
+        newUserLabelTxt.setText("Informations du nouvel ".concat(parentUser.getCategory().equals(SUPER_ADMIN) ? ADMIN_LABEL : USER_LABEL));
 
         newUserFullNameEdt = findViewById(R.id.new_user_full_name_edt);
         newUserEmailEdt = findViewById(R.id.new_user_email_edt);
