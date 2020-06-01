@@ -3,7 +3,10 @@ package com.infectdistrack.model;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.infectdistrack.presenter.NewUserController;
+import com.infectdistrack.presenter.LoginController;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,24 +18,40 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import static com.infectdistrack.model.Constants.*;
+import static com.infectdistrack.model.Constants.CHAR_SET_NAME;
+import static com.infectdistrack.model.Constants.CHECKING_USER_SESSION_DATA_VALIDITY_SCRIPT_NAME;
+import static com.infectdistrack.model.Constants.CONNECTION_TIMEOUT;
+import static com.infectdistrack.model.Constants.ENCODING;
+import static com.infectdistrack.model.Constants.JSON_HEADER_TAG;
+import static com.infectdistrack.model.Constants.LOGIN_SCRIPT_NAME;
+import static com.infectdistrack.model.Constants.POST_METHOD;
+import static com.infectdistrack.model.Constants.READ_TIMEOUT;
+import static com.infectdistrack.model.Constants.SCRIPT_PATH;
+import static com.infectdistrack.model.Constants.USER_ASSOCIATE_ADMIN_TAG;
+import static com.infectdistrack.model.Constants.USER_CATEGORY_TAG;
+import static com.infectdistrack.model.Constants.USER_EMAIL_TAG;
+import static com.infectdistrack.model.Constants.USER_ESTABLISHMENT_TAG;
+import static com.infectdistrack.model.Constants.USER_FULL_NAME_TAG;
+import static com.infectdistrack.model.Constants.USER_ID_TAG;
+import static com.infectdistrack.model.Constants.USER_PASSWORD_TAG;
+import static com.infectdistrack.model.Constants.USER_WILAYA_TAG;
+import static com.infectdistrack.model.Utilities.removeApostrophe;
 
-public class NewUserAsyncTask extends AsyncTask<String, Integer, String> {
+public class CheckUserSessionDataValidityAsyncTask extends AsyncTask<String, Integer, String> {
 
-    private static final String TAG = "NewUserAsyncTask";
-    private boolean isUserAdded = false;
-    private NewUserController newUserControllerListener;
-    private User user;
+    private static final String TAG = "CheckSessDataValidity";
+    private boolean sessionDataIsStillValid = false;
+    private LoginController loginControllerListener;
     StringBuilder result;
 
-    public NewUserAsyncTask(NewUserController newUserControllerListener) {
-        this.newUserControllerListener = newUserControllerListener;
+    public CheckUserSessionDataValidityAsyncTask(LoginController loginControllerListener) {
+        this.loginControllerListener = loginControllerListener;
     }
 
     @Override
     protected String doInBackground(String... params) {
         try {
-            URL insertURL = new URL(SCRIPT_PATH + ADD_NEW_USER_SCRIPT_NAME);
+            URL insertURL = new URL(SCRIPT_PATH + CHECKING_USER_SESSION_DATA_VALIDITY_SCRIPT_NAME);
             HttpURLConnection connection = (HttpURLConnection) insertURL.openConnection();
             connection.setRequestMethod(POST_METHOD);
             connection.setReadTimeout(READ_TIMEOUT);
@@ -71,13 +90,18 @@ public class NewUserAsyncTask extends AsyncTask<String, Integer, String> {
             inputStream.close();
             connection.disconnect();
 
-            if (result.toString().equals(SUCCEESSFUL)) {
-                isUserAdded = true;
-                return "";
+            if (result.toString().equals("[]"))
+                sessionDataIsStillValid = false;
+            else {
+                JSONObject response = new JSONObject(result.toString());
+                if (!response.isNull(JSON_HEADER_TAG))
+                    sessionDataIsStillValid = true;
+                else {
+                    Log.e(TAG, "String result from doInBackground method : " + result.toString());
+                    return result.toString();
+                }
             }
-
-            Log.e(TAG, "String result from doInBackground method : " + result.toString());
-            return result.toString();
+            return "";
         } catch (Exception e) {
             Log.e(TAG, "doInBackground: " + Log.getStackTraceString(e));
             return "Exception name : " + e.getClass().getName() + "\nException message : " + e.getMessage();
@@ -86,6 +110,6 @@ public class NewUserAsyncTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String exceptionInfo) {
-        newUserControllerListener.onNewUserAdded(user, exceptionInfo, isUserAdded);
+        loginControllerListener.whenUserSessionDataIsSavedInSharedPrefs(exceptionInfo, sessionDataIsStillValid);
     }
 }

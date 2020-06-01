@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.infectdistrack.R;
+import com.infectdistrack.model.CheckUserSessionDataValidityAsyncTask;
 import com.infectdistrack.model.SharedPrefsManager;
 import com.infectdistrack.model.User;
 import com.infectdistrack.presenter.LoginController;
@@ -18,6 +19,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private static final String TAG = "LoginActivity";
     private EditText emailEdt, passwordEdt;
+    LoginController loginController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         initViews();
-        checkUserSessionData();
+        loginController = new LoginController(this);
+        loginController.checkUserSessionData(getIntent());
     }
 
     private void initViews() {
@@ -33,33 +36,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passwordEdt = findViewById(R.id.login_password_edt);
         Button connectBtn = findViewById(R.id.login_connect_btn);
         connectBtn.setOnClickListener(this);
-    }
-
-    private String isUserJustLoggedOut() {
-        if (getIntent().hasExtra("userloggedOutBundle")) {
-            try {
-                Bundle bundle = getIntent().getBundleExtra("userloggedOutBundle");
-                User user = bundle.getParcelable("userloggedOut");
-                return user.getEmail();
-            } catch (NullPointerException e) {
-                return null;
-            }
-        }
-        return null;
-    }
-
-    private void checkUserSessionData() {
-        SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(this);
-        User user = sharedPrefsManager.isUserLoggedIn();
-        if (user != null)
-            openHomeActivity(user);
-        else {
-            if (isUserJustLoggedOut() != null) {
-                emailEdt.setText(isUserJustLoggedOut());
-                passwordEdt.requestFocus();
-            } else
-                Log.e(TAG, "checkUserPrefs: empty session data !");
-        }
     }
 
     public EditText getEmailEdt() {
@@ -73,7 +49,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.login_connect_btn) {
-            LoginController loginController = new LoginController(this);
             loginController.onClickConnectButtonController();
         }
     }

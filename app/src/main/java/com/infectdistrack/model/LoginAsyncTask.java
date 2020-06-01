@@ -81,15 +81,14 @@ public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
 
                     user = new User(id, full_name, email, password, category, Integer.parseInt(associate_admin), wilaya, establishment);
                 } else {
-                    Log.e(TAG, result.toString());
+                    Log.e(TAG, "String result from doInBackground method : " + result.toString());
                     return result.toString();
                 }
             }
             return "";
         } catch (Exception e) {
-            Log.e(TAG, Log.getStackTraceString(e));
-            // return "Exception name : " + e.getClass().getName() + "\nException message : " + e.getMessage();
-            return "Une erreur s'est produite";
+            Log.e(TAG, "doInBackground: " + Log.getStackTraceString(e));
+            return "Exception name : " + e.getClass().getName() + "\nException message : " + e.getMessage();
         }
     }
 

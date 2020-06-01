@@ -17,7 +17,7 @@ public class Utilities {
     public static boolean isInternetAvailable() {
         String netAddress;
         try {
-            netAddress = new InternetCheckingTask().execute("www.google.com").get(100, TimeUnit.MILLISECONDS);
+            netAddress = new InternetCheckingAsyncTask().execute("www.google.com").get(100, TimeUnit.MILLISECONDS);
             return !netAddress.equals("");
         } catch (Exception e) {
             Log.e(TAG, Log.getStackTraceString(e));

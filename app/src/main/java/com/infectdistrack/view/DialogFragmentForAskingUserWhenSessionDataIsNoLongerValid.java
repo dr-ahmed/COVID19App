@@ -9,12 +9,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
-public class DialogFragmentForExitConfirmation extends DialogFragment {
+import com.infectdistrack.presenter.LoginController;
 
-    private HomeActivity homeActivity;
+public class DialogFragmentForAskingUserWhenSessionDataIsNoLongerValid extends DialogFragment {
 
-    DialogFragmentForExitConfirmation(HomeActivity homeActivity) {
-        this.homeActivity = homeActivity;
+    private LoginController loginController;
+
+    public DialogFragmentForAskingUserWhenSessionDataIsNoLongerValid(LoginController loginController) {
+        this.loginController = loginController;
     }
 
     @Override
@@ -22,13 +24,20 @@ public class DialogFragmentForExitConfirmation extends DialogFragment {
         AlertDialog.Builder dialogBuiler = new AlertDialog.Builder(getActivity());
         dialogBuiler.setMessage(getArguments().getString("message"));
         dialogBuiler.setTitle(getArguments().getString("title"));
-        dialogBuiler.setNegativeButton("Non", null);
-        dialogBuiler.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+        dialogBuiler.setNegativeButton("Se déconnecter", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                homeActivity.logOut();
+                loginController.logOutWhenSessionDataIsNoLongerValid();
             }
         });
+        dialogBuiler.setPositiveButton("Réessayer", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loginController.checkUserSessionDataValidity();
+            }
+        });
+        setCancelable(false);
+
         return dialogBuiler.create();
     }
 

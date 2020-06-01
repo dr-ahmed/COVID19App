@@ -4,9 +4,11 @@ public class Constants {
     private static final String TAG = "Util";
 
     static String POST_METHOD = "POST",
-            SCRIPT_PATH = "http://192.168.1.100/infectdisdb/",
+            SCRIPT_PATH = "http://192.168.1.101/infectdisdb/",
             LOGIN_SCRIPT_NAME = "login.php",
             ADD_NEW_USER_SCRIPT_NAME = "add_new_user.php",
+            CHECKING_DUPLICATE_USER_SCRIPT_NAME = "check_duplicate_user.php",
+            CHECKING_USER_SESSION_DATA_VALIDITY_SCRIPT_NAME = "check_user_session_data_validity.php",
             ENCODING = "UTF-8",
             USER_ID_TAG = "id",
             USER_FULL_NAME_TAG = "full_name",

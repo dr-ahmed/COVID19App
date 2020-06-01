@@ -17,15 +17,16 @@ public class UIBasicController {
 
     private static ProgressDialog progressDialog;
 
-    static void showProgressDialog(AppCompatActivity appCompatActivity, String message) {
+    public static void showProgressDialog(AppCompatActivity appCompatActivity, String message) {
         progressDialog = new ProgressDialog(appCompatActivity, R.style.CustomProgressDialogStyle);
         progressDialog.setMessage(message);
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
 
-    public static void hideProgressDialog() {
-        progressDialog.dismiss();
+    static void hideProgressDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 
     static boolean isFieldEmpty(EditText editText) {

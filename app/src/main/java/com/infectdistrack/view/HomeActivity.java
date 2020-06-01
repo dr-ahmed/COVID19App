@@ -16,6 +16,7 @@ import com.infectdistrack.R;
 import com.infectdistrack.model.SharedPrefsManager;
 import com.infectdistrack.model.User;
 import com.infectdistrack.model.ViewPagerAdapter;
+import com.infectdistrack.presenter.HomeController;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private User currentUser;
     private TextView welcomeLabelTxt;
     private Button addUserBtn, makeActionBtn, logoutBtn;
+    private HomeController homeController;
 
     private ViewPager mMyViewPager;
     private TabLayout mTabLayout;
@@ -40,8 +42,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        initViews();
-        setListeners();
+        init();
 
         /*
         mTabLayout = findViewById(R.id.tab_layout);
@@ -51,6 +52,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
          */
     }
 
+    /*
     private void init() {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new LoginFrag());
@@ -60,7 +62,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         mMyViewPager.setAdapter(pagerAdapter);
         mTabLayout.setupWithViewPager(mMyViewPager, true);
     }
+     */
 
+    private void init() {
+        initViews();
+        setListeners();
+        homeController = new HomeController(this);
+    }
 
     private void initViews() {
         welcomeLabelTxt = findViewById(R.id.welcome_label_txt);
@@ -72,6 +80,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             addUserBtn.setText("Ajouter un ".concat(currentUser.getCategory().equals(SUPER_ADMIN) ? ADMIN_LABEL : USER_LABEL));
         makeActionBtn = findViewById(R.id.make_action_btn);
         logoutBtn = findViewById(R.id.logout_btn);
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 
     private void setListeners() {
@@ -86,49 +98,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         welcomeLabelTxt.setText("Bienvenue " + currentUser.getFullName());
     }
 
-    private void launchActivityWithBundle(Class<?> cls, String userTag, String bundleTag) {
-        Intent intent = new Intent(HomeActivity.this, cls);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(userTag, currentUser);
-        intent.putExtra(bundleTag, bundle);
-        startActivity(intent);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.new_user_btn:
-                launchActivityWithBundle(NewUserActivity.class, "parentUser", "parentUserBundle");
+                homeController.launchActivityWithBundle(NewUserActivity.class, "parentUser", "parentUserBundle", currentUser);
                 break;
             case R.id.make_action_btn:
                 break;
             case R.id.logout_btn:
-                doYouWantToExit();
+                homeController.doYouWantToExit();
                 break;
             default: {
             }
         }
-    }
-
-    private void doYouWantToExit() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        DialogFragmentForExitConfirmation dialog = new DialogFragmentForExitConfirmation(this);
-
-        Bundle args = new Bundle();
-        args.putString("title", "Demande de confirmation");
-        args.putString("message", "Êtes-vous sûr de vouloir vous déconnecter ?");
-        dialog.setArguments(args);
-
-        ft.add(dialog, "dialogFragmentForExitConfirmation");
-        ft.commit();
-    }
-
-    public void logOut() {
-        // clear sharedpref data
-        SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(HomeActivity.this);
-        sharedPrefsManager.clearUserData();
-
-        launchActivityWithBundle(LoginActivity.class, "userloggedOut", "userloggedOutBundle");
-        finish();
     }
 }

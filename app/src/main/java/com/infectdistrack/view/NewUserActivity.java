@@ -54,8 +54,8 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         return newUserPasswordConfirmationEdt;
     }
 
-    public Spinner getNewUserWilayaSpinner() {
-        return newUserWilayaSpinner;
+    public String getNewUserWilaya() {
+        return newUserWilayaSpinner.getSelectedItem().toString();
     }
 
     public String getEstablishmentType() {
