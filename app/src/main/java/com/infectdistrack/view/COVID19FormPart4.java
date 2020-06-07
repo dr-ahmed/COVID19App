@@ -86,13 +86,13 @@ public class COVID19FormPart4 extends Fragment implements View.OnClickListener, 
 
     private void checkSpinners() {
         if (confirmedCasesValue.isEmpty()) {
-            setRedTextview(confirmedCasesTxt, "CHOIX OBLIGATOIRE");
+            setRedTextview(confirmedCasesTxt);
             return;
         } else
             resetTextview(confirmedCasesTxt, "Cas confirmé de COVID-19");
 
         if (evolutionValue.isEmpty()) {
-            setRedTextview(evolutionTxt, "CHOIX OBLIGATOIRE");
+            setRedTextview(evolutionTxt);
             return;
         } else
             resetTextview(evolutionTxt, "Évolution");
@@ -100,8 +100,8 @@ public class COVID19FormPart4 extends Fragment implements View.OnClickListener, 
         submitBtn.setVisibility(View.VISIBLE);
     }
 
-    private void setRedTextview(TextView textView, String s) {
-        textView.setText(s);
+    private void setRedTextview(TextView textView) {
+        textView.setText("CHOIX OBLIGATOIRE");
         textView.setTextColor(Color.RED);
     }
 

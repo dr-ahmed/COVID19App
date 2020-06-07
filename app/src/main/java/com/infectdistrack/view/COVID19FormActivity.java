@@ -1,5 +1,6 @@
 package com.infectdistrack.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -7,6 +8,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 import com.infectdistrack.R;
+import com.infectdistrack.model.COVID19Form;
 import com.infectdistrack.model.ViewPagerAdapter;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class COVID19FormActivity extends AppCompatActivity {
     private COVID19FormPart3 covid19FormPart3;
     private COVID19FormPart4 covid19FormPart4;
 
-    private ViewPagerAdapter pagerAdapter;
+    private COVID19Form covid19FormObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,9 @@ public class COVID19FormActivity extends AppCompatActivity {
         customViewPager = findViewById(R.id.view_pager);
         customViewPager.setParentActivity(this);
 
-        covid19FormPart1 = new COVID19FormPart1();
+        covid19FormObject = new COVID19Form();
+
+        covid19FormPart1 = new COVID19FormPart1(covid19FormObject);
         covid19FormPart2 = new COVID19FormPart2();
         covid19FormPart3 = new COVID19FormPart3();
         covid19FormPart4 = new COVID19FormPart4();
@@ -47,7 +51,7 @@ public class COVID19FormActivity extends AppCompatActivity {
         fragments.add(covid19FormPart3);
         fragments.add(covid19FormPart4);
 
-        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 1, fragments);
+        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 1, fragments);
         customViewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(customViewPager, true);
     }

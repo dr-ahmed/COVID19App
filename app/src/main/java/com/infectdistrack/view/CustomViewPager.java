@@ -35,6 +35,7 @@ public class CustomViewPager extends ViewPager {
             case 0: {
                 pagingEnabled = parentActivity.isPart1FormDone();
                 if (pagingEnabled) {
+                    parentActivity.getCovid19FormPart1().setValues();
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     parentActivity.getCovid19FormPart1().isFieldEmpty();
@@ -45,6 +46,7 @@ public class CustomViewPager extends ViewPager {
             case 1: {
                 pagingEnabled = parentActivity.isPart2FormDone();
                 if (pagingEnabled) {
+                    //parentActivity.getCovid19FormPart2().setValues();
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     parentActivity.getCovid19FormPart2().IsCheckboxChecked();
@@ -55,6 +57,7 @@ public class CustomViewPager extends ViewPager {
             case 2: {
                 pagingEnabled = parentActivity.isPart3FormDone();
                 if (pagingEnabled) {
+                    //parentActivity.getCovid19FormPart3().setValues();
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     parentActivity.getCovid19FormPart3().IsCheckboxChecked();

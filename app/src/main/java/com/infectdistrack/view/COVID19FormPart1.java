@@ -19,6 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.infectdistrack.R;
+import com.infectdistrack.model.COVID19Form;
+
+import java.util.Arrays;
 
 import static com.infectdistrack.model.Constants.AGE_LIST;
 import static com.infectdistrack.model.Constants.DEFAULT_AGE;
@@ -34,6 +37,12 @@ public class COVID19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
     private String patientGender = "", patientSuspectedCasesDescription = "";
     private Spinner patientAgeSpinner, patientWilayaSpinner;
     private ArrayAdapter<String> ageSpinnerAdapter, wilayaSpinnerAdapter;
+
+    private COVID19Form covid19FormObject;
+
+    public COVID19FormPart1(COVID19Form covid19FormObject) {
+        this.covid19FormObject = covid19FormObject;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +94,6 @@ public class COVID19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
                     case R.id.patient_having_covid19_symptoms:
                         patientSuspectedCasesDescription = "Malade présentant des symptômes de COVID-19";
                 }
-                //setValues();
             }
         }
     }
@@ -147,11 +155,17 @@ public class COVID19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
     }
 
     public void setValues() {
-        Log.e(TAG, "Nom : " + patientNameEdt.getText().toString() + "\n"
-                + "Tel : " + patientPhoneNumberEdt.getText().toString() + "\n"
-                + "Genre : " + patientGender + "\n"
-                + "Age : " + patientAgeSpinner.getSelectedItem().toString() + "\n"
-                + "Wilaya : " + patientWilayaSpinner.getSelectedItem().toString() + "\n"
-                + "Cas suspects : " + patientSuspectedCasesDescription);
+        covid19FormObject.setName(patientNameEdt.getText().toString());
+        covid19FormObject.setPhoneNumber(patientPhoneNumberEdt.getText().toString());
+        covid19FormObject.setGendre(patientGender.equals("M"));
+
+        String ageAsString = patientAgeSpinner.getSelectedItem().toString();
+        int ageAsInt = Arrays.asList(AGE_LIST).indexOf(ageAsString);
+
+        covid19FormObject.setAge(ageAsInt);
+        covid19FormObject.setWilaya(patientWilayaSpinner.getSelectedItem().toString());
+        covid19FormObject.setSuspectedCases(patientSuspectedCasesDescription);
+
+        Log.e(TAG, covid19FormObject.toString());
     }
 }

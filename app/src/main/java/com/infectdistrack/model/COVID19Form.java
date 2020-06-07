@@ -1,5 +1,7 @@
 package com.infectdistrack.model;
 
+import androidx.annotation.NonNull;
+
 public class COVID19Form {
     private Integer id, parentUserId, age;
     private String name, phoneNumber, wilaya, suspectedCases, symptoms, category, confirmedCovid19Cases, evolution;
@@ -102,5 +104,16 @@ public class COVID19Form {
 
     public void setGendre(Boolean gendre) {
         this.gendre = gendre;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Nom : " + getName() + "\n"
+                + "Tel : " + getPhoneNumber() + "\n"
+                + "Genre : " + getGendre() + "\n"
+                + "Age : " + getAge() + "\n"
+                + "Wilaya : " + getWilaya() + "\n"
+                + "Cas suspects : " + getSuspectedCases();
     }
 }
