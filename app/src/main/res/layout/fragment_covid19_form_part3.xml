@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:context=".view.COVID19FormPart3">
+
+        <TextView
+            android:id="@+id/terrain_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terrain" />
+
+        <CheckBox
+            android:id="@+id/diabete_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Diabète" />
+
+        <CheckBox
+            android:id="@+id/hta_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HTA/Cardiopathies" />
+
+        <CheckBox
+            android:id="@+id/grossesse_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grossesse" />
+
+        <CheckBox
+            android:id="@+id/immuno_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Immunossupresion / Immunodepression" />
+
+        <CheckBox
+            android:id="@+id/pathies_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pnemopathies" />
+
+        <CheckBox
+            android:id="@+id/fumeur_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fumeur" />
+
+        <CheckBox
+            android:id="@+id/autres_terrain_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autres" />
+
+        <CheckBox
+            android:id="@+id/aucun_terrain_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aucun" />
+    </LinearLayout>
+</ScrollView>

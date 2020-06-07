@@ -7,18 +7,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
 import com.infectdistrack.R;
-import com.infectdistrack.model.SharedPrefsManager;
 import com.infectdistrack.model.User;
-import com.infectdistrack.model.ViewPagerAdapter;
 import com.infectdistrack.presenter.HomeController;
-
-import java.util.ArrayList;
 
 import static com.infectdistrack.model.Constants.ADMIN_LABEL;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
@@ -34,35 +26,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private Button addUserBtn, makeActionBtn, logoutBtn;
     private HomeController homeController;
 
-    private ViewPager mMyViewPager;
-    private TabLayout mTabLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         init();
-
-        /*
-        mTabLayout = findViewById(R.id.tab_layout);
-        mMyViewPager = findViewById(R.id.view_pager);
-
-        init();
-         */
     }
-
-    /*
-    private void init() {
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new LoginFrag());
-        fragments.add(new BlankFragment());
-        fragments.add(new LikeFragment());
-        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 1, fragments);
-        mMyViewPager.setAdapter(pagerAdapter);
-        mTabLayout.setupWithViewPager(mMyViewPager, true);
-    }
-     */
 
     private void init() {
         initViews();
@@ -105,6 +75,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 homeController.launchActivityWithBundle(NewUserActivity.class, "parentUser", "parentUserBundle", currentUser);
                 break;
             case R.id.make_action_btn:
+                Intent intent = new Intent(this, COVID19FormActivity.class);
+                startActivity(intent);
                 break;
             case R.id.logout_btn:
                 homeController.doYouWantToExit();

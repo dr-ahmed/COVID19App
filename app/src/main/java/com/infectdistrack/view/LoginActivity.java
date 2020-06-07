@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.infectdistrack.R;
-import com.infectdistrack.model.CheckUserSessionDataValidityAsyncTask;
-import com.infectdistrack.model.SharedPrefsManager;
 import com.infectdistrack.model.User;
 import com.infectdistrack.presenter.LoginController;
 

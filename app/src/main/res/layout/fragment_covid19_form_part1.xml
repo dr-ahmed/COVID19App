@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:context=".view.COVID19FormPart1">
+
+        <EditText
+            android:id="@+id/patient_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nom"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/patient_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tel"
+            android:inputType="phone" />
+
+        <TextView
+            android:id="@+id/patient_gender_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Genre" />
+
+        <RadioGroup
+            android:id="@+id/patient_gender_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/male_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Masculin" />
+
+            <RadioButton
+                android:id="@+id/female_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Féminin" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/patient_age_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Âge" />
+
+        <Spinner
+            android:id="@+id/patient_age_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/patient_wilaya_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wilaya" />
+
+        <Spinner
+            android:id="@+id/patient_wilaya_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/patient_suspected_cases_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cas suspects" />
+
+        <RadioGroup
+            android:id="@+id/patient_suspected_cases_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/direct_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact direct" />
+
+            <RadioButton
+                android:id="@+id/direct_contact_with_symptoms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact direct avec des symptômes" />
+
+            <RadioButton
+                android:id="@+id/patient_having_covid19_symptoms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Malade présentant des symptômes de COVID-19" />
+        </RadioGroup>
+    </LinearLayout>
+</ScrollView>

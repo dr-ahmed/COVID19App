@@ -24,7 +24,7 @@ public class UIBasicController {
         progressDialog.show();
     }
 
-    static void hideProgressDialog() {
+    public static void hideProgressDialog() {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
     }

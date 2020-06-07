@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:context=".view.COVID19FormPart4">
+
+        <TextView
+            android:id="@+id/confirmed_cases_covid19_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cas confirmé de COVID-19" />
+
+        <RadioGroup
+            android:id="@+id/patient_confirmed_cases_covid19_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/co_cov_tdr_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TDR / ELISA positif" />
+
+            <RadioButton
+                android:id="@+id/co_cov_pcr_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PCR positif" />
+
+            <RadioButton
+                android:id="@+id/co_cov_ct_scan_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CT-Scan compatible avec COVID-19" />
+
+            <RadioButton
+                android:id="@+id/co_cov_na_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NA" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/form_evolution_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Évolution" />
+
+        <RadioGroup
+            android:id="@+id/patient_evolution_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/evol_decede_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Décédé" />
+
+            <RadioButton
+                android:id="@+id/evol_confin_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="En confinement" />
+
+            <RadioButton
+                android:id="@+id/evol_gueri_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guéri" />
+
+            <RadioButton
+                android:id="@+id/evol_autre_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Autre" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/patien_submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/transparent_bg_bordered_button"
+            android:padding="20dp"
+            android:text="Envoyer"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent" />
+    </LinearLayout>
+</ScrollView>

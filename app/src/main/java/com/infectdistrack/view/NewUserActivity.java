@@ -18,7 +18,6 @@ import com.infectdistrack.presenter.NewUserController;
 
 import static com.infectdistrack.model.Constants.ADMIN_LABEL;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
-import static com.infectdistrack.model.Constants.USER;
 import static com.infectdistrack.model.Constants.USER_LABEL;
 import static com.infectdistrack.model.Constants.WILAYAS;
 
@@ -114,7 +113,7 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
                 case R.id.labo_item:
                     establishmentType = "Laboratoire";
                     break;
-                case R.id.other_item:
+                case R.id.other_establishment_item:
                     establishmentType = "Autre";
             }
         }
@@ -132,7 +131,7 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         callCenterRadioButton.setChecked(false);
         RadioButton laboRadioButton = findViewById(R.id.labo_item);
         laboRadioButton.setChecked(false);
-        RadioButton otherRadioButton = findViewById(R.id.other_item);
+        RadioButton otherRadioButton = findViewById(R.id.other_establishment_item);
         otherRadioButton.setChecked(false);
     }
 }

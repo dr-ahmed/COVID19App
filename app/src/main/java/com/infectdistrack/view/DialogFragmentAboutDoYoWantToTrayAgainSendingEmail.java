@@ -11,11 +11,13 @@ import androidx.fragment.app.DialogFragment;
 
 import com.infectdistrack.presenter.NewUserController;
 
-public class DialogFragmentForAskingUserAboutSendingAccountInformation extends DialogFragment {
+import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
+
+public class DialogFragmentAboutDoYoWantToTrayAgainSendingEmail extends DialogFragment {
 
     private NewUserController newUserController;
 
-    public DialogFragmentForAskingUserAboutSendingAccountInformation(NewUserController newUserController) {
+    public DialogFragmentAboutDoYoWantToTrayAgainSendingEmail(NewUserController newUserController) {
         this.newUserController = newUserController;
     }
 
@@ -24,19 +26,19 @@ public class DialogFragmentForAskingUserAboutSendingAccountInformation extends D
         AlertDialog.Builder dialogBuiler = new AlertDialog.Builder(getActivity());
         dialogBuiler.setMessage(getArguments().getString("message"));
         dialogBuiler.setTitle(getArguments().getString("title"));
-        dialogBuiler.setPositiveButton("Par email", new DialogInterface.OnClickListener() {
+        dialogBuiler.setPositiveButton("Réessayer", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 newUserController.sendUserAccountInformationWithEmail();
             }
         });
-        dialogBuiler.setNegativeButton("Partager", new DialogInterface.OnClickListener() {
+        dialogBuiler.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                newUserController.shareUserAccountInformation();
+                hideProgressDialog();
+                newUserController.getNewUserActivity().resetUIComponents();
             }
         });
-        dialogBuiler.setNeutralButton("Non", null);
         setCancelable(false);
 
         return dialogBuiler.create();
@@ -62,8 +64,5 @@ public class DialogFragmentForAskingUserAboutSendingAccountInformation extends D
 
         ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
         ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);
-
-        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.BLACK);
-        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEUTRAL).setAllCaps(false);
     }
 }

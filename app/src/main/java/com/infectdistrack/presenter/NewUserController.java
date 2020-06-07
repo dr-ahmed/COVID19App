@@ -1,14 +1,20 @@
 package com.infectdistrack.presenter;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.infectdistrack.model.CheckDuplicateUserAsyncTask;
 import com.infectdistrack.model.NewUserAsyncTask;
+import com.infectdistrack.model.SendingMailAsyncTask;
 import com.infectdistrack.model.User;
 import com.infectdistrack.model.Utilities;
+import com.infectdistrack.view.DialogFragmentAboutDoYoWantToTrayAgainSendingEmail;
 import com.infectdistrack.view.DialogFragmentForAskingConfirmationWhenCreatingUser;
 import com.infectdistrack.view.DialogFragmentForAskingUserAboutSendingAccountInformation;
 import com.infectdistrack.view.NewUserActivity;
@@ -23,6 +29,7 @@ import static com.infectdistrack.model.Constants.USER;
 import static com.infectdistrack.model.Constants.USER_LABEL;
 import static com.infectdistrack.model.Utilities.SHA256;
 import static com.infectdistrack.model.Utilities.isEmailValid;
+import static com.infectdistrack.model.Utilities.isInternetAvailable;
 import static com.infectdistrack.model.Utilities.replaceApostrophe;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 import static com.infectdistrack.presenter.UIBasicController.isFieldEmpty;
@@ -35,9 +42,15 @@ public class NewUserController {
     private NewUserActivity newUserActivity;
     private boolean isSuperAdmin;
 
+    private String MAIL_SUBJECT, MAIL_ADDRESS;
+
     public NewUserController(NewUserActivity newUserActivity) {
         this.newUserActivity = newUserActivity;
         isSuperAdmin = newUserActivity.getParentUser().getCategory().equals(SUPER_ADMIN);
+    }
+
+    public NewUserActivity getNewUserActivity() {
+        return newUserActivity;
     }
 
     public void onClickAddNewUserButtonController() {
@@ -74,15 +87,19 @@ public class NewUserController {
         Bundle args = new Bundle();
         args.putString("title", "Demande de confirmation");
         args.putString("message", "Êtes-vous sûr de vouloir créer un nouvel " + getCategoryOfUserToCreate() + " dont les informations sont :"
-                + "\nNom : " + newUserActivity.getNewUserFullNameEdt().getText().toString()
-                + "\nEmail : " + newUserActivity.getNewUserEmailEdt().getText().toString()
-                + "\nMot de passe : " + newUserActivity.getNewUserPasswordEdt().getText().toString()
-                + "\nWilaya : " + newUserActivity.getNewUserWilaya()
-                + "\nEtablissement : " + newUserActivity.getEstablishmentType());
+                + getUserInformation());
         dialog.setArguments(args);
 
         ft.add(dialog, "dialogFragmentForAskingConfirmationWhenCreatingUser");
         ft.commit();
+    }
+
+    private String getUserInformation() {
+        return "\nNom : " + newUserActivity.getNewUserFullNameEdt().getText().toString()
+                + "\nEmail : " + newUserActivity.getNewUserEmailEdt().getText().toString()
+                + "\nMot de passe : " + newUserActivity.getNewUserPasswordEdt().getText().toString()
+                + "\nWilaya : " + newUserActivity.getNewUserWilaya()
+                + "\nEtablissement : " + newUserActivity.getEstablishmentType();
     }
 
     private void checkingDuplicateUser() {
@@ -100,7 +117,7 @@ public class NewUserController {
             } else
                 showMessage(newUserActivity, "Email déjà existant", "Désolé, cet email est deja utilsié, veuillez essayer un autre !");
         } else {
-            if (!Utilities.isInternetAvailable())
+            if (!isInternetAvailable())
                 showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
                 showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 004)");
@@ -129,9 +146,8 @@ public class NewUserController {
         hideProgressDialog();
         if (isUserAdded) {
             askAdminAboutSendingAccountInformation();
-            newUserActivity.resetUIComponents();
         } else {
-            if (!Utilities.isInternetAvailable())
+            if (!isInternetAvailable())
                 showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
                 showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 006)");
@@ -140,6 +156,13 @@ public class NewUserController {
     }
 
     private void askAdminAboutSendingAccountInformation() {
+        MAIL_SUBJECT = "Détails de votre compte sur l'application COVID-19";
+        MAIL_ADDRESS = "Bonjour " + newUserActivity.getNewUserFullNameEdt().getText().toString() + ",\n"
+                + "L'administrateur " + newUserActivity.getParentUser().getFullName() + " vous a créé un nouveau compte dont les informations sont :"
+                + getUserInformation()
+                + "\n\nRendez-vous sur l'application COVID-19" +
+                "\nA bientôt.";
+
         FragmentTransaction ft = newUserActivity.getSupportFragmentManager().beginTransaction();
         DialogFragmentForAskingUserAboutSendingAccountInformation dialog = new DialogFragmentForAskingUserAboutSendingAccountInformation(this);
 
@@ -151,6 +174,52 @@ public class NewUserController {
 
         ft.add(dialog, "dialogFragmentForAskingUserAboutSendingAccountInformation");
         ft.commit();
+    }
+
+    private void doYouWantToTrySendingMailAgain(String title, String message) {
+        FragmentTransaction ft = newUserActivity.getSupportFragmentManager().beginTransaction();
+        DialogFragmentAboutDoYoWantToTrayAgainSendingEmail dialog = new DialogFragmentAboutDoYoWantToTrayAgainSendingEmail(this);
+
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putString("message", message);
+        dialog.setArguments(args);
+
+        ft.add(dialog, "dialogFragmentAboutDoYoWantToTrayAgainSendingEmail");
+        ft.commit();
+    }
+
+    public void shareUserAccountInformation() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, MAIL_SUBJECT);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, MAIL_ADDRESS);
+        newUserActivity.startActivity(Intent.createChooser(shareIntent, "Partager avec"));
+        newUserActivity.resetUIComponents();
+    }
+
+    public void sendUserAccountInformationWithEmail() {
+        SendingMailAsyncTask sendingMailAsyncTask = new SendingMailAsyncTask(this);
+        showProgressDialog(newUserActivity, "Envoi du courrier électronique en cours ...");
+        sendingMailAsyncTask.execute(newUserActivity.getNewUserEmailEdt().getText().toString(), MAIL_SUBJECT, MAIL_ADDRESS);
+    }
+
+    public void onMailSent(boolean noExceptionOccurred) {
+        hideProgressDialog();
+        if (noExceptionOccurred) {
+            newUserActivity.resetUIComponents();
+            showMessage(newUserActivity, "Opération accomplie", "Le courrier a été envoyé avec succès.");
+        } else {
+            String title, message;
+            if (!isInternetAvailable()) {
+                title = "Pas de connexion internet";
+                message = "Merci de vérifier votre connexion internet!";
+            } else {
+                title = "Une erreur s'est produite";
+                message = "Désolé, l'envoi du courrier électronique a échoué. Veuillez réssayer plus tard.";
+            }
+            doYouWantToTrySendingMailAgain(title, message);
+        }
     }
 
     private String getCategoryOfUserToCreate() {
