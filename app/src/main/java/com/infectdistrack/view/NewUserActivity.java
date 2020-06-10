@@ -133,5 +133,8 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         laboRadioButton.setChecked(false);
         RadioButton otherRadioButton = findViewById(R.id.other_establishment_item);
         otherRadioButton.setChecked(false);
+        establishmentType = "";
+
+        newUserFullNameEdt.requestFocus();
     }
 }

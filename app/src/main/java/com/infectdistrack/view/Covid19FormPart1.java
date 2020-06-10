@@ -1,14 +1,10 @@
 package com.infectdistrack.view;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.infectdistrack.R;
-import com.infectdistrack.model.COVID19Form;
+import com.infectdistrack.model.Covid19Form;
 
 import java.util.Arrays;
 
@@ -28,7 +24,7 @@ import static com.infectdistrack.model.Constants.DEFAULT_AGE;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
 import static com.infectdistrack.model.Constants.WILAYAS;
 
-public class COVID19FormPart1 extends Fragment implements RadioGroup.OnCheckedChangeListener {
+public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "COVID19FormPart1";
     private View rootView;
@@ -38,9 +34,9 @@ public class COVID19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
     private Spinner patientAgeSpinner, patientWilayaSpinner;
     private ArrayAdapter<String> ageSpinnerAdapter, wilayaSpinnerAdapter;
 
-    private COVID19Form covid19FormObject;
+    private Covid19Form covid19FormObject;
 
-    public COVID19FormPart1(COVID19Form covid19FormObject) {
+    public Covid19FormPart1(Covid19Form covid19FormObject) {
         this.covid19FormObject = covid19FormObject;
     }
 
@@ -157,7 +153,7 @@ public class COVID19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
     public void setValues() {
         covid19FormObject.setName(patientNameEdt.getText().toString());
         covid19FormObject.setPhoneNumber(patientPhoneNumberEdt.getText().toString());
-        covid19FormObject.setGendre(patientGender.equals("M"));
+        covid19FormObject.setGendre(patientGender);
 
         String ageAsString = patientAgeSpinner.getSelectedItem().toString();
         int ageAsInt = Arrays.asList(AGE_LIST).indexOf(ageAsString);
@@ -166,6 +162,6 @@ public class COVID19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
         covid19FormObject.setWilaya(patientWilayaSpinner.getSelectedItem().toString());
         covid19FormObject.setSuspectedCases(patientSuspectedCasesDescription);
 
-        Log.e(TAG, covid19FormObject.toString());
+        //Log.e(TAG, covid19FormObject.toString());
     }
 }

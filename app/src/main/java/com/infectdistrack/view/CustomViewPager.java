@@ -2,7 +2,6 @@ package com.infectdistrack.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.viewpager.widget.ViewPager;
@@ -10,13 +9,13 @@ import androidx.viewpager.widget.ViewPager;
 public class CustomViewPager extends ViewPager {
 
     private boolean pagingEnabled;
-    private COVID19FormActivity parentActivity;
+    private Covid19FormActivity parentActivity;
 
     public CustomViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setParentActivity(COVID19FormActivity parentActivity) {
+    public void setParentActivity(Covid19FormActivity parentActivity) {
         this.parentActivity = parentActivity;
     }
 
@@ -46,7 +45,7 @@ public class CustomViewPager extends ViewPager {
             case 1: {
                 pagingEnabled = parentActivity.isPart2FormDone();
                 if (pagingEnabled) {
-                    //parentActivity.getCovid19FormPart2().setValues();
+                    parentActivity.getCovid19FormPart2().setValues();
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     parentActivity.getCovid19FormPart2().IsCheckboxChecked();
@@ -57,7 +56,7 @@ public class CustomViewPager extends ViewPager {
             case 2: {
                 pagingEnabled = parentActivity.isPart3FormDone();
                 if (pagingEnabled) {
-                    //parentActivity.getCovid19FormPart3().setValues();
+                    parentActivity.getCovid19FormPart3().setValues();
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     parentActivity.getCovid19FormPart3().IsCheckboxChecked();

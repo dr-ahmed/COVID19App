@@ -11,7 +11,7 @@
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:padding="10dp"
-        tools:context=".view.COVID19FormPart4">
+        tools:context=".view.Covid19FormPart4">
 
         <TextView
             android:id="@+id/confirmed_cases_covid19_txt"

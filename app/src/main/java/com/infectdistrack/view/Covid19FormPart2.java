@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.infectdistrack.R;
+import com.infectdistrack.model.Covid19Form;
 
-public class COVID19FormPart2 extends Fragment {
+public class Covid19FormPart2 extends Fragment {
 
     private static final String TAG = "COVID19FormPart2";
 
@@ -22,6 +22,11 @@ public class COVID19FormPart2 extends Fragment {
     private TextView textView;
     private CheckBox feverBox, astheniaBox, cephaleeBox, touxBox, dyspneeBox, malDeGorgeBox, rhiniteBox,
             congestionNasalBox, dysguesieBox, diarrheeBox, nauseesBox, otherSympBox, noSympBox;
+    private Covid19Form covid19FormObject;
+
+    public Covid19FormPart2(Covid19Form covid19FormObject) {
+        this.covid19FormObject = covid19FormObject;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,5 +81,43 @@ public class COVID19FormPart2 extends Fragment {
     private void resetTextview() {
         textView.setText("Symptômes");
         textView.setTextColor(Color.DKGRAY);
+    }
+
+    private String getPatientSymptoms() {
+        StringBuilder symptoms = new StringBuilder();
+
+        if (feverBox.isChecked())
+            symptoms.append("Fièvre").append(";");
+        if (astheniaBox.isChecked())
+            symptoms.append("Asthénie").append(";");
+        if (cephaleeBox.isChecked())
+            symptoms.append("Céphalée").append(";");
+        if (touxBox.isChecked())
+            symptoms.append("Toux").append(";");
+        if (dyspneeBox.isChecked())
+            symptoms.append("Dyspnée").append(";");
+        if (malDeGorgeBox.isChecked())
+            symptoms.append("Mal de gorge").append(";");
+        if (rhiniteBox.isChecked())
+            symptoms.append("Rhinite").append(";");
+        if (congestionNasalBox.isChecked())
+            symptoms.append("Congestion nasale").append(";");
+        if (dysguesieBox.isChecked())
+            symptoms.append("Dysgueusie ou agueusie").append(";");
+        if (diarrheeBox.isChecked())
+            symptoms.append("Diarrhée").append(";");
+        if (nauseesBox.isChecked())
+            symptoms.append("Nausées/vomissements").append(";");
+        if (otherSympBox.isChecked())
+            symptoms.append("Autres symptômes").append(";");
+        if (noSympBox.isChecked())
+            symptoms.append("Aucun symptôme").append(";");
+
+        return symptoms.toString();
+    }
+
+    public void setValues() {
+        covid19FormObject.setSymptoms(getPatientSymptoms());
+        //Log.e(TAG, covid19FormObject.toString());
     }
 }

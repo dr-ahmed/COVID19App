@@ -12,7 +12,7 @@
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:padding="10dp"
-        tools:context=".view.COVID19FormPart1">
+        tools:context=".view.Covid19FormPart1">
 
         <EditText
             android:id="@+id/patient_name"

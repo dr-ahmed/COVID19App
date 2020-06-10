@@ -3,20 +3,24 @@ package com.infectdistrack.view;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.infectdistrack.presenter.NewUserController;
+import com.infectdistrack.model.SharedPrefsManager;
+import com.infectdistrack.presenter.Covid19NewFormController;
 
-public class DialogFragmentForAskingUserAboutSendingAccountInformation extends DialogFragment {
+import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 
-    private NewUserController newUserController;
+public class DialogFragmentForGoingBackAfterAddingForm extends DialogFragment {
 
-    public DialogFragmentForAskingUserAboutSendingAccountInformation(NewUserController newUserController) {
-        this.newUserController = newUserController;
+    private Covid19NewFormController covid19NewFormController;
+
+    public DialogFragmentForGoingBackAfterAddingForm(Covid19NewFormController covid19NewFormController) {
+        this.covid19NewFormController = covid19NewFormController;
     }
 
     @Override
@@ -24,22 +28,26 @@ public class DialogFragmentForAskingUserAboutSendingAccountInformation extends D
         AlertDialog.Builder dialogBuiler = new AlertDialog.Builder(getActivity());
         dialogBuiler.setMessage(getArguments().getString("message"));
         dialogBuiler.setTitle(getArguments().getString("title"));
-        dialogBuiler.setPositiveButton("Par email", new DialogInterface.OnClickListener() {
+        dialogBuiler.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                newUserController.sendUserAccountInformationWithEmail();
+                Intent intent = new Intent(covid19NewFormController.getCovid19FormPart4().getActivity(), HomeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("currentUser", covid19NewFormController.getCovid19FormPart4().getParentUser());
+                intent.putExtra("currentUserBundle", bundle);
+                startActivity(intent);
+                covid19NewFormController.getCovid19FormPart4().getActivity().finish();
             }
         });
-        dialogBuiler.setNegativeButton("Partager", new DialogInterface.OnClickListener() {
+        dialogBuiler.setNegativeButton("Non", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                newUserController.shareUserAccountInformation();
-            }
-        });
-        dialogBuiler.setNeutralButton("Non", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                newUserController.getNewUserActivity().resetUIComponents();
+                Intent intent = new Intent(covid19NewFormController.getCovid19FormPart4().getActivity(), Covid19FormActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("parentUser", covid19NewFormController.getCovid19FormPart4().getParentUser());
+                intent.putExtra("parentUserBundle", bundle);
+                startActivity(intent);
+                covid19NewFormController.getCovid19FormPart4().getActivity().finish();
             }
         });
         setCancelable(false);
@@ -67,8 +75,5 @@ public class DialogFragmentForAskingUserAboutSendingAccountInformation extends D
 
         ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
         ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);
-
-        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.BLACK);
-        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEUTRAL).setAllCaps(false);
     }
 }

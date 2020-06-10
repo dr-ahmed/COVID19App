@@ -11,7 +11,7 @@
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:padding="10dp"
-        tools:context=".view.COVID19FormPart3">
+        tools:context=".view.Covid19FormPart3">
 
         <TextView
             android:id="@+id/terrain_textview"
@@ -29,7 +29,7 @@
             android:id="@+id/hta_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HTA/Cardiopathies" />
+            android:text="HTA / Cardiopathies" />
 
         <CheckBox
             android:id="@+id/grossesse_box"
@@ -41,13 +41,13 @@
             android:id="@+id/immuno_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Immunossupresion / Immunodepression" />
+            android:text="Immunosuppression / Immunodépression" />
 
         <CheckBox
             android:id="@+id/pathies_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pnemopathies" />
+            android:text="Pneumopathies" />
 
         <CheckBox
             android:id="@+id/fumeur_box"

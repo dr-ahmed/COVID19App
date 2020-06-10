@@ -17,7 +17,7 @@ public class UIBasicController {
 
     private static ProgressDialog progressDialog;
 
-    public static void showProgressDialog(AppCompatActivity appCompatActivity, String message) {
+    public static void showProgressDialog(FragmentActivity appCompatActivity, String message) {
         progressDialog = new ProgressDialog(appCompatActivity, R.style.CustomProgressDialogStyle);
         progressDialog.setMessage(message);
         progressDialog.setCancelable(false);
@@ -38,7 +38,7 @@ public class UIBasicController {
         return false;
     }
 
-    public static void showMessage(AppCompatActivity activity, String title, String message) {
+    public static void showMessage(FragmentActivity activity, String title, String message) {
         FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
         DialogFragmentWithOnlyOneButton dialog = new DialogFragmentWithOnlyOneButton();
 

@@ -12,12 +12,20 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.infectdistrack.R;
+import com.infectdistrack.model.Covid19Form;
 
-public class COVID19FormPart3 extends Fragment {
+public class Covid19FormPart3 extends Fragment {
+
+    private static final String TAG = "COVID19FormPart3";
 
     private View rootView;
     private TextView terrainTextView;
     private CheckBox diabeteBox, htaBox, grossesseBox, immunoBox, pathiesBox, fumurBox, autresTerrainBox, aucunTerrainBox;
+    private Covid19Form covid19FormObject;
+
+    public Covid19FormPart3(Covid19Form covid19FormObject) {
+        this.covid19FormObject = covid19FormObject;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,5 +73,33 @@ public class COVID19FormPart3 extends Fragment {
     private void resetTextview() {
         terrainTextView.setText("Terrain");
         terrainTextView.setTextColor(Color.DKGRAY);
+    }
+
+    private String getPatientTerrain() {
+        StringBuilder terrain = new StringBuilder();
+
+        if (diabeteBox.isChecked())
+            terrain.append("Diabète").append(";");
+        if (htaBox.isChecked())
+            terrain.append("HTA / Cardiopathies").append(";");
+        if (grossesseBox.isChecked())
+            terrain.append("Grossesse").append(";");
+        if (immunoBox.isChecked())
+            terrain.append("Immunosuppression / Immunodépression").append(";");
+        if (pathiesBox.isChecked())
+            terrain.append("Pneumopathies").append(";");
+        if (fumurBox.isChecked())
+            terrain.append("Fumeur").append(";");
+        if (autresTerrainBox.isChecked())
+            terrain.append("Autres").append(";");
+        if (aucunTerrainBox.isChecked())
+            terrain.append("Aucun").append(";");
+
+        return terrain.toString();
+    }
+
+    public void setValues() {
+        covid19FormObject.setTerrain(getPatientTerrain());
+        //Log.e(TAG, covid19FormObject.toString());
     }
 }

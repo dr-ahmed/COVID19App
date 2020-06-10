@@ -2,12 +2,11 @@ package com.infectdistrack.model;
 
 import androidx.annotation.NonNull;
 
-public class COVID19Form {
+public class Covid19Form {
     private Integer id, parentUserId, age;
-    private String name, phoneNumber, wilaya, suspectedCases, symptoms, category, confirmedCovid19Cases, evolution;
-    private Boolean gendre;
+    private String name, phoneNumber, gendre, wilaya, suspectedCases, symptoms, terrain, confirmedCovid19Case, evolution;
 
-    public COVID19Form() {
+    public Covid19Form() {
     }
 
     public Integer getId() {
@@ -74,20 +73,20 @@ public class COVID19Form {
         this.symptoms = symptoms;
     }
 
-    public String getCategory() {
-        return category;
+    public String getTerrain() {
+        return terrain;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setTerrain(String terrain) {
+        this.terrain = terrain;
     }
 
-    public String getConfirmedCovid19Cases() {
-        return confirmedCovid19Cases;
+    public String getConfirmedCovid19Case() {
+        return confirmedCovid19Case;
     }
 
-    public void setConfirmedCovid19Cases(String confirmedCovid19Cases) {
-        this.confirmedCovid19Cases = confirmedCovid19Cases;
+    public void setConfirmedCovid19Case(String confirmedCovid19Case) {
+        this.confirmedCovid19Case = confirmedCovid19Case;
     }
 
     public String getEvolution() {
@@ -98,22 +97,27 @@ public class COVID19Form {
         this.evolution = evolution;
     }
 
-    public Boolean getGendre() {
+    public String getGendre() {
         return gendre;
     }
 
-    public void setGendre(Boolean gendre) {
+    public void setGendre(String gendre) {
         this.gendre = gendre;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "Nom : " + getName() + "\n"
+        return "Parent ID : " + getParentUserId() + "\n"
+                + "Nom : " + getName() + "\n"
                 + "Tel : " + getPhoneNumber() + "\n"
                 + "Genre : " + getGendre() + "\n"
                 + "Age : " + getAge() + "\n"
                 + "Wilaya : " + getWilaya() + "\n"
-                + "Cas suspects : " + getSuspectedCases();
+                + "Cas suspects : " + getSuspectedCases() + "\n"
+                + "Symptômes : " + getSymptoms() + "\n"
+                + "Terrain : " + getTerrain() + "\n"
+                + "Cas confirmé de COVID-19 : " + getConfirmedCovid19Case() + "\n"
+                + "Evolution : " + getEvolution();
     }
 }

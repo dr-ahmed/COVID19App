@@ -5,23 +5,46 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.infectdistrack.R;
+import com.infectdistrack.model.Covid19Form;
+import com.infectdistrack.model.User;
+import com.infectdistrack.presenter.Covid19NewFormController;
 
-public class COVID19FormPart4 extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class Covid19FormPart4 extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+
+    private static final String TAG = "COVID19FormPart4";
 
     private View rootView;
     private TextView confirmedCasesTxt, evolutionTxt;
     private RadioGroup confirmedCasesRadioGroup, evolutionRadioGroup;
     private String confirmedCasesValue = "", evolutionValue = "";
     private Button submitBtn;
+    private Covid19Form covid19FormObject;
+    private User parentUser;
+
+    public Covid19FormPart4(Covid19Form covid19FormObject) {
+        this.covid19FormObject = covid19FormObject;
+    }
+
+    public Covid19Form getFinalCovid19FormResult() {
+        return covid19FormObject;
+    }
+
+    public void setParentUser(User parentUser) {
+        this.parentUser = parentUser;
+    }
+
+    public User getParentUser() {
+        return parentUser;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,7 +136,16 @@ public class COVID19FormPart4 extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.patien_submit_button) {
-            Toast.makeText(getActivity(), "C'est Ok !!", Toast.LENGTH_SHORT).show();
+            setValues();
+            Covid19NewFormController covid19NewFormController = new Covid19NewFormController(this);
+            covid19NewFormController.insertForm();
         }
+    }
+
+    public void setValues() {
+        covid19FormObject.setConfirmedCovid19Case(confirmedCasesValue);
+        covid19FormObject.setEvolution(evolutionValue);
+
+        //Log.e(TAG, covid19FormObject.toString());
     }
 }
