@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.infectdistrack.model.Utilities.getTodayDate;
 import static com.infectdistrack.model.Utilities.isInternetAvailable;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
@@ -38,11 +39,9 @@ public class Covid19NewFormController {
         Covid19NewFormAsyncTask covid19NewFormAsyncTask = new Covid19NewFormAsyncTask(this);
         showProgressDialog(covid19FormPart4.getActivity(), "Insertion du formulaire en cours ...");
 
-        String additionDate = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(Calendar.getInstance().getTime());
-
         covid19NewFormAsyncTask.execute(String.valueOf(covid19Form.getParentUserId()), covid19Form.getName(), covid19Form.getPhoneNumber(),
                 covid19Form.getGendre(), String.valueOf(covid19Form.getAge()), covid19Form.getWilaya(), covid19Form.getSuspectedCases(),
-                covid19Form.getSymptoms(), covid19Form.getTerrain(), covid19Form.getConfirmedCovid19Case(), covid19Form.getEvolution(), additionDate);
+                covid19Form.getSymptoms(), covid19Form.getTerrain(), covid19Form.getConfirmedCovid19Case(), covid19Form.getEvolution(), getTodayDate());
     }
 
     public void onFormAdded(String exceptionInfo, boolean isFormAdded) {

@@ -6,13 +6,31 @@ import android.util.Log;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import static com.infectdistrack.model.Constants.ALLOWED_CHARACTERS;
+import static com.infectdistrack.model.Constants.YES;
 
 public class Utilities {
 
     private static final String TAG = "Utilities";
+
+    public static String isPhoneNumberValid(String phoneNumber) {
+        // full regex expression : ^[234]\d{7}$
+        if (phoneNumber.matches("^[234].*$")) {
+            if (phoneNumber.matches("\\d+"))
+                if (phoneNumber.matches("^\\d{8}$"))
+                    return YES;
+                else
+                    return "Le numéro de téléphone doit être constitué de 8 chiffres";
+            else
+                return "Le numéro de téléphone doit être constitué uniquement de chiffres";
+        } else
+            return "Le numéro de téléphone doit commencer par 2, 3 ou 4";
+    }
 
     public static boolean isInternetAvailable() {
         String netAddress;
@@ -64,5 +82,9 @@ public class Utilities {
             sb.append(hex);
         }
         return sb.toString();
+    }
+
+    public static String getTodayDate() {
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).format(Calendar.getInstance().getTime());
     }
 }

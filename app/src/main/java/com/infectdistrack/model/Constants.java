@@ -3,9 +3,9 @@ package com.infectdistrack.model;
 public class Constants {
     private static final String TAG = "Util";
 
-    static String POST_METHOD = "POST",
+    public static String YES = "YES",
+            POST_METHOD = "POST",
             SCRIPT_PATH = "http://www.amdrs.org/infectdisdb/", // http://192.168.1.100/
-            API_CHECKOUT = "https://maurimath.net/braintree/checkout.php",
             LOGIN_SCRIPT_NAME = "login.php",
             ADD_NEW_USER_SCRIPT_NAME = "add_new_user.php",
             CHECKING_DUPLICATE_USER_SCRIPT_NAME = "check_duplicate_user.php",
@@ -27,7 +27,8 @@ public class Constants {
             USER_CATEGORY_TAG = "category",
             USER_ASSOCIATE_ADMIN_TAG = "associate_admin",
             USER_WILAYA_TAG = "wilaya",
-            USER_ESTABLISHMENT_TAG = "establishment";
+            USER_ESTABLISHMENT_TAG = "establishment",
+            USER_CREATION_DATE_TAG = "creation_date";
 
     public static final String DEFAULT_WILAYA = "Choisir la Wilaya",
             DEFAULT_AGE = "Choisir l'âge";

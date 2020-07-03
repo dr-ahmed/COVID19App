@@ -28,6 +28,7 @@ import static com.infectdistrack.model.Constants.SUPER_ADMIN;
 import static com.infectdistrack.model.Constants.USER;
 import static com.infectdistrack.model.Constants.USER_LABEL;
 import static com.infectdistrack.model.Utilities.SHA256;
+import static com.infectdistrack.model.Utilities.getTodayDate;
 import static com.infectdistrack.model.Utilities.isEmailValid;
 import static com.infectdistrack.model.Utilities.isInternetAvailable;
 import static com.infectdistrack.model.Utilities.replaceApostrophe;
@@ -126,7 +127,7 @@ public class NewUserController {
     }
 
     public void insertUser() {
-        NewUserAsyncTask loginAsyncTask = new NewUserAsyncTask(this);
+        NewUserAsyncTask newUserAsyncTask = new NewUserAsyncTask(this);
         try {
             String fullName = replaceApostrophe(newUserActivity.getNewUserFullNameEdt().getText().toString()),
                     email = newUserActivity.getNewUserEmailEdt().getText().toString(),
@@ -136,13 +137,13 @@ public class NewUserController {
                     wilaya = newUserActivity.getNewUserWilaya(),
                     establishment = replaceApostrophe(newUserActivity.getEstablishmentType());
             showProgressDialog(newUserActivity, "Création du compte en cours ...");
-            loginAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, establishment);
+            newUserAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, establishment, getTodayDate());
         } catch (NoSuchAlgorithmException e) {
             showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 005)");
         }
     }
 
-    public void onNewUserAdded(User user, String exceptionInfo, boolean isUserAdded) {
+    public void onNewUserAdded(String exceptionInfo, boolean isUserAdded) {
         hideProgressDialog();
         if (isUserAdded) {
             askAdminAboutSendingAccountInformation();

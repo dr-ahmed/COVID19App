@@ -22,7 +22,6 @@ public class NewUserAsyncTask extends AsyncTask<String, Integer, String> {
     private static final String TAG = "NewUserAsyncTask";
     private boolean isUserAdded = false;
     private NewUserController newUserControllerListener;
-    private User user;
     StringBuilder result;
 
     public NewUserAsyncTask(NewUserController newUserControllerListener) {
@@ -53,7 +52,8 @@ public class NewUserAsyncTask extends AsyncTask<String, Integer, String> {
                     + "&" + URLEncoder.encode(USER_CATEGORY_TAG, ENCODING) + "=" + URLEncoder.encode(params[3], ENCODING)
                     + "&" + URLEncoder.encode(USER_ASSOCIATE_ADMIN_TAG, ENCODING) + "=" + URLEncoder.encode(params[4], ENCODING)
                     + "&" + URLEncoder.encode(USER_WILAYA_TAG, ENCODING) + "=" + URLEncoder.encode(params[5], ENCODING)
-                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_TAG, ENCODING) + "=" + URLEncoder.encode(params[6], ENCODING);
+                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_TAG, ENCODING) + "=" + URLEncoder.encode(params[6], ENCODING)
+                    + "&" + URLEncoder.encode(USER_CREATION_DATE_TAG, ENCODING) + "=" + URLEncoder.encode(params[7], ENCODING);
 
             bufferedWriter.write(post_data);
             bufferedWriter.flush();
@@ -86,6 +86,6 @@ public class NewUserAsyncTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String exceptionInfo) {
-        newUserControllerListener.onNewUserAdded(user, exceptionInfo, isUserAdded);
+        newUserControllerListener.onNewUserAdded(exceptionInfo, isUserAdded);
     }
 }

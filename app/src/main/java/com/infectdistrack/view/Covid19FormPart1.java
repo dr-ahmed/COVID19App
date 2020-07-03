@@ -23,6 +23,8 @@ import static com.infectdistrack.model.Constants.AGE_LIST;
 import static com.infectdistrack.model.Constants.DEFAULT_AGE;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
 import static com.infectdistrack.model.Constants.WILAYAS;
+import static com.infectdistrack.model.Constants.YES;
+import static com.infectdistrack.model.Utilities.isPhoneNumberValid;
 
 public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedChangeListener {
 
@@ -112,6 +114,12 @@ public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
             return true;
         }
 
+        String phoneNumberFeedback = isPhoneNumberValid(patientPhoneNumberEdt.getText().toString());
+        if (!phoneNumberFeedback.equals(YES)) {
+            patientPhoneNumberEdt.requestFocus();
+            patientPhoneNumberEdt.setError(phoneNumberFeedback);
+            return true;
+        }
 
         if (patientGender.isEmpty()) {
             setRedTextview(genderTextView, "GENRE OBLIGATOIRE");
