@@ -18,6 +18,7 @@ import com.infectdistrack.view.LoginActivity;
 import java.security.NoSuchAlgorithmException;
 
 import static com.infectdistrack.model.Utilities.SHA256;
+import static com.infectdistrack.model.Utilities.replaceApostrophe;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 import static com.infectdistrack.presenter.UIBasicController.isFieldEmpty;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
@@ -46,13 +47,14 @@ public class LoginController {
 
     public void checkUserSessionDataValidity() {
         CheckUserSessionDataValidityAsyncTask checkUserSessionDataValidityAsyncTask = new CheckUserSessionDataValidityAsyncTask(this);
-        checkUserSessionDataValidityAsyncTask.execute(userObjectFromSharedPrefs.getFullName(),
+        // L'appel de replaceApostrophe permet de gérer le ' (exemple : centre d'appels)
+        checkUserSessionDataValidityAsyncTask.execute(replaceApostrophe(userObjectFromSharedPrefs.getFullName()),
                 userObjectFromSharedPrefs.getEmail(),
                 userObjectFromSharedPrefs.getPassword(),
                 userObjectFromSharedPrefs.getCategory(),
                 String.valueOf(userObjectFromSharedPrefs.getAssociateAdmin()),
-                userObjectFromSharedPrefs.getWilaya(),
-                userObjectFromSharedPrefs.getEstablishment());
+                replaceApostrophe(userObjectFromSharedPrefs.getWilaya()),
+                replaceApostrophe(userObjectFromSharedPrefs.getEstablishment()));
     }
 
     public void checkUserSessionData(Intent intent) {

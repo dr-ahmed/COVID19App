@@ -21,6 +21,7 @@ import java.net.URLEncoder;
 import static com.infectdistrack.model.Constants.CHAR_SET_NAME;
 import static com.infectdistrack.model.Constants.CHECKING_USER_SESSION_DATA_VALIDITY_SCRIPT_NAME;
 import static com.infectdistrack.model.Constants.CONNECTION_TIMEOUT;
+import static com.infectdistrack.model.Constants.DOES_USER_EXIST_TAG;
 import static com.infectdistrack.model.Constants.ENCODING;
 import static com.infectdistrack.model.Constants.JSON_HEADER_TAG;
 import static com.infectdistrack.model.Constants.LOGIN_SCRIPT_NAME;
@@ -35,6 +36,7 @@ import static com.infectdistrack.model.Constants.USER_FULL_NAME_TAG;
 import static com.infectdistrack.model.Constants.USER_ID_TAG;
 import static com.infectdistrack.model.Constants.USER_PASSWORD_TAG;
 import static com.infectdistrack.model.Constants.USER_WILAYA_TAG;
+import static com.infectdistrack.model.Constants.YES;
 import static com.infectdistrack.model.Utilities.removeApostrophe;
 
 public class CheckUserSessionDataValidityAsyncTask extends AsyncTask<String, Integer, String> {
@@ -94,7 +96,7 @@ public class CheckUserSessionDataValidityAsyncTask extends AsyncTask<String, Int
                 sessionDataIsStillValid = false;
             else {
                 JSONObject response = new JSONObject(result.toString());
-                if (!response.isNull(JSON_HEADER_TAG))
+                if (response.has(DOES_USER_EXIST_TAG) && response.getString(DOES_USER_EXIST_TAG).equals(YES))
                     sessionDataIsStillValid = true;
                 else {
                     Log.e(TAG, "String result from doInBackground method : " + result.toString());

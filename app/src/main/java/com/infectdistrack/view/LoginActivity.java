@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         initViews();
         loginController = new LoginController(this);
-        //loginController.checkUserSessionData(getIntent());
+        loginController.checkUserSessionData(getIntent());
     }
 
     private void initViews() {

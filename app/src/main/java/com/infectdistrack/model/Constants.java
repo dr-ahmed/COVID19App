@@ -14,6 +14,7 @@ public class Constants {
             ENCODING = "UTF-8",
             CHAR_SET_NAME = "iso-8859-1",
             JSON_HEADER_TAG = "User",
+            DOES_USER_EXIST_TAG = "does_user_exist",
             SUCCEESSFUL = "succeessful",
             ALLOWED_CHARACTERS = "789tuvwxyzIJKLMNOPQRabcde01234fghijkABCDEqrs56STUVFGHlmnopWXYZ",
             EMAIL = "amdrs2020@gmail.com",
