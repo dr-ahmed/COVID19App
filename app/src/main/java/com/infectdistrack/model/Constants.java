@@ -1,13 +1,21 @@
 package com.infectdistrack.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 
 public class Constants {
-    private static final String TAG = "Util";
+    private static final String TAG = "Constants";
 
-    static String YES = "YES",
-            POST_METHOD = "POST",
+    public static String YES = "YES";
+
+    static String POST_METHOD = "POST",
             SCRIPT_PATH = "http://www.amdrs.org/infectdisdb/", // http://192.168.1.100/
             LOGIN_SCRIPT_NAME = "login.php",
             ADD_NEW_USER_SCRIPT_NAME = "add_new_user.php",
@@ -23,106 +31,30 @@ public class Constants {
             EMAIL = "amdrs2020@gmail.com",
             PASSWORD = "&_&COVID19";
 
-    static HashMap<String, ArrayList<String>> wilayasAndMoughataas = new HashMap<>();
+    public static List<String> getByIndex(LinkedHashMap<String, ArrayList<String>> hashMap, int index) {
+        //new ArrayList<String>(hashMap.keySet()).indexOf("jeremy")
+        return (List<String>) hashMap.values().toArray()[index];
+    }
+
+    public static LinkedHashMap<String, ArrayList<String>> wilayasAndMoughataas = new LinkedHashMap<>();
 
     public static void setWilayasAndMoughataas() {
-        ArrayList<String> moughataas = new ArrayList<>();
-        moughataas.add("Aoujeft");
-        moughataas.add("Atar");
-        moughataas.add("Chinguetti");
-        moughataas.add("Ouadane");
-        wilayasAndMoughataas.put("Adrar", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Barkewol (Aftout)");
-        moughataas.add("Boumdeid");
-        moughataas.add("Guerou");
-        moughataas.add("Kankossa");
-        moughataas.add("Kiffa");
-        wilayasAndMoughataas.put("Assaba", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Aleg");
-        moughataas.add("Bababé");
-        moughataas.add("Boghé");
-        moughataas.add("M'Bagne");
-        moughataas.add("Magta-Lahjar");
-        wilayasAndMoughataas.put("Brakna", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Nouadhibou");
-        wilayasAndMoughataas.put("Dakhlet Nouadhibou", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Kaédi");
-        moughataas.add("M'Bout");
-        moughataas.add("Maghama");
-        moughataas.add("Monguel");
-        wilayasAndMoughataas.put("Gorgol", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Ould Yengé");
-        moughataas.add("Sélibabi");
-        wilayasAndMoughataas.put("Guidimakha", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Amourj");
-        moughataas.add("Bassikounou");
-        moughataas.add("Djiguenni");
-        moughataas.add("Néma");
-        moughataas.add("Oualata");
-        moughataas.add("Timbedra");
-        wilayasAndMoughataas.put("Hodh Ech Chargui", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Aïoun El Atrouss");
-        moughataas.add("Kobenni");
-        moughataas.add("Tamchekett");
-        moughataas.add("Tintane");
-        wilayasAndMoughataas.put("Hodh El Gharbi", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Akjoujt");
-        wilayasAndMoughataas.put("Inchiri", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Dar Naim");
-        moughataas.add("Teyareth");
-        moughataas.add("Toujounine");
-        wilayasAndMoughataas.put("Nouakchott-Nord", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Ksar");
-        moughataas.add("Sebkha");
-        moughataas.add("Tevragh Zeïna");
-        wilayasAndMoughataas.put("Nouakchott-Ouest", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Araffat");
-        moughataas.add("El Mina");
-        moughataas.add("Riyadh");
-        wilayasAndMoughataas.put("Nouakchott-Sud", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Moudjeria");
-        moughataas.add("Tichitt");
-        moughataas.add("Tidjikdja");
-        wilayasAndMoughataas.put("Tagant", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Bir Moghreïn");
-        moughataas.add("F'Derick");
-        moughataas.add("Zouerate");
-        wilayasAndMoughataas.put("Tiris Zemmour", moughataas);
-
-        moughataas.clear();
-        moughataas.add("Boutilimit");
-        moughataas.add("Keurmacen");
-        moughataas.add("Mederdra");
-        moughataas.add("Ouad Naga");
-        moughataas.add("R'Kiz");
-        moughataas.add("Rosso");
-        wilayasAndMoughataas.put("Trarza", moughataas);
+        wilayasAndMoughataas.put("", new ArrayList<>(Collections.singletonList("")));
+        wilayasAndMoughataas.put("Adrar", new ArrayList<>(Arrays.asList("", "Aoujeft", "Atar", "Chinguetti", "Ouadane")));
+        wilayasAndMoughataas.put("Assaba", new ArrayList<>(Arrays.asList("", "Barkewol (Aftout)", "Boumdeid", "Guerou", "Kankossa", "Kiffa")));
+        wilayasAndMoughataas.put("Brakna", new ArrayList<>(Arrays.asList("", "Aleg", "Bababé", "Boghé", "M'Bagne", "Magta-Lahjar")));
+        wilayasAndMoughataas.put("Dakhlet Nouadhibou", new ArrayList<>(Arrays.asList("", "Nouadhibou")));
+        wilayasAndMoughataas.put("Gorgol", new ArrayList<>(Arrays.asList("", "Kaédi", "M'Bout", "Maghama", "Monguel")));
+        wilayasAndMoughataas.put("Guidimakha", new ArrayList<>(Arrays.asList("", "Ould Yengé", "Sélibabi")));
+        wilayasAndMoughataas.put("Hodh Ech Chargui", new ArrayList<>(Arrays.asList("", "Amourj", "Bassikounou", "Djiguenni", "Néma", "Oualata", "Timbedra")));
+        wilayasAndMoughataas.put("Hodh El Gharbi", new ArrayList<>(Arrays.asList("", "Aïoun El Atrouss", "Kobenni", "Tamchekett", "Tintane")));
+        wilayasAndMoughataas.put("Inchiri", new ArrayList<>(Arrays.asList("", "Akjoujt")));
+        wilayasAndMoughataas.put("Nouakchott-Nord", new ArrayList<>(Arrays.asList("", "Dar Naim", "Teyareth", "Toujounine")));
+        wilayasAndMoughataas.put("Nouakchott-Ouest", new ArrayList<>(Arrays.asList("", "Ksar", "Sebkha", "Tevragh Zeïna")));
+        wilayasAndMoughataas.put("Nouakchott-Sud", new ArrayList<>(Arrays.asList("", "Araffat", "El Mina", "Riyadh")));
+        wilayasAndMoughataas.put("Tagant", new ArrayList<>(Arrays.asList("", "Moudjeria", "Tichitt", "Tidjikdja")));
+        wilayasAndMoughataas.put("Tiris Zemmour", new ArrayList<>(Arrays.asList("", "Bir Moghreïn", "F'Derick", "Zouerate")));
+        wilayasAndMoughataas.put("Trarza", new ArrayList<>(Arrays.asList("", "Boutilimit", "Keurmacen", "Mederdra", "Ouad Naga", "R'Kiz", "Rosso")));
     }
 
     static String USER_ID_TAG = "id",

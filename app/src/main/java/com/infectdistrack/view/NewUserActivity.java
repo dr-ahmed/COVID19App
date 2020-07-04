@@ -3,32 +3,46 @@ package com.infectdistrack.view;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.infectdistrack.R;
+import com.infectdistrack.model.Constants;
 import com.infectdistrack.model.User;
 import com.infectdistrack.presenter.NewUserController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.infectdistrack.model.Constants.ADMIN_LABEL;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
 import static com.infectdistrack.model.Constants.USER_LABEL;
-import static com.infectdistrack.model.Constants.WILAYAS;
+import static com.infectdistrack.model.Constants.setWilayasAndMoughataas;
+import static com.infectdistrack.model.Constants.wilayasAndMoughataas;
 
-public class NewUserActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class NewUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private User parentUser;
     private static final String TAG = "NewUserActivity";
     private TextView newUserLabelTxt;
     private EditText newUserFullNameEdt, newUserEmailEdt, newUserPasswordEdt, newUserPasswordConfirmationEdt;
-    private Spinner newUserWilayaSpinner;
-    private ArrayAdapter<String> adapter;
+    private LinearLayout moughataaLayout;
+    private Spinner newUserWilayaSpinner, newUserMoughataaSpinner;
+    private ArrayAdapter<String> wilayaAdapter, moughataaAdapter;
     private RadioGroup newUserEstablishmentRadioGroup;
     private String establishmentType = "";
     private Button addNewUserBtn;
@@ -57,6 +71,10 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         return newUserWilayaSpinner.getSelectedItem().toString();
     }
 
+    public String getNewUserMoughataa() {
+        return newUserMoughataaSpinner.getSelectedItem().toString();
+    }
+
     public String getEstablishmentType() {
         return establishmentType;
     }
@@ -67,10 +85,11 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_new_user);
 
         getUserDataFromHomeActivity();
-        initViews();
+        setWilayasAndMoughataas();
+        initViews(wilayasAndMoughataas.keySet());
     }
 
-    private void initViews() {
+    private void initViews(Set<String> wilayaSet) {
         newUserLabelTxt = findViewById(R.id.new_user_label_txt);
         newUserLabelTxt.setText("Informations du nouvel ".concat(parentUser.getCategory().equals(SUPER_ADMIN) ? ADMIN_LABEL : USER_LABEL));
 
@@ -80,8 +99,12 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         newUserPasswordConfirmationEdt = findViewById(R.id.new_user_password_confirmation_edt);
 
         newUserWilayaSpinner = findViewById(R.id.new_user_wilaya_spinner);
-        adapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, WILAYAS);
-        newUserWilayaSpinner.setAdapter(adapter);
+        wilayaAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, wilayaSet.toArray(new String[wilayaSet.size()]));
+        newUserWilayaSpinner.setAdapter(wilayaAdapter);
+        newUserWilayaSpinner.setOnItemSelectedListener(this);
+
+        moughataaLayout = findViewById(R.id.moughataa_layout);
+        newUserMoughataaSpinner = findViewById(R.id.new_user_moughataa_spinner);
 
         newUserEstablishmentRadioGroup = findViewById(R.id.new_user_establishment_radio_group);
         newUserEstablishmentRadioGroup.setOnCheckedChangeListener(this);
@@ -136,5 +159,17 @@ public class NewUserActivity extends AppCompatActivity implements View.OnClickLi
         establishmentType = "";
 
         newUserFullNameEdt.requestFocus();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        moughataaLayout.setVisibility(newUserWilayaSpinner.getSelectedItem().toString().isEmpty() ? View.GONE : View.VISIBLE);
+        ArrayList<String> moughataas = wilayasAndMoughataas.get(newUserWilayaSpinner.getSelectedItem());
+        moughataaAdapter = new ArrayAdapter<String>(NewUserActivity.this, R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));
+        newUserMoughataaSpinner.setAdapter(moughataaAdapter);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
     }
 }
