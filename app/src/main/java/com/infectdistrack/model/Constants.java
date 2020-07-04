@@ -64,6 +64,7 @@ public class Constants {
             USER_CATEGORY_TAG = "category",
             USER_ASSOCIATE_ADMIN_TAG = "associate_admin",
             USER_WILAYA_TAG = "wilaya",
+            USER_MOUGHATAA_TAG = "moughataa",
             USER_ESTABLISHMENT_TAG = "establishment",
             USER_CREATION_DATE_TAG = "creation_date";
 

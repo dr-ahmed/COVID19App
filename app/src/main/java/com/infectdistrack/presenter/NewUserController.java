@@ -135,9 +135,10 @@ public class NewUserController {
                     category = isSuperAdmin ? ADMIN : USER,
                     associateAdmin = String.valueOf(newUserActivity.getParentUser().getId()),
                     wilaya = newUserActivity.getNewUserWilaya(),
+                    moughataa = newUserActivity.getNewUserMoughataa(),
                     establishment = replaceApostrophe(newUserActivity.getEstablishmentType());
             showProgressDialog(newUserActivity, "Création du compte en cours ...");
-            newUserAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, establishment, getTodayDate());
+            newUserAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, moughataa, establishment, getTodayDate());
         } catch (NoSuchAlgorithmException e) {
             showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 005)");
         }
