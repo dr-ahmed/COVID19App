@@ -1,13 +1,18 @@
 package com.infectdistrack.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.infectdistrack.R;
 import com.infectdistrack.model.User;
@@ -82,15 +87,41 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if (group.getId() == R.id.form_type_radio_group) {
-            if (checkedId == R.id.covid19_item)
-                formTypeValue = "COVID19";
-            else if (checkedId == R.id.deces_item)
-                formTypeValue = "DECES";
+            switch (checkedId) {
+                case R.id.covid19_item:
+                    formTypeValue = "COVID19";
+                    break;
+                case R.id.deces_item:
+                    formTypeValue = "DECES";
+                    break;
+                case R.id.vaccination_item:
+                    formTypeValue = "VACCINATION";
+                    break;
+                case R.id.hospitalisation_item:
+                    formTypeValue = "HOSPITALISATION";
+                    break;
+                default: {
+
+                }
+            }
         } else if (group.getId() == R.id.action_type_radio_group) {
-            if (checkedId == R.id.remplir_item)
-                actionTypeValue = "REMPLIR";
-            else if (checkedId == R.id.visualiser_item)
-                actionTypeValue = "VISUALISER";
+            switch (checkedId) {
+                case R.id.remplir_item:
+                    actionTypeValue = "REMPLIR";
+                    break;
+                case R.id.visualiser_item:
+                    actionTypeValue = "VISUALISER";
+                    break;
+                case R.id.search_item:
+                    actionTypeValue = "RECHERCHER";
+                    break;
+                case R.id.edit_item:
+                    actionTypeValue = "MODIFIER";
+                    break;
+                default: {
+
+                }
+            }
         }
     }
 
@@ -106,13 +137,35 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (formTypeValue.equals("COVID19") && actionTypeValue.equals("REMPLIR")) {
-            Intent intent = new Intent(this, Covid19FormActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("parentUser", currentUser);
-            intent.putExtra("parentUserBundle", bundle);
-            startActivity(intent);
+            chooseCovdid19FormType();
+
+            /*
+
+
+             */
         } else
             showMessage(this, "À suivre", "Cette fonctionnalité serait bientôt disponible");
+    }
+
+    private void chooseCovdid19FormType() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        DialogFragmentToChooseCovid19FormType dialog = new DialogFragmentToChooseCovid19FormType(this);
+        ft.add(dialog, "dialogFragmentToChooseCovid19FormType");
+        ft.commit();
+    }
+
+    public void launchCovid19FormActivity() {
+        Intent intent = new Intent(this, Covid19FormActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("parentUser", currentUser);
+        intent.putExtra("parentUserBundle", bundle);
+        startActivity(intent);
+    }
+
+    public void launchCommunityWatchFragment() {
+        Intent intent = new Intent(this, CommunityWatchActivity.class);
+        Bundle bundle = new Bundle();
+        startActivity(intent);
     }
 
     @Override

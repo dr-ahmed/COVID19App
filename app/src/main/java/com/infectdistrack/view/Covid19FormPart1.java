@@ -22,7 +22,6 @@ import java.util.Arrays;
 import static com.infectdistrack.model.Constants.AGE_LIST;
 import static com.infectdistrack.model.Constants.DEFAULT_AGE;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
-import static com.infectdistrack.model.Constants.WILAYAS;
 import static com.infectdistrack.model.Constants.YES;
 import static com.infectdistrack.model.Utilities.isPhoneNumberValid;
 
@@ -67,7 +66,7 @@ public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
         patientAgeSpinner.setAdapter(ageSpinnerAdapter);
 
         patientWilayaSpinner = rootView.findViewById(R.id.patient_wilaya_spinner);
-        wilayaSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, WILAYAS);
+        wilayaSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, AGE_LIST);
         patientWilayaSpinner.setAdapter(wilayaSpinnerAdapter);
     }
 

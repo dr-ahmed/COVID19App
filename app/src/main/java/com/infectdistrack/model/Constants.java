@@ -31,15 +31,10 @@ public class Constants {
             EMAIL = "amdrs2020@gmail.com",
             PASSWORD = "&_&COVID19";
 
-    public static List<String> getByIndex(LinkedHashMap<String, ArrayList<String>> hashMap, int index) {
-        //new ArrayList<String>(hashMap.keySet()).indexOf("jeremy")
-        return (List<String>) hashMap.values().toArray()[index];
-    }
-
     public static LinkedHashMap<String, ArrayList<String>> wilayasAndMoughataas = new LinkedHashMap<>();
 
     public static void setWilayasAndMoughataas() {
-        wilayasAndMoughataas.put("", new ArrayList<>(Collections.singletonList("")));
+        wilayasAndMoughataas.put("", new ArrayList<>(Collections.singletonList(DEFAULT_WILAYA)));
         wilayasAndMoughataas.put("Adrar", new ArrayList<>(Arrays.asList("", "Aoujeft", "Atar", "Chinguetti", "Ouadane")));
         wilayasAndMoughataas.put("Assaba", new ArrayList<>(Arrays.asList("", "Barkewol (Aftout)", "Boumdeid", "Guerou", "Kankossa", "Kiffa")));
         wilayasAndMoughataas.put("Brakna", new ArrayList<>(Arrays.asList("", "Aleg", "Bababé", "Boghé", "M'Bagne", "Magta-Lahjar")));
@@ -77,10 +72,7 @@ public class Constants {
             ADMIN_LABEL = "administrateur ",
             USER_LABEL = "utilisateur ";
 
-    public static final String[] WILAYAS = new String[]{DEFAULT_WILAYA, "Nouakchott-Sud", "Nouakchott-Ouest",
-            "Nouakchott-Nord", "Hodh Ech-Chargui", "Hodh El Gharbi", "Assaba", "Brakna", "Gorgol", "Guidimakha",
-            "Trarza", "Tagant", "Inchiri", "Adrar", "Tiris Zemour", "Nouadhibou"},
-            AGE_LIST = new String[]{DEFAULT_AGE, "0-5", "6-15", "16-30", "31-40", "41-50", "51-60", "61-80", "81-90", "100 ou plus"};
+    public static final String[] AGE_LIST = new String[]{DEFAULT_AGE, "0-5", "6-15", "16-30", "31-40", "41-50", "51-60", "61-80", "81-90", "100 ou plus"};
 
     static final int READ_TIMEOUT = 15000, CONNECTION_TIMEOUT = 15000;
 

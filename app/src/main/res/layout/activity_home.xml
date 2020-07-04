@@ -97,6 +97,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Décès" />
+
+                            <RadioButton
+                                android:id="@+id/vaccination_item"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Vaccination" />
+
+                            <RadioButton
+                                android:id="@+id/hospitalisation_item"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Hospitalisation" />
                         </RadioGroup>
                     </LinearLayout>
 
@@ -129,6 +141,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Visualiser" />
+
+                            <RadioButton
+                                android:id="@+id/search_item"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rechercher" />
+
+                            <RadioButton
+                                android:id="@+id/edit_item"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Modifier" />
                         </RadioGroup>
                     </LinearLayout>
 

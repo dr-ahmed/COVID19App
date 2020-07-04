@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.infectdistrack.model.Constants.ADMIN_LABEL;
+import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
 import static com.infectdistrack.model.Constants.USER_LABEL;
 import static com.infectdistrack.model.Constants.setWilayasAndMoughataas;
@@ -163,7 +164,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        moughataaLayout.setVisibility(newUserWilayaSpinner.getSelectedItem().toString().isEmpty() ? View.GONE : View.VISIBLE);
+        moughataaLayout.setVisibility(newUserWilayaSpinner.getSelectedItem().toString().equals(DEFAULT_WILAYA) ? View.GONE : View.VISIBLE);
         ArrayList<String> moughataas = wilayasAndMoughataas.get(newUserWilayaSpinner.getSelectedItem());
         moughataaAdapter = new ArrayAdapter<String>(NewUserActivity.this, R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));
         newUserMoughataaSpinner.setAdapter(moughataaAdapter);
