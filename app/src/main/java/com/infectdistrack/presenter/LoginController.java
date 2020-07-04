@@ -47,6 +47,7 @@ public class LoginController {
 
     public void checkUserSessionDataValidity() {
         CheckUserSessionDataValidityAsyncTask checkUserSessionDataValidityAsyncTask = new CheckUserSessionDataValidityAsyncTask(this);
+        showProgressDialog(loginActivity, "Vérification des données de session ...");
         // L'appel de replaceApostrophe permet de gérer le ' (exemple : centre d'appels)
         checkUserSessionDataValidityAsyncTask.execute(replaceApostrophe(userObjectFromSharedPrefs.getFullName()),
                 userObjectFromSharedPrefs.getEmail(),
@@ -70,6 +71,7 @@ public class LoginController {
     }
 
     public void whenUserSessionDataIsSavedInSharedPrefs(String exceptionInfo, boolean sessionDataIsStillValid) {
+        hideProgressDialog();
         if (exceptionInfo.isEmpty()) {
             if (!sessionDataIsStillValid) { // vérifier si les données de session ne sont plus identiques avec les infos in database
                 showMessageWhenSessionDataIsNoLongerValid();
