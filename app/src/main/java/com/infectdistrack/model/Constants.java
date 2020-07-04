@@ -1,9 +1,12 @@
 package com.infectdistrack.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Constants {
     private static final String TAG = "Util";
 
-    public static String YES = "YES",
+    static String YES = "YES",
             POST_METHOD = "POST",
             SCRIPT_PATH = "http://www.amdrs.org/infectdisdb/", // http://192.168.1.100/
             LOGIN_SCRIPT_NAME = "login.php",
@@ -20,6 +23,107 @@ public class Constants {
             EMAIL = "amdrs2020@gmail.com",
             PASSWORD = "&_&COVID19";
 
+    static HashMap<String, ArrayList<String>> wilayasAndMoughataas = new HashMap<>();
+
+    public static void setWilayasAndMoughataas() {
+        ArrayList<String> moughataas = new ArrayList<>();
+        moughataas.add("Aoujeft");
+        moughataas.add("Atar");
+        moughataas.add("Chinguetti");
+        moughataas.add("Ouadane");
+        wilayasAndMoughataas.put("Adrar", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Barkewol (Aftout)");
+        moughataas.add("Boumdeid");
+        moughataas.add("Guerou");
+        moughataas.add("Kankossa");
+        moughataas.add("Kiffa");
+        wilayasAndMoughataas.put("Assaba", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Aleg");
+        moughataas.add("Bababé");
+        moughataas.add("Boghé");
+        moughataas.add("M'Bagne");
+        moughataas.add("Magta-Lahjar");
+        wilayasAndMoughataas.put("Brakna", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Nouadhibou");
+        wilayasAndMoughataas.put("Dakhlet Nouadhibou", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Kaédi");
+        moughataas.add("M'Bout");
+        moughataas.add("Maghama");
+        moughataas.add("Monguel");
+        wilayasAndMoughataas.put("Gorgol", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Ould Yengé");
+        moughataas.add("Sélibabi");
+        wilayasAndMoughataas.put("Guidimakha", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Amourj");
+        moughataas.add("Bassikounou");
+        moughataas.add("Djiguenni");
+        moughataas.add("Néma");
+        moughataas.add("Oualata");
+        moughataas.add("Timbedra");
+        wilayasAndMoughataas.put("Hodh Ech Chargui", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Aïoun El Atrouss");
+        moughataas.add("Kobenni");
+        moughataas.add("Tamchekett");
+        moughataas.add("Tintane");
+        wilayasAndMoughataas.put("Hodh El Gharbi", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Akjoujt");
+        wilayasAndMoughataas.put("Inchiri", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Dar Naim");
+        moughataas.add("Teyareth");
+        moughataas.add("Toujounine");
+        wilayasAndMoughataas.put("Nouakchott-Nord", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Ksar");
+        moughataas.add("Sebkha");
+        moughataas.add("Tevragh Zeïna");
+        wilayasAndMoughataas.put("Nouakchott-Ouest", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Araffat");
+        moughataas.add("El Mina");
+        moughataas.add("Riyadh");
+        wilayasAndMoughataas.put("Nouakchott-Sud", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Moudjeria");
+        moughataas.add("Tichitt");
+        moughataas.add("Tidjikdja");
+        wilayasAndMoughataas.put("Tagant", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Bir Moghreïn");
+        moughataas.add("F'Derick");
+        moughataas.add("Zouerate");
+        wilayasAndMoughataas.put("Tiris Zemmour", moughataas);
+
+        moughataas.clear();
+        moughataas.add("Boutilimit");
+        moughataas.add("Keurmacen");
+        moughataas.add("Mederdra");
+        moughataas.add("Ouad Naga");
+        moughataas.add("R'Kiz");
+        moughataas.add("Rosso");
+        wilayasAndMoughataas.put("Trarza", moughataas);
+    }
 
     static String USER_ID_TAG = "id",
             USER_FULL_NAME_TAG = "full_name",
