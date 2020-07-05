@@ -2,7 +2,6 @@ package com.infectdistrack.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -22,6 +21,8 @@ import static com.infectdistrack.model.Constants.DEFAULT_TYPE;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
 import static com.infectdistrack.model.Constants.EMPTY_STRING;
 import static com.infectdistrack.model.Constants.OTHER_ESTABLISHMENT;
+import static com.infectdistrack.model.Constants.PRIVATE_ESTABLISHMENT;
+import static com.infectdistrack.model.Constants.PUBLIC_ESTABLISHMENT;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
 import static com.infectdistrack.model.Constants.USER;
 import static com.infectdistrack.model.Constants.USER_LABEL;
@@ -89,10 +90,18 @@ public class NewUserController {
             showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner la catégorie de établissement!");
             return;
         }
-        if (newUserActivity.getEstablishmentType().isEmpty() && !newUserActivity.getEstablishmentCategory().equals(OTHER_ESTABLISHMENT)) {
-            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner le type de l'établissement!");
+        /*
+          Si le user sélectionne la catégorie "Public" ou "Privé" et il ne sélectionne pas le type de l'établissement
+        */
+        if (newUserActivity.getEstablishmentCategory().equals(PUBLIC_ESTABLISHMENT) && newUserActivity.getPublicEstablishmentType().isEmpty()) {
+            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner le type de l'établissement public!");
             return;
         }
+        if (newUserActivity.getEstablishmentCategory().equals(PRIVATE_ESTABLISHMENT) && newUserActivity.getPrivateEstablishmentType().isEmpty()) {
+            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner le type de l'établissement privé!");
+            return;
+        }
+        // Si le user sélectionne la catégorie "Autre" et il ne précise rien dans l'edittex
         if (newUserActivity.getEstablishmentCategory().equals(OTHER_ESTABLISHMENT) && newUserActivity.getOtherEstablishmentValue().isEmpty()) {
             showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez saisir le type de l'établissement!");
             return;
@@ -120,7 +129,7 @@ public class NewUserController {
                 + "\nEmail : " + newUserActivity.getNewUserEmailEdt().getText().toString()
                 + "\nMot de passe : " + newUserActivity.getNewUserPasswordEdt().getText().toString()
                 + "\nWilaya : " + newUserActivity.getNewUserWilaya()
-                + "\nEtablissement : " + newUserActivity.getEstablishmentType();
+                + "\nEtablissement : " + newUserActivity.getPublicEstablishmentType();
     }
 
     private void checkingDuplicateUser() {
@@ -156,7 +165,7 @@ public class NewUserController {
                     associateAdmin = String.valueOf(newUserActivity.getParentUser().getId()),
                     wilaya = newUserActivity.getNewUserWilaya(),
                     moughataa = newUserActivity.getNewUserMoughataa(),
-                    establishment = replaceApostrophe(newUserActivity.getEstablishmentType());
+                    establishment = replaceApostrophe(newUserActivity.getPublicEstablishmentType());
             showProgressDialog(newUserActivity, "Création du compte en cours ...");
             newUserAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, moughataa, establishment, getTodayDate());
         } catch (NoSuchAlgorithmException e) {

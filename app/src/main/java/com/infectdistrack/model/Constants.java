@@ -43,6 +43,8 @@ public class Constants {
             DEFAULT_WILAYA = "Choisir la wilaya",
             DEFAULT_AGE = "Choisir l'âge",
             DEFAULT_TYPE = "Choisir le type",
+            PUBLIC_ESTABLISHMENT = "Public",
+            PRIVATE_ESTABLISHMENT = "Privé",
             OTHER_ESTABLISHMENT = "Autre";
 
     public static LinkedHashMap<String, ArrayList<String>> wilayasAndMoughataas = new LinkedHashMap<>();
