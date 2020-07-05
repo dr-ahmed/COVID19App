@@ -37,7 +37,7 @@ import static com.infectdistrack.model.Constants.wilayasAndMoughataas;
 
 public class NewUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    private User parentUser;
+    private User parentUser, newUser;
     private static final String TAG = "NewUserActivity";
     private TextView newUserLabelTxt;
     private EditText newUserFullNameEdt, newUserEmailEdt, newUserPasswordEdt, newUserPasswordConfirmationEdt;
@@ -45,10 +45,11 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
     private Spinner newUserWilayaSpinner, newUserMoughataaSpinner, adminTypeSpinner, userTypeSpinner;
     private ArrayAdapter<String> wilayaAdapter, moughataaAdapter, adminAdapter, userAdapter;
     private EditText userTypeEdt;
-    private RadioGroup newUserEstablishmentRadioGroup, publicEstablishmentDetails, privateEstablishmentDetails;
-    private EditText otherEstablishmentEdt;
+    private RadioGroup newUserEstablishmentRadioGroup, publicEstablishmentRadioGroup, privateEstablishmentRadioGroup;
+    private EditText otherEstablishmentCategoryEdt;
     private TextView establishmentTxt;
-    private String establishmentCategory = "", publicEstablishmentType = "", privateEstablishmentType = "";
+    private String establishmentType = "";
+    private String publicEstablishmentCategory = "", privateEstablishmentCategory = "";
     private Button addNewUserBtn;
 
     @Override
@@ -102,16 +103,16 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         establishmentTxt = findViewById(R.id.establishment_type_textview);
         establishmentTxt.setVisibility(GONE);
 
-        publicEstablishmentDetails = findViewById(R.id.public_establishment_details);
-        publicEstablishmentDetails.setOnCheckedChangeListener(this);
-        publicEstablishmentDetails.setVisibility(GONE);
+        publicEstablishmentRadioGroup = findViewById(R.id.public_establishment_details);
+        publicEstablishmentRadioGroup.setOnCheckedChangeListener(this);
+        publicEstablishmentRadioGroup.setVisibility(GONE);
 
-        privateEstablishmentDetails = findViewById(R.id.private_establishment_details);
-        privateEstablishmentDetails.setOnCheckedChangeListener(this);
-        privateEstablishmentDetails.setVisibility(GONE);
+        privateEstablishmentRadioGroup = findViewById(R.id.private_establishment_details);
+        privateEstablishmentRadioGroup.setOnCheckedChangeListener(this);
+        privateEstablishmentRadioGroup.setVisibility(GONE);
 
-        otherEstablishmentEdt = findViewById(R.id.other_establishment_editext);
-        otherEstablishmentEdt.setVisibility(GONE);
+        otherEstablishmentCategoryEdt = findViewById(R.id.other_establishment_editext);
+        otherEstablishmentCategoryEdt.setVisibility(GONE);
 
         addNewUserBtn = findViewById(R.id.add_new_user_btn);
         addNewUserBtn.setOnClickListener(this);
@@ -119,6 +120,10 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
 
     public User getParentUser() {
         return parentUser;
+    }
+
+    public User getNewUser() {
+        return newUser;
     }
 
     public EditText getNewUserFullNameEdt() {
@@ -153,20 +158,20 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         return userTypeEdt.getText().toString();
     }
 
-    public String getEstablishmentCategory() {
-        return establishmentCategory;
+    public String getEstablishmentType() {
+        return establishmentType;
     }
 
-    public String getPublicEstablishmentType() {
-        return publicEstablishmentType;
+    public String getPublicEstablishmentCategory() {
+        return publicEstablishmentCategory;
     }
 
-    public String getPrivateEstablishmentType() {
-        return privateEstablishmentType;
+    public String getPrivateEstablishmentCategory() {
+        return privateEstablishmentCategory;
     }
 
-    public String getOtherEstablishmentValue() {
-        return otherEstablishmentEdt.getText().toString();
+    public String getOtherEstablishmentCategory() {
+        return otherEstablishmentCategoryEdt.getText().toString();
     }
 
     private void getUserDataFromHomeActivity() {
@@ -177,6 +182,20 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.add_new_user_btn) {
+            String userType = userTypeSpinner.getSelectedItem().toString().equals(USER_TYPE[6])
+                    ? userTypeEdt.getText().toString()
+                    : userTypeSpinner.getSelectedItem().toString();
+
+            String establishmentCategory;
+            if (!publicEstablishmentCategory.isEmpty())
+                establishmentCategory = publicEstablishmentCategory;
+            else if (!privateEstablishmentCategory.isEmpty())
+                establishmentCategory = privateEstablishmentCategory;
+            else
+                establishmentCategory = otherEstablishmentCategoryEdt.getText().toString();
+
+            newUser = new User(newUserFullNameEdt.getText().toString(), newUserEmailEdt.getText().toString(), newUserPasswordEdt.getText().toString(),
+                    getNewUserWilaya(), getNewUserMoughataa(), userType, establishmentType, establishmentCategory);
             NewUserController newUserController = new NewUserController(this);
             newUserController.onClickAddNewUserButtonController();
         }
@@ -191,55 +210,70 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
 
                 switch (checkedId) {
                     case R.id.public_establishment_item:
-                        publicEstablishmentDetails.setVisibility(VISIBLE);
-                        privateEstablishmentDetails.setVisibility(GONE);
-                        otherEstablishmentEdt.setVisibility(GONE);
-                        establishmentCategory = PUBLIC_ESTABLISHMENT;
+                        // Ceci permet de réinitialiser le type de l'établissement et le radioGroup si le user bascule de Privé vers Public
+                        privateEstablishmentRadioGroup.clearCheck();
+                        privateEstablishmentCategory = "";
+
+                        publicEstablishmentRadioGroup.setVisibility(VISIBLE);
+                        privateEstablishmentRadioGroup.setVisibility(GONE);
+                        otherEstablishmentCategoryEdt.setVisibility(GONE);
+                        establishmentType = PUBLIC_ESTABLISHMENT;
+
                         break;
                     case R.id.private_establishment_item:
-                        privateEstablishmentDetails.setVisibility(VISIBLE);
-                        publicEstablishmentDetails.setVisibility(GONE);
-                        otherEstablishmentEdt.setVisibility(GONE);
-                        establishmentCategory = PRIVATE_ESTABLISHMENT;
+                        // Ceci permet de réinitialiser le type de l'établissement et le radioGroup si le user bascule de Public vers Privé
+                        publicEstablishmentRadioGroup.clearCheck();
+                        publicEstablishmentCategory = "";
+
+                        privateEstablishmentRadioGroup.setVisibility(VISIBLE);
+                        publicEstablishmentRadioGroup.setVisibility(GONE);
+                        otherEstablishmentCategoryEdt.setVisibility(GONE);
+                        establishmentType = PRIVATE_ESTABLISHMENT;
                         break;
                     case R.id.other_establishment_item:
-                        otherEstablishmentEdt.setVisibility(VISIBLE);
-                        privateEstablishmentDetails.setVisibility(GONE);
-                        publicEstablishmentDetails.setVisibility(GONE);
-                        establishmentCategory = OTHER_ESTABLISHMENT;
+                        // Ceci permet de réinitialiser le type de l'établissement et le radioGroup si le user bascule de Public ou Privé vers Autre
+                        publicEstablishmentRadioGroup.clearCheck();
+                        publicEstablishmentCategory = "";
+                        privateEstablishmentRadioGroup.clearCheck();
+                        privateEstablishmentCategory = "";
+
+                        otherEstablishmentCategoryEdt.setVisibility(VISIBLE);
+                        privateEstablishmentRadioGroup.setVisibility(GONE);
+                        publicEstablishmentRadioGroup.setVisibility(GONE);
+                        establishmentType = OTHER_ESTABLISHMENT;
                 }
                 break;
             case R.id.public_establishment_details:
                 switch (checkedId) {
                     case R.id.call_center_item:
-                        publicEstablishmentType = "Centre d'appels 1155";
+                        publicEstablishmentCategory = "Centre d'appels 1155";
                         break;
                     case R.id.hospital_item:
-                        publicEstablishmentType = "Hôpital";
+                        publicEstablishmentCategory = "Hôpital";
                         break;
                     case R.id.health_center_item:
-                        publicEstablishmentType = "Centre de santé";
+                        publicEstablishmentCategory = "Centre de santé";
                         break;
                     case R.id.public_labo_item:
-                        publicEstablishmentType = "Laboratoire public";
+                        publicEstablishmentCategory = "Laboratoire";
                         break;
                     case R.id.research_unit_item:
-                        publicEstablishmentType = "Unité de recherche";
+                        publicEstablishmentCategory = "Unité de recherche";
                 }
                 break;
             case R.id.private_establishment_details:
                 switch (checkedId) {
                     case R.id.clinic_item:
-                        privateEstablishmentType = "Clinique";
+                        privateEstablishmentCategory = "Clinique";
                         break;
                     case R.id.cabinet_item:
-                        privateEstablishmentType = "Cabinet";
+                        privateEstablishmentCategory = "Cabinet";
                         break;
                     case R.id.private_labo_item:
-                        privateEstablishmentType = "Laboratoire privé";
+                        privateEstablishmentCategory = "Laboratoire";
                         break;
                     case R.id.study_center_item:
-                        privateEstablishmentType = "Centre d’études";
+                        privateEstablishmentCategory = "Centre d’études";
                 }
         }
     }
@@ -258,8 +292,8 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         laboRadioButton.setChecked(false);
         RadioButton otherRadioButton = findViewById(R.id.other_establishment_item);
         otherRadioButton.setChecked(false);
-        publicEstablishmentType = "";
-        privateEstablishmentType = "";
+        publicEstablishmentCategory = "";
+        privateEstablishmentCategory = "";
 
         newUserFullNameEdt.requestFocus();
     }

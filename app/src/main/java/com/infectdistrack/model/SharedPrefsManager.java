@@ -2,7 +2,6 @@ package com.infectdistrack.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import static com.infectdistrack.model.Constants.*;
 
@@ -28,7 +27,7 @@ public class SharedPrefsManager {
         editor.putString(USER_CATEGORY_TAG, user.getCategory());
         editor.putInt(USER_ASSOCIATE_ADMIN_TAG, user.getAssociateAdmin());
         editor.putString(USER_WILAYA_TAG, user.getWilaya());
-        editor.putString(USER_ESTABLISHMENT_TAG, user.getEstablishment());
+        editor.putString(USER_ESTABLISHMENT_TAG, user.getEstablishmentType());
         editor.apply();
     }
 
@@ -57,7 +56,10 @@ public class SharedPrefsManager {
                     getDataByTag(sharedPreferences, USER_CATEGORY_TAG),
                     sharedPreferences.getInt(USER_ASSOCIATE_ADMIN_TAG, DEFAULT_INT_VALUE),
                     getDataByTag(sharedPreferences, USER_WILAYA_TAG),
-                    getDataByTag(sharedPreferences, USER_ESTABLISHMENT_TAG));
+                    "",
+                    "",
+                    getDataByTag(sharedPreferences, USER_ESTABLISHMENT_TAG),
+                    "");
 
         /*
         Log.e(TAG, "isUserLoggedIn: \n" +

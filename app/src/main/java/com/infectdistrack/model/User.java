@@ -3,19 +3,29 @@ package com.infectdistrack.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 public class User implements Parcelable {
     private Integer id, associate_admin;
-    private String fullName, email, password, category, wilaya, establishment;
+    private String fullName, email, password, category, wilaya, moughataa, userType, establishmentType, establishmentCategory;
 
-    public User(Integer id, String fullName, String email, String password, String category, Integer associate_admin, String wilaya, String establishment) {
+    public User(Integer id, String fullName, String email, String password, String category, Integer associate_admin,
+                String wilaya, String moughataa, String userType, String establishmentType, String establishmentCategory) {
+        this(fullName, email, password, wilaya, moughataa, userType, establishmentType, establishmentCategory);
         this.id = id;
+        this.category = category;
+        this.associate_admin = associate_admin;
+    }
+
+    public User(String fullName, String email, String password, String wilaya, String moughataa, String userType, String establishmentType, String establishmentCategory) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        this.category = category;
-        this.associate_admin = associate_admin;
         this.wilaya = wilaya;
-        this.establishment = establishment;
+        this.moughataa = moughataa;
+        this.userType = userType;
+        this.establishmentType = establishmentType;
+        this.establishmentCategory = establishmentCategory;
     }
 
     public Integer getId() {
@@ -30,7 +40,7 @@ public class User implements Parcelable {
         category = in.readString();
         associate_admin = in.readInt();
         wilaya = in.readString();
-        establishment = in.readString();
+        establishmentType = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -69,12 +79,36 @@ public class User implements Parcelable {
         this.wilaya = wilaya;
     }
 
-    public String getEstablishment() {
-        return establishment;
+    public String getMoughataa() {
+        return moughataa;
     }
 
-    public void setEstablishment(String establishment) {
-        this.establishment = establishment;
+    public void setMoughataa(String moughataa) {
+        this.moughataa = moughataa;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getEstablishmentCategory() {
+        return establishmentCategory;
+    }
+
+    public void setEstablishmentCategory(String establishmentCategory) {
+        this.establishmentCategory = establishmentCategory;
+    }
+
+    public String getEstablishmentType() {
+        return establishmentType;
+    }
+
+    public void setEstablishmentType(String establishmentType) {
+        this.establishmentType = establishmentType;
     }
 
     public String getFullName() {
@@ -115,6 +149,18 @@ public class User implements Parcelable {
         dest.writeString(category);
         dest.writeInt(associate_admin);
         dest.writeString(wilaya);
-        dest.writeString(establishment);
+        dest.writeString(establishmentType);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Nom : " + fullName
+                + "\nEmail : " + email
+                + "\nWilaya : " + wilaya
+                + "\nMoughataa : " + moughataa
+                + "\nType d'utilisateur : " + userType
+                + "\nType de l'établissement : " + establishmentType
+                + "\nCatégorie : " + establishmentCategory + ".";
     }
 }

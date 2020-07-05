@@ -79,7 +79,7 @@ public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
                             wilaya = userData.getJSONObject(0).getString(USER_WILAYA_TAG),
                             establishment = removeApostrophe(userData.getJSONObject(0).getString(USER_ESTABLISHMENT_TAG));
 
-                    user = new User(id, full_name, email, password, category, Integer.parseInt(associate_admin), wilaya, establishment);
+                    user = new User(id, full_name, email, password, category, Integer.parseInt(associate_admin), wilaya, "", "", establishment, "");
                 } else {
                     Log.e(TAG, "String result from doInBackground method : " + result.toString());
                     return result.toString();

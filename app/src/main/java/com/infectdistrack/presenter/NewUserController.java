@@ -86,28 +86,28 @@ public class NewUserController {
             showMessage(newUserActivity, "Type obligatoire", "Veuillez saisir le type de l'utilisateur!");
             return;
         }
-        if (newUserActivity.getEstablishmentCategory().isEmpty()) {
-            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner la catégorie de établissement!");
+        if (newUserActivity.getEstablishmentType().isEmpty()) {
+            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner le type de établissement!");
             return;
         }
         /*
           Si le user sélectionne la catégorie "Public" ou "Privé" et il ne sélectionne pas le type de l'établissement
         */
-        if (newUserActivity.getEstablishmentCategory().equals(PUBLIC_ESTABLISHMENT) && newUserActivity.getPublicEstablishmentType().isEmpty()) {
-            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner le type de l'établissement public!");
+        if (newUserActivity.getEstablishmentType().equals(PUBLIC_ESTABLISHMENT) && newUserActivity.getPublicEstablishmentCategory().isEmpty()) {
+            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner la catégorie de l'établissement public!");
             return;
         }
-        if (newUserActivity.getEstablishmentCategory().equals(PRIVATE_ESTABLISHMENT) && newUserActivity.getPrivateEstablishmentType().isEmpty()) {
-            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner le type de l'établissement privé!");
+        if (newUserActivity.getEstablishmentType().equals(PRIVATE_ESTABLISHMENT) && newUserActivity.getPrivateEstablishmentCategory().isEmpty()) {
+            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner la catégorie de l'établissement privé!");
             return;
         }
         // Si le user sélectionne la catégorie "Autre" et il ne précise rien dans l'edittex
-        if (newUserActivity.getEstablishmentCategory().equals(OTHER_ESTABLISHMENT) && newUserActivity.getOtherEstablishmentValue().isEmpty()) {
-            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez saisir le type de l'établissement!");
+        if (newUserActivity.getEstablishmentType().equals(OTHER_ESTABLISHMENT) && newUserActivity.getOtherEstablishmentCategory().isEmpty()) {
+            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez saisir la catégorie de l'établissement!");
             return;
         }
 
-        checkingDuplicateUser();
+        checkDuplicateUser();
     }
 
     private void askForConfirmation() {
@@ -116,23 +116,15 @@ public class NewUserController {
 
         Bundle args = new Bundle();
         args.putString("title", "Demande de confirmation");
-        args.putString("message", "Êtes-vous sûr de vouloir créer un nouvel " + getCategoryOfUserToCreate() + " dont les informations sont :"
-                + getUserInformation());
+        args.putString("message", "Êtes-vous sûr de vouloir créer un nouvel " + getCategoryOfUserToCreate() + " dont les informations sont :\n"
+                + newUserActivity.getNewUser().toString());
         dialog.setArguments(args);
 
         ft.add(dialog, "dialogFragmentForAskingConfirmationWhenCreatingUser");
         ft.commit();
     }
 
-    private String getUserInformation() {
-        return "\nNom : " + newUserActivity.getNewUserFullNameEdt().getText().toString()
-                + "\nEmail : " + newUserActivity.getNewUserEmailEdt().getText().toString()
-                + "\nMot de passe : " + newUserActivity.getNewUserPasswordEdt().getText().toString()
-                + "\nWilaya : " + newUserActivity.getNewUserWilaya()
-                + "\nEtablissement : " + newUserActivity.getPublicEstablishmentType();
-    }
-
-    private void checkingDuplicateUser() {
+    private void checkDuplicateUser() {
         showProgressDialog(newUserActivity, "Vérification des informations du compte en cours ...");
 
         CheckDuplicateUserAsyncTask checkDuplicateUserAsyncTask = new CheckDuplicateUserAsyncTask(this);
@@ -165,7 +157,7 @@ public class NewUserController {
                     associateAdmin = String.valueOf(newUserActivity.getParentUser().getId()),
                     wilaya = newUserActivity.getNewUserWilaya(),
                     moughataa = newUserActivity.getNewUserMoughataa(),
-                    establishment = replaceApostrophe(newUserActivity.getPublicEstablishmentType());
+                    establishment = replaceApostrophe(newUserActivity.getPublicEstablishmentCategory());
             showProgressDialog(newUserActivity, "Création du compte en cours ...");
             newUserAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, moughataa, establishment, getTodayDate());
         } catch (NoSuchAlgorithmException e) {
@@ -187,11 +179,11 @@ public class NewUserController {
     }
 
     private void askAdminAboutSendingAccountInformation() {
-        MAIL_SUBJECT = "Détails de votre compte sur l'application COVID-19";
+        MAIL_SUBJECT = "Détails de votre nouveau compte sur l'application d'AMDRS";
         MAIL_ADDRESS = "Bonjour " + newUserActivity.getNewUserFullNameEdt().getText().toString() + ",\n"
                 + "L'administrateur " + newUserActivity.getParentUser().getFullName() + " vous a créé un nouveau compte dont les informations sont :"
-                + getUserInformation()
-                + "\n\nRendez-vous sur l'application COVID-19" +
+                + newUserActivity.getNewUser().toString()
+                + "\n\nRendez-vous sur l'application d'AMDRS." +
                 "\nA bientôt.";
 
         FragmentTransaction ft = newUserActivity.getSupportFragmentManager().beginTransaction();

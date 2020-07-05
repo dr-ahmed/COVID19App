@@ -159,7 +159,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Catégorie de l'établissement" />
+                android:text="Type de l'établissement" />
 
             <RadioGroup
                 android:id="@+id/new_user_establishment_radio_group"
@@ -191,7 +191,7 @@
                 android:id="@+id/establishment_type_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Type de l'établissement" />
+                android:text="Catégorie de l'établissement" />
 
             <RadioGroup
                 android:id="@+id/public_establishment_details"
