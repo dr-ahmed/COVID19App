@@ -180,6 +180,10 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (group.getId()) {
             case R.id.new_user_establishment_radio_group:
+                // La réinitialisation de la variable establishmentType permet de ne pas compter la sélection deja faite dans privateEstablishmentDetails
+                // lorsque l'un des radioButtons de publicEstablishmentDetails est sélectionné et vice-versa
+                establishmentType = "";
+
                 if (establishmentTxt.getVisibility() == GONE)
                     establishmentTxt.setVisibility(VISIBLE);
                 switch (checkedId) {
@@ -203,9 +207,6 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
                 }
                 break;
             case R.id.public_establishment_details:
-                // La réinitialisation de la variable establishmentType permet de ne pas compter la sélection deja faite dans privateEstablishmentDetails
-                // lorsque l'un des radioButton de publicEstablishmentDetails est sélectionné et vice-versa
-                establishmentType = "";
                 switch (checkedId) {
                     case R.id.call_center_item:
                         establishmentType = "Centre d'appels 1155";
@@ -224,9 +225,6 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
                 }
                 break;
             case R.id.private_establishment_details:
-                // La réinitialisation de la variable establishmentType permet de ne pas compter la sélection deja faite dans privateEstablishmentDetails
-                // lorsque l'un des radioButton de publicEstablishmentDetails est sélectionné et vice-versa
-                establishmentType = "";
                 switch (checkedId) {
                     case R.id.clinic_item:
                         establishmentType = "Clinique";

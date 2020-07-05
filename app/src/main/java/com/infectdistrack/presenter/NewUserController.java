@@ -89,7 +89,7 @@ public class NewUserController {
             showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner la catégorie de établissement!");
             return;
         }
-        if (!newUserActivity.getEstablishmentCategory().equals(OTHER_ESTABLISHMENT) && newUserActivity.getEstablishmentType().isEmpty()) {
+        if (newUserActivity.getEstablishmentType().isEmpty() && !newUserActivity.getEstablishmentCategory().equals(OTHER_ESTABLISHMENT)) {
             showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner le type de l'établissement!");
             return;
         }
