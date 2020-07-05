@@ -1,19 +1,14 @@
 package com.infectdistrack.presenter;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.infectdistrack.model.CheckDuplicateUserAsyncTask;
 import com.infectdistrack.model.NewUserAsyncTask;
 import com.infectdistrack.model.SendingMailAsyncTask;
-import com.infectdistrack.model.User;
-import com.infectdistrack.model.Utilities;
 import com.infectdistrack.view.DialogFragmentAboutDoYoWantToTrayAgainSendingEmail;
 import com.infectdistrack.view.DialogFragmentForAskingConfirmationWhenCreatingUser;
 import com.infectdistrack.view.DialogFragmentForAskingUserAboutSendingAccountInformation;
@@ -23,10 +18,14 @@ import java.security.NoSuchAlgorithmException;
 
 import static com.infectdistrack.model.Constants.ADMIN;
 import static com.infectdistrack.model.Constants.ADMIN_LABEL;
+import static com.infectdistrack.model.Constants.DEFAULT_TYPE;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
+import static com.infectdistrack.model.Constants.EMPTY_STRING;
+import static com.infectdistrack.model.Constants.OTHER_ESTABLISHMENT;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
 import static com.infectdistrack.model.Constants.USER;
 import static com.infectdistrack.model.Constants.USER_LABEL;
+import static com.infectdistrack.model.Constants.USER_TYPE;
 import static com.infectdistrack.model.Utilities.SHA256;
 import static com.infectdistrack.model.Utilities.getTodayDate;
 import static com.infectdistrack.model.Utilities.isEmailValid;
@@ -56,15 +55,16 @@ public class NewUserController {
 
     public void onClickAddNewUserButtonController() {
         if (isFieldEmpty(newUserActivity.getNewUserFullNameEdt())
-                || isFieldEmpty(newUserActivity.getNewUserEmailEdt())
-                || isFieldEmpty(newUserActivity.getNewUserPasswordEdt())
-                || isFieldEmpty(newUserActivity.getNewUserPasswordConfirmationEdt()))
+                || isFieldEmpty(newUserActivity.getNewUserEmailEdt()))
             return;
         if (!isEmailValid(newUserActivity.getNewUserEmailEdt().getText().toString())) {
             newUserActivity.getNewUserEmailEdt().requestFocus();
             newUserActivity.getNewUserEmailEdt().setError("Syntaxe invalide !");
             return;
         }
+        if (isFieldEmpty(newUserActivity.getNewUserPasswordEdt())
+                || isFieldEmpty(newUserActivity.getNewUserPasswordConfirmationEdt()))
+            return;
         if (!newUserActivity.getNewUserPasswordEdt().getText().toString().equals(newUserActivity.getNewUserPasswordConfirmationEdt().getText().toString())) {
             showMessage(newUserActivity, "Mots de passe incohérents", "Le mot de passe et sa confirmation ne sont pas identiques!");
             return;
@@ -73,8 +73,28 @@ public class NewUserController {
             showMessage(newUserActivity, "Wilaya obligatoire", "Veuillez sélectionner une wilaya!");
             return;
         }
-        if (newUserActivity.getEstablishmentType().isEmpty()) {
-            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner un établissement!");
+        if (newUserActivity.getNewUserMoughataa().equals(EMPTY_STRING)) {
+            showMessage(newUserActivity, "Moughataa obligatoire", "Veuillez sélectionner une moughataa!");
+            return;
+        }
+        if (newUserActivity.getNewUserTypeFromSpinner().equals(DEFAULT_TYPE)) {
+            showMessage(newUserActivity, "Type obligatoire", "Veuillez sélectionner le type de l'utilisateur!");
+            return;
+        }
+        if (newUserActivity.getNewUserTypeFromSpinner().equals(USER_TYPE[6]) && newUserActivity.getNewUserTypeFromEdittext().isEmpty()) {
+            showMessage(newUserActivity, "Type obligatoire", "Veuillez saisir le type de l'utilisateur!");
+            return;
+        }
+        if (newUserActivity.getEstablishmentCategory().isEmpty()) {
+            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner la catégorie de établissement!");
+            return;
+        }
+        if (!newUserActivity.getEstablishmentCategory().equals(OTHER_ESTABLISHMENT) && newUserActivity.getEstablishmentType().isEmpty()) {
+            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez sélectionner le type de l'établissement!");
+            return;
+        }
+        if (newUserActivity.getEstablishmentCategory().equals(OTHER_ESTABLISHMENT) && newUserActivity.getOtherEstablishmentValue().isEmpty()) {
+            showMessage(newUserActivity, "Etablissement obligatoire", "Veuillez saisir le type de l'établissement!");
             return;
         }
 
