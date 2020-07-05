@@ -5,10 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
 
 public class Constants {
     private static final String TAG = "Constants";
@@ -42,9 +39,9 @@ public class Constants {
             USER_ESTABLISHMENT_TAG = "establishment",
             USER_CREATION_DATE_TAG = "creation_date";
 
-    public static final String DEFAULT_WILAYA = "Choisir la wilaya",
+    public static final String EMPTY_STRING = "",
+            DEFAULT_WILAYA = "Choisir la wilaya",
             DEFAULT_AGE = "Choisir l'âge",
-            EMPTY_STRING = "",
             DEFAULT_TYPE = "Choisir le type",
             OTHER_ESTABLISHMENT = "Autre";
 

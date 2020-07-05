@@ -203,6 +203,9 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
                 }
                 break;
             case R.id.public_establishment_details:
+                // La réinitialisation de la variable establishmentType permet de ne pas compter la sélection deja faite dans privateEstablishmentDetails
+                // lorsque l'un des radioButton de publicEstablishmentDetails est sélectionné et vice-versa
+                establishmentType = "";
                 switch (checkedId) {
                     case R.id.call_center_item:
                         establishmentType = "Centre d'appels 1155";
@@ -221,6 +224,9 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
                 }
                 break;
             case R.id.private_establishment_details:
+                // La réinitialisation de la variable establishmentType permet de ne pas compter la sélection deja faite dans privateEstablishmentDetails
+                // lorsque l'un des radioButton de publicEstablishmentDetails est sélectionné et vice-versa
+                establishmentType = "";
                 switch (checkedId) {
                     case R.id.clinic_item:
                         establishmentType = "Clinique";
