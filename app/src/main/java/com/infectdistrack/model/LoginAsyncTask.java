@@ -18,7 +18,7 @@ import static com.infectdistrack.model.Utilities.removeApostrophe;
 public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
 
     private static final String TAG = "LoginAsyncTask";
-    private boolean userIsConfirmed = true;
+    private boolean userIsConfirmed = true, isFirstLogin;
     private LoginController loginControllerListener;
     private User user;
     StringBuilder result;
@@ -71,8 +71,7 @@ public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
                     JSONArray userData = response.getJSONArray(JSON_HEADER_TAG);
                     userIsConfirmed = true;
 
-                    boolean isFirstLogin = userData.getJSONObject(0).getBoolean(USER_FIRST_LOGIN_TAG);
-                    Log.e(TAG, "first login : " + isFirstLogin);
+                    isFirstLogin = userData.getJSONObject(0).getBoolean(USER_FIRST_LOGIN_TAG);
 
                     Integer id = Integer.parseInt(userData.getJSONObject(0).getString(USER_ID_TAG));
                     String full_name = removeApostrophe(userData.getJSONObject(0).getString(USER_FULL_NAME_TAG)),
@@ -101,6 +100,6 @@ public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String exceptionInfo) {
-        loginControllerListener.onLoginResponse(user, exceptionInfo, userIsConfirmed);
+        loginControllerListener.onLoginResponse(user, exceptionInfo, userIsConfirmed, isFirstLogin);
     }
 }

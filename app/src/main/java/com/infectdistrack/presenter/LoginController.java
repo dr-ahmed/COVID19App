@@ -1,17 +1,29 @@
 package com.infectdistrack.presenter;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.infectdistrack.R;
 import com.infectdistrack.model.CheckUserSessionDataValidityAsyncTask;
 import com.infectdistrack.model.LoginAsyncTask;
 import com.infectdistrack.model.SharedPrefsManager;
 import com.infectdistrack.model.User;
 import com.infectdistrack.model.Utilities;
 import com.infectdistrack.view.DialogFragmentForAskingUserWhenSessionDataIsNoLongerValid;
+import com.infectdistrack.view.DialogFragmentToResetPasswordDuringFirstLogin;
 import com.infectdistrack.view.DialogFragmentWithOnlyOneButton;
 import com.infectdistrack.view.LoginActivity;
 
@@ -151,13 +163,17 @@ public class LoginController {
         }
     }
 
-    public void onLoginResponse(User user, String exceptionInfo, boolean userIsConfirmed) {
+    public void onLoginResponse(User user, String exceptionInfo, boolean userIsConfirmed, boolean isFirstLogin) {
         hideProgressDialog();
         if (exceptionInfo.isEmpty()) {
             if (userIsConfirmed) {
-                SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(loginActivity);
-                sharedPrefsManager.saveUserInfo(user);
-                loginActivity.openHomeActivity(user);
+                if (isFirstLogin) {
+                    resetPassword(user);
+                } else {
+                    SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(loginActivity);
+                    sharedPrefsManager.saveUserInfo(user);
+                    loginActivity.openHomeActivity(user);
+                }
             } else
                 showMessage(loginActivity, "Informations incorrectes", "Email ou mot de passe incorrect !");
         } else {
@@ -167,5 +183,12 @@ public class LoginController {
                 showMessage(loginActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 003)");
             //showMessageUsingDialogFragment(newUserActivity, "Exception", "Une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
         }
+    }
+
+    private void resetPassword(final User user) {
+        FragmentTransaction ft = loginActivity.getSupportFragmentManager().beginTransaction();
+        DialogFragmentToResetPasswordDuringFirstLogin dialog = new DialogFragmentToResetPasswordDuringFirstLogin(loginActivity, user);
+        ft.add(dialog, "dialogFragmentToResetPasswordDuringFirstLogin");
+        ft.commit();
     }
 }
