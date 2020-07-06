@@ -21,6 +21,7 @@ public class Constants {
             CHECKING_DUPLICATE_USER_SCRIPT_NAME = "check_duplicate_user.php",
             CHECKING_USER_SESSION_DATA_VALIDITY_SCRIPT_NAME = "check_user_session_data_validity.php",
             ADD_NEW_FORM_SCRIPT_NAME = "add_new_form.php",
+            RESET_PASSWORD_DURING_FIRST_LOGIN_SCRIPT_NAME = "reset_password_during_first_login.php",
             ENCODING = "UTF-8",
             CHAR_SET_NAME = "iso-8859-1",
             JSON_HEADER_TAG = "User",

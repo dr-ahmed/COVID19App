@@ -50,6 +50,10 @@ public class LoginController {
         userObjectFromSharedPrefs = sharedPrefsManager.isUserLoggedIn();
     }
 
+    public LoginActivity getLoginActivity() {
+        return loginActivity;
+    }
+
     public void onClickConnectButtonController() {
         if (isFieldEmpty(loginActivity.getEmailEdt()) || isFieldEmpty(loginActivity.getPasswordEdt()))
             return;
@@ -167,13 +171,10 @@ public class LoginController {
         hideProgressDialog();
         if (exceptionInfo.isEmpty()) {
             if (userIsConfirmed) {
-                if (isFirstLogin) {
+                if (isFirstLogin)
                     resetPassword(user);
-                } else {
-                    SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(loginActivity);
-                    sharedPrefsManager.saveUserInfo(user);
-                    loginActivity.openHomeActivity(user);
-                }
+                else
+                    saveUserDataInSharedPrefsAndGoToHomeActivity(loginActivity, user);
             } else
                 showMessage(loginActivity, "Informations incorrectes", "Email ou mot de passe incorrect !");
         } else {
@@ -187,8 +188,14 @@ public class LoginController {
 
     private void resetPassword(final User user) {
         FragmentTransaction ft = loginActivity.getSupportFragmentManager().beginTransaction();
-        DialogFragmentToResetPasswordDuringFirstLogin dialog = new DialogFragmentToResetPasswordDuringFirstLogin(loginActivity, user);
+        DialogFragmentToResetPasswordDuringFirstLogin dialog = new DialogFragmentToResetPasswordDuringFirstLogin(this, user);
         ft.add(dialog, "dialogFragmentToResetPasswordDuringFirstLogin");
         ft.commit();
+    }
+
+    public void saveUserDataInSharedPrefsAndGoToHomeActivity(LoginActivity loginActivity, User user) {
+        SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(loginActivity);
+        sharedPrefsManager.saveUserInfo(user);
+        loginActivity.openHomeActivity(user);
     }
 }

@@ -17,31 +17,38 @@ import android.widget.Toast;
 import androidx.fragment.app.DialogFragment;
 
 import com.infectdistrack.R;
+import com.infectdistrack.model.ResetPasswordDuringFirstLoginAsyncTask;
 import com.infectdistrack.model.User;
+import com.infectdistrack.model.Utilities;
+import com.infectdistrack.presenter.LoginController;
 
 import java.security.NoSuchAlgorithmException;
 
+import static com.infectdistrack.model.Constants.NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
 import static com.infectdistrack.model.Utilities.SHA256;
+import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
+import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
 
 public class DialogFragmentToResetPasswordDuringFirstLogin extends DialogFragment {
 
 
     private static final String TAG = "DialogFragmentToResetPasswordDuringFirstLogin";
 
-    private LoginActivity loginActivity;
+    private LoginController loginController;
     private User user;
+    private AlertDialog cutomAlertDialog = null;
 
-    public DialogFragmentToResetPasswordDuringFirstLogin(LoginActivity loginActivity, User user) {
-        this.loginActivity = loginActivity;
+    public DialogFragmentToResetPasswordDuringFirstLogin(LoginController loginController, User user) {
+        this.loginController = loginController;
         this.user = user;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder dialogBuiler = new AlertDialog.Builder(getActivity());
-        LinearLayout rootView = loginActivity.findViewById(R.id.root_view);
+        LinearLayout rootView = loginController.getLoginActivity().findViewById(R.id.root_view);
 
-        View viewInflated = LayoutInflater.from(loginActivity).inflate(R.layout.reset_password_view, rootView, false);
+        View viewInflated = LayoutInflater.from(loginController.getLoginActivity()).inflate(R.layout.reset_password_view, rootView, false);
         final EditText newPasswordEdt = viewInflated.findViewById(R.id.new_password);
         newPasswordEdt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         final EditText newPasswordConfirmationEdt = viewInflated.findViewById(R.id.new_password_confirmation);
@@ -59,11 +66,11 @@ public class DialogFragmentToResetPasswordDuringFirstLogin extends DialogFragmen
                 .setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(loginActivity, "Mot de passe non réinitialisé !", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(loginController.getLoginActivity(), "Opération annulée !", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        final AlertDialog cutomAlertDialog = dialogBuiler.create();
+        cutomAlertDialog = dialogBuiler.create();
         cutomAlertDialog.setOnShowListener((new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
@@ -76,15 +83,17 @@ public class DialogFragmentToResetPasswordDuringFirstLogin extends DialogFragmen
                             newPasswordEdt.setError("Veuillez saisir votre nouveau mot de passe !");
                             return;
                         }
+                        String newPasswordHashed;
                         try {
-                            String newPasswordHashed = SHA256(newPasswordEdt.getText().toString());
+                            newPasswordHashed = SHA256(newPasswordEdt.getText().toString());
                             if (newPasswordHashed.equals(user.getPassword())) {
                                 newPasswordEdt.requestFocus();
                                 newPasswordEdt.setError("Le nouveau mot de passe doit etre différent de l'initial !");
                                 return;
                             }
                         } catch (NoSuchAlgorithmException e) {
-                            Toast.makeText(loginActivity, "Impossible de hasher le nouveau mot de passe !", Toast.LENGTH_LONG).show();
+                            Toast.makeText(loginController.getLoginActivity(), "Impossible de hasher le nouveau mot de passe !", Toast.LENGTH_LONG).show();
+                            return;
                         }
                         if (newPasswordConfirmationEdt.getText().toString().trim().isEmpty()) {
                             newPasswordConfirmationEdt.requestFocus();
@@ -97,13 +106,9 @@ public class DialogFragmentToResetPasswordDuringFirstLogin extends DialogFragmen
                             return;
                         }
 
-                        int x = 1;
-                        if (x == 1) {
-                            Toast.makeText(loginActivity, "C'est bon !", Toast.LENGTH_SHORT).show();
-                            cutomAlertDialog.dismiss();
-                        } else {
-                            Toast.makeText(loginActivity, "Ce n'est bon ..", Toast.LENGTH_SHORT).show();
-                        }
+                        ResetPasswordDuringFirstLoginAsyncTask firstLoginAsyncTask = new ResetPasswordDuringFirstLoginAsyncTask(DialogFragmentToResetPasswordDuringFirstLogin.this);
+                        showProgressDialog(loginController.getLoginActivity(), "Nous mettons à jour votre mot de passe ...");
+                        firstLoginAsyncTask.execute(String.valueOf(user.getId()), newPasswordHashed);
                     }
                 });
             }
@@ -112,6 +117,25 @@ public class DialogFragmentToResetPasswordDuringFirstLogin extends DialogFragmen
         newPasswordEdt.requestFocus();
 
         return cutomAlertDialog;
+    }
+
+    public void onResetPassword(String exceptionInfo, boolean isCommited) {
+        hideProgressDialog();
+
+        if (exceptionInfo.isEmpty()) {
+            if (isCommited) {
+                cutomAlertDialog.dismiss();
+                Toast.makeText(loginController.getLoginActivity(), "Mot de passe réinitialisé avec succès", Toast.LENGTH_SHORT).show();
+                loginController.saveUserDataInSharedPrefsAndGoToHomeActivity(loginController.getLoginActivity(), user);
+            } else
+                Toast.makeText(loginController.getLoginActivity(), "Désolé, une erreur s'est produite (Code d'erreur RP01)", Toast.LENGTH_LONG).show();
+        } else {
+            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
+                Toast.makeText(loginController.getLoginActivity(), "Merci de vérifier votre connexion internet!", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(loginController.getLoginActivity(), "Désolé, une erreur s'est produite (Code d'erreur RP02)", Toast.LENGTH_SHORT).show();
+            //showMessageUsingDialogFragment(loginController.getLoginActivity(), "Exception", "Une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
+        }
     }
 
     @Override
