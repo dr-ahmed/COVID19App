@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,14 +23,14 @@ import java.util.Set;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.infectdistrack.model.Constants.ADMIN_LABEL;
-import static com.infectdistrack.model.Constants.ADMIN_TYPE;
+import static com.infectdistrack.model.Constants.ADMIN_TYPE_LIST;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
 import static com.infectdistrack.model.Constants.OTHER_ESTABLISHMENT;
 import static com.infectdistrack.model.Constants.PRIVATE_ESTABLISHMENT;
 import static com.infectdistrack.model.Constants.PUBLIC_ESTABLISHMENT;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
 import static com.infectdistrack.model.Constants.USER_LABEL;
-import static com.infectdistrack.model.Constants.USER_TYPE;
+import static com.infectdistrack.model.Constants.USER_TYPE_LIST;
 import static com.infectdistrack.model.Constants.setWilayasAndMoughataas;
 import static com.infectdistrack.model.Constants.wilayasAndMoughataas;
 
@@ -42,8 +41,8 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
     private TextView newUserLabelTxt;
     private EditText newUserFullNameEdt, newUserEmailEdt, newUserPasswordEdt, newUserPasswordConfirmationEdt;
     private LinearLayout moughataaLayout;
-    private Spinner newUserWilayaSpinner, newUserMoughataaSpinner, adminTypeSpinner, userTypeSpinner;
-    private ArrayAdapter<String> wilayaAdapter, moughataaAdapter, adminAdapter, userAdapter;
+    private Spinner newUserWilayaSpinner, newUserMoughataaSpinner, userTypeSpinner;
+    private ArrayAdapter<String> wilayaAdapter, moughataaAdapter, userAdapter;
     private RadioGroup newUserEstablishmentRadioGroup, publicEstablishmentRadioGroup, privateEstablishmentRadioGroup;
     private EditText userTypeEdt, otherEstablishmentCategoryEdt;
     private TextView establishmentTxt;
@@ -77,20 +76,10 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         moughataaLayout = findViewById(R.id.moughataa_layout);
         newUserMoughataaSpinner = findViewById(R.id.new_user_moughataa_spinner);
 
-        adminTypeSpinner = findViewById(R.id.admin_type_spinner);
-        adminAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, ADMIN_TYPE);
-        adminTypeSpinner.setAdapter(adminAdapter);
-
         userTypeSpinner = findViewById(R.id.user_type_spinner);
-        userAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, USER_TYPE);
+        userAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, parentUser.getCategory().equals(SUPER_ADMIN) ? ADMIN_TYPE_LIST : USER_TYPE_LIST);
         userTypeSpinner.setAdapter(userAdapter);
         userTypeSpinner.setOnItemSelectedListener(this);
-
-        // Si le user est super admin, on fait disparaitre le spinner de user_type, sinon, on fait disparaitre le spinner de admin_type
-        if (parentUser.getCategory().equals(SUPER_ADMIN))
-            userTypeSpinner.setVisibility(GONE);
-        else
-            adminTypeSpinner.setVisibility(GONE);
 
         userTypeEdt = findViewById(R.id.user_type_editext);
         userTypeEdt.setVisibility(GONE);
@@ -180,7 +169,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.add_new_user_btn) {
-            String userType = userTypeSpinner.getSelectedItem().toString().equals(USER_TYPE[6])
+            String userType = userTypeSpinner.getSelectedItem().toString().equals(USER_TYPE_LIST[6])
                     ? userTypeEdt.getText().toString()
                     : userTypeSpinner.getSelectedItem().toString();
 
@@ -314,7 +303,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
             moughataaAdapter = new ArrayAdapter<>(NewUserActivity.this, R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));
             newUserMoughataaSpinner.setAdapter(moughataaAdapter);
         } else if (parent.getId() == R.id.user_type_spinner) {
-            if (userTypeSpinner.getSelectedItem().toString().equals(USER_TYPE[6])) {
+            if (userTypeSpinner.getSelectedItem().toString().equals(USER_TYPE_LIST[6])) {
                 userTypeEdt.setVisibility(VISIBLE);
                 userTypeEdt.requestFocus();
             } else

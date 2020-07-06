@@ -80,8 +80,8 @@ public class Constants {
             "Nouakchott-Nord", "Hodh Ech-Chargui", "Hodh El Gharbi", "Assaba", "Brakna", "Gorgol", "Guidimakha",
             "Trarza", "Tagant", "Inchiri", "Adrar", "Tiris Zemour", "Nouadhibou"},
             AGE_LIST = new String[]{DEFAULT_AGE, "0-5", "6-15", "16-30", "31-40", "41-50", "51-60", "61-80", "81-90", "100 ou plus"},
-            ADMIN_TYPE = new String[]{DEFAULT_TYPE, "Chef d'équipe", "Médecin chef", "Chef service", "Directeur", "Spécialiste", "Chercheur"},
-            USER_TYPE = new String[]{DEFAULT_TYPE, "Agent d'équipe", "Superviseur", "Point focal", "Médecin", "Thésard", "Autre"};
+            ADMIN_TYPE_LIST = new String[]{DEFAULT_TYPE, "Chef d'équipe", "Médecin chef", "Chef service", "Directeur", "Spécialiste", "Chercheur", "Autre"},
+            USER_TYPE_LIST = new String[]{DEFAULT_TYPE, "Agent d'équipe", "Superviseur", "Point focal", "Médecin", "Thésard", "Autre"};
 
     static final int READ_TIMEOUT = 15000, CONNECTION_TIMEOUT = 15000;
 

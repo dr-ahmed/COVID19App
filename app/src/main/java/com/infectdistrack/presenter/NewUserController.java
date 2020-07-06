@@ -2,6 +2,7 @@ package com.infectdistrack.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,27 +16,9 @@ import com.infectdistrack.view.NewUserActivity;
 
 import java.security.NoSuchAlgorithmException;
 
-import static com.infectdistrack.model.Constants.ADMIN;
-import static com.infectdistrack.model.Constants.ADMIN_LABEL;
-import static com.infectdistrack.model.Constants.DEFAULT_TYPE;
-import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
-import static com.infectdistrack.model.Constants.EMPTY_STRING;
-import static com.infectdistrack.model.Constants.OTHER_ESTABLISHMENT;
-import static com.infectdistrack.model.Constants.PRIVATE_ESTABLISHMENT;
-import static com.infectdistrack.model.Constants.PUBLIC_ESTABLISHMENT;
-import static com.infectdistrack.model.Constants.SUPER_ADMIN;
-import static com.infectdistrack.model.Constants.USER;
-import static com.infectdistrack.model.Constants.USER_LABEL;
-import static com.infectdistrack.model.Constants.USER_TYPE;
-import static com.infectdistrack.model.Utilities.SHA256;
-import static com.infectdistrack.model.Utilities.getTodayDate;
-import static com.infectdistrack.model.Utilities.isEmailValid;
-import static com.infectdistrack.model.Utilities.isInternetAvailable;
-import static com.infectdistrack.model.Utilities.replaceApostrophe;
-import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
-import static com.infectdistrack.presenter.UIBasicController.isFieldEmpty;
-import static com.infectdistrack.presenter.UIBasicController.showMessage;
-import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
+import static com.infectdistrack.model.Constants.*;
+import static com.infectdistrack.model.Utilities.*;
+import static com.infectdistrack.presenter.UIBasicController.*;
 
 public class NewUserController {
 
@@ -82,7 +65,7 @@ public class NewUserController {
             showMessage(newUserActivity, "Type obligatoire", "Veuillez sélectionner le type de l'utilisateur!");
             return;
         }
-        if (newUserActivity.getNewUserTypeFromSpinner().equals(USER_TYPE[6]) && newUserActivity.getNewUserTypeFromEdittext().isEmpty()) {
+        if (newUserActivity.getNewUserTypeFromSpinner().equals(USER_TYPE_LIST[6]) && newUserActivity.getNewUserTypeFromEdittext().isEmpty()) {
             showMessage(newUserActivity, "Type obligatoire", "Veuillez saisir le type de l'utilisateur!");
             return;
         }
