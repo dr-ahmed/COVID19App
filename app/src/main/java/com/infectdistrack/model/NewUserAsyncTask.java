@@ -53,8 +53,10 @@ public class NewUserAsyncTask extends AsyncTask<String, Integer, String> {
                     + "&" + URLEncoder.encode(USER_ASSOCIATE_ADMIN_TAG, ENCODING) + "=" + URLEncoder.encode(params[4], ENCODING)
                     + "&" + URLEncoder.encode(USER_WILAYA_TAG, ENCODING) + "=" + URLEncoder.encode(params[5], ENCODING)
                     + "&" + URLEncoder.encode(USER_MOUGHATAA_TAG, ENCODING) + "=" + URLEncoder.encode(params[6], ENCODING)
-                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_TAG, ENCODING) + "=" + URLEncoder.encode(params[7], ENCODING)
-                    + "&" + URLEncoder.encode(USER_CREATION_DATE_TAG, ENCODING) + "=" + URLEncoder.encode(params[8], ENCODING);
+                    + "&" + URLEncoder.encode(USER_TYPE_TAG, ENCODING) + "=" + URLEncoder.encode(params[7], ENCODING)
+                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_TYPE_TAG, ENCODING) + "=" + URLEncoder.encode(params[8], ENCODING)
+                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_CATEGORY_TAG, ENCODING) + "=" + URLEncoder.encode(params[9], ENCODING)
+                    + "&" + URLEncoder.encode(USER_CREATION_DATE_TAG, ENCODING) + "=" + URLEncoder.encode(params[10], ENCODING);
 
             bufferedWriter.write(post_data);
             bufferedWriter.flush();

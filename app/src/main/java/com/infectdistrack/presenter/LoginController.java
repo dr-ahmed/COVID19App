@@ -55,7 +55,10 @@ public class LoginController {
                 userObjectFromSharedPrefs.getCategory(),
                 String.valueOf(userObjectFromSharedPrefs.getAssociateAdmin()),
                 replaceApostrophe(userObjectFromSharedPrefs.getWilaya()),
-                replaceApostrophe(userObjectFromSharedPrefs.getEstablishmentType()));
+                replaceApostrophe(userObjectFromSharedPrefs.getMoughataa()),
+                replaceApostrophe(userObjectFromSharedPrefs.getUserType()),
+                replaceApostrophe(userObjectFromSharedPrefs.getEstablishmentType()),
+                replaceApostrophe(userObjectFromSharedPrefs.getEstablishmentCategory()));
     }
 
     public void checkUserSessionData(Intent intent) {

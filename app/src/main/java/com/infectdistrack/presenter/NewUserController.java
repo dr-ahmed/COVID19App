@@ -150,16 +150,19 @@ public class NewUserController {
     public void insertUser() {
         NewUserAsyncTask newUserAsyncTask = new NewUserAsyncTask(this);
         try {
-            String fullName = replaceApostrophe(newUserActivity.getNewUserFullNameEdt().getText().toString()),
-                    email = newUserActivity.getNewUserEmailEdt().getText().toString(),
-                    password = SHA256(newUserActivity.getNewUserPasswordEdt().getText().toString()),
+            String fullName = replaceApostrophe(newUserActivity.getNewUser().getFullName()),
+                    email = newUserActivity.getNewUser().getEmail(),
+                    password = SHA256(newUserActivity.getNewUser().getPassword()),
                     category = isSuperAdmin ? ADMIN : USER,
                     associateAdmin = String.valueOf(newUserActivity.getParentUser().getId()),
-                    wilaya = newUserActivity.getNewUserWilaya(),
-                    moughataa = newUserActivity.getNewUserMoughataa(),
-                    establishment = replaceApostrophe(newUserActivity.getPublicEstablishmentCategory());
+                    wilaya = replaceApostrophe(newUserActivity.getNewUser().getWilaya()),
+                    moughataa = replaceApostrophe(newUserActivity.getNewUser().getMoughataa()),
+                    userType = replaceApostrophe(newUserActivity.getNewUser().getUserType()),
+                    establishmentType = replaceApostrophe(newUserActivity.getNewUser().getEstablishmentType()),
+                    establishmentCategory = replaceApostrophe(newUserActivity.getNewUser().getEstablishmentCategory());
             showProgressDialog(newUserActivity, "Création du compte en cours ...");
-            newUserAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, moughataa, establishment, getTodayDate());
+            newUserAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, moughataa,
+                    userType, establishmentType, establishmentCategory, getTodayDate());
         } catch (NoSuchAlgorithmException e) {
             showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 005)");
         }

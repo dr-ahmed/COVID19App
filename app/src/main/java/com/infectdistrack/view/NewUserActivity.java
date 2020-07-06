@@ -44,13 +44,11 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
     private LinearLayout moughataaLayout;
     private Spinner newUserWilayaSpinner, newUserMoughataaSpinner, adminTypeSpinner, userTypeSpinner;
     private ArrayAdapter<String> wilayaAdapter, moughataaAdapter, adminAdapter, userAdapter;
-    private EditText userTypeEdt;
     private RadioGroup newUserEstablishmentRadioGroup, publicEstablishmentRadioGroup, privateEstablishmentRadioGroup;
-    private EditText otherEstablishmentCategoryEdt;
+    private EditText userTypeEdt, otherEstablishmentCategoryEdt;
     private TextView establishmentTxt;
     private String establishmentType = "";
     private String publicEstablishmentCategory = "", privateEstablishmentCategory = "";
-    private Button addNewUserBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +112,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         otherEstablishmentCategoryEdt = findViewById(R.id.other_establishment_editext);
         otherEstablishmentCategoryEdt.setVisibility(GONE);
 
-        addNewUserBtn = findViewById(R.id.add_new_user_btn);
+        Button addNewUserBtn = findViewById(R.id.add_new_user_btn);
         addNewUserBtn.setOnClickListener(this);
     }
 
@@ -285,15 +283,25 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         newUserPasswordConfirmationEdt.setText("");
 
         newUserWilayaSpinner.setSelection(0);
+        userTypeSpinner.setSelection(0);
+        userTypeEdt.setText("");
+        userTypeEdt.setVisibility(GONE);
 
-        RadioButton callCenterRadioButton = findViewById(R.id.public_establishment_item);
-        callCenterRadioButton.setChecked(false);
-        RadioButton laboRadioButton = findViewById(R.id.private_establishment_item);
-        laboRadioButton.setChecked(false);
-        RadioButton otherRadioButton = findViewById(R.id.other_establishment_item);
-        otherRadioButton.setChecked(false);
+        newUserEstablishmentRadioGroup.clearCheck();
+        establishmentType = "";
+
+        establishmentTxt.setVisibility(GONE);
+
+        publicEstablishmentRadioGroup.clearCheck();
+        publicEstablishmentRadioGroup.setVisibility(GONE);
         publicEstablishmentCategory = "";
+
+        privateEstablishmentRadioGroup.clearCheck();
+        privateEstablishmentRadioGroup.setVisibility(GONE);
         privateEstablishmentCategory = "";
+
+        otherEstablishmentCategoryEdt.setText("");
+        otherEstablishmentCategoryEdt.setVisibility(GONE);
 
         newUserFullNameEdt.requestFocus();
     }

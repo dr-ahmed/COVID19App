@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.infectdistrack.presenter.LoginController;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -23,21 +22,20 @@ import static com.infectdistrack.model.Constants.CHECKING_USER_SESSION_DATA_VALI
 import static com.infectdistrack.model.Constants.CONNECTION_TIMEOUT;
 import static com.infectdistrack.model.Constants.DOES_USER_EXIST_TAG;
 import static com.infectdistrack.model.Constants.ENCODING;
-import static com.infectdistrack.model.Constants.JSON_HEADER_TAG;
-import static com.infectdistrack.model.Constants.LOGIN_SCRIPT_NAME;
 import static com.infectdistrack.model.Constants.POST_METHOD;
 import static com.infectdistrack.model.Constants.READ_TIMEOUT;
 import static com.infectdistrack.model.Constants.SCRIPT_PATH;
 import static com.infectdistrack.model.Constants.USER_ASSOCIATE_ADMIN_TAG;
 import static com.infectdistrack.model.Constants.USER_CATEGORY_TAG;
 import static com.infectdistrack.model.Constants.USER_EMAIL_TAG;
-import static com.infectdistrack.model.Constants.USER_ESTABLISHMENT_TAG;
+import static com.infectdistrack.model.Constants.USER_ESTABLISHMENT_CATEGORY_TAG;
+import static com.infectdistrack.model.Constants.USER_ESTABLISHMENT_TYPE_TAG;
 import static com.infectdistrack.model.Constants.USER_FULL_NAME_TAG;
-import static com.infectdistrack.model.Constants.USER_ID_TAG;
+import static com.infectdistrack.model.Constants.USER_MOUGHATAA_TAG;
 import static com.infectdistrack.model.Constants.USER_PASSWORD_TAG;
+import static com.infectdistrack.model.Constants.USER_TYPE_TAG;
 import static com.infectdistrack.model.Constants.USER_WILAYA_TAG;
 import static com.infectdistrack.model.Constants.YES;
-import static com.infectdistrack.model.Utilities.removeApostrophe;
 
 public class CheckUserSessionDataValidityAsyncTask extends AsyncTask<String, Integer, String> {
 
@@ -74,7 +72,10 @@ public class CheckUserSessionDataValidityAsyncTask extends AsyncTask<String, Int
                     + "&" + URLEncoder.encode(USER_CATEGORY_TAG, ENCODING) + "=" + URLEncoder.encode(params[3], ENCODING)
                     + "&" + URLEncoder.encode(USER_ASSOCIATE_ADMIN_TAG, ENCODING) + "=" + URLEncoder.encode(params[4], ENCODING)
                     + "&" + URLEncoder.encode(USER_WILAYA_TAG, ENCODING) + "=" + URLEncoder.encode(params[5], ENCODING)
-                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_TAG, ENCODING) + "=" + URLEncoder.encode(params[6], ENCODING);
+                    + "&" + URLEncoder.encode(USER_MOUGHATAA_TAG, ENCODING) + "=" + URLEncoder.encode(params[6], ENCODING)
+                    + "&" + URLEncoder.encode(USER_TYPE_TAG, ENCODING) + "=" + URLEncoder.encode(params[7], ENCODING)
+                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_TYPE_TAG, ENCODING) + "=" + URLEncoder.encode(params[8], ENCODING)
+                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_CATEGORY_TAG, ENCODING) + "=" + URLEncoder.encode(params[9], ENCODING);
 
             bufferedWriter.write(post_data);
             bufferedWriter.flush();

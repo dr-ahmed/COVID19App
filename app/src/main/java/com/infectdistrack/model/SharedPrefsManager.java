@@ -27,7 +27,10 @@ public class SharedPrefsManager {
         editor.putString(USER_CATEGORY_TAG, user.getCategory());
         editor.putInt(USER_ASSOCIATE_ADMIN_TAG, user.getAssociateAdmin());
         editor.putString(USER_WILAYA_TAG, user.getWilaya());
-        editor.putString(USER_ESTABLISHMENT_TAG, user.getEstablishmentType());
+        editor.putString(USER_MOUGHATAA_TAG, user.getMoughataa());
+        editor.putString(USER_TYPE_TAG, user.getUserType());
+        editor.putString(USER_ESTABLISHMENT_TYPE_TAG, user.getEstablishmentType());
+        editor.putString(USER_ESTABLISHMENT_CATEGORY_TAG, user.getEstablishmentCategory());
         editor.apply();
     }
 
@@ -45,10 +48,14 @@ public class SharedPrefsManager {
                 isCategoryEmpty = getDataByTag(sharedPreferences, USER_CATEGORY_TAG).equals(DEFAULT_STRING_VALUE),
                 isAssociateAdminEmpty = sharedPreferences.getInt(USER_ASSOCIATE_ADMIN_TAG, DEFAULT_INT_VALUE) == DEFAULT_INT_VALUE,
                 isWilayaEmpty = getDataByTag(sharedPreferences, USER_WILAYA_TAG).equals(DEFAULT_STRING_VALUE),
-                isEstablishmentEmpty = getDataByTag(sharedPreferences, USER_ESTABLISHMENT_TAG).equals(DEFAULT_STRING_VALUE);
+                isMoughataaEmpty = getDataByTag(sharedPreferences, USER_MOUGHATAA_TAG).equals(DEFAULT_STRING_VALUE),
+                isUserTypeEmpty = getDataByTag(sharedPreferences, USER_TYPE_TAG).equals(DEFAULT_STRING_VALUE),
+                isEstablishmentTypeEmpty = getDataByTag(sharedPreferences, USER_ESTABLISHMENT_TYPE_TAG).equals(DEFAULT_STRING_VALUE),
+                isEstablishmentCategoryEmpty = getDataByTag(sharedPreferences, USER_ESTABLISHMENT_CATEGORY_TAG).equals(DEFAULT_STRING_VALUE);
 
         User user = null;
-        if (!isIdEmpty && !isNameEmpty && !isEmailEmpty && !isPasswordEmpty && !isCategoryEmpty && !isAssociateAdminEmpty && !isWilayaEmpty && !isEstablishmentEmpty)
+        if (!isIdEmpty && !isNameEmpty && !isEmailEmpty && !isPasswordEmpty && !isCategoryEmpty && !isAssociateAdminEmpty && !isWilayaEmpty && !isMoughataaEmpty
+                && !isUserTypeEmpty && !isEstablishmentTypeEmpty && !isEstablishmentCategoryEmpty)
             user = new User(sharedPreferences.getInt(USER_ID_TAG, DEFAULT_INT_VALUE),
                     getDataByTag(sharedPreferences, USER_FULL_NAME_TAG),
                     getDataByTag(sharedPreferences, USER_EMAIL_TAG),
@@ -56,10 +63,10 @@ public class SharedPrefsManager {
                     getDataByTag(sharedPreferences, USER_CATEGORY_TAG),
                     sharedPreferences.getInt(USER_ASSOCIATE_ADMIN_TAG, DEFAULT_INT_VALUE),
                     getDataByTag(sharedPreferences, USER_WILAYA_TAG),
-                    "",
-                    "",
-                    getDataByTag(sharedPreferences, USER_ESTABLISHMENT_TAG),
-                    "");
+                    getDataByTag(sharedPreferences, USER_MOUGHATAA_TAG),
+                    getDataByTag(sharedPreferences, USER_TYPE_TAG),
+                    getDataByTag(sharedPreferences, USER_ESTABLISHMENT_TYPE_TAG),
+                    getDataByTag(sharedPreferences, USER_ESTABLISHMENT_CATEGORY_TAG));
 
         /*
         Log.e(TAG, "isUserLoggedIn: \n" +
@@ -70,7 +77,7 @@ public class SharedPrefsManager {
                 "\nisCategoryEmpty = " + isCategoryEmpty +
                 "\nisAssociateAdminEmpty = " + isAssociateAdminEmpty +
                 "\nisWilayaEmpty = " + isWilayaEmpty +
-                "\nisEstablishmentEmpty = " + isEstablishmentEmpty);
+                "\nisEstablishmentTypeEmpty = " + isEstablishmentTypeEmpty);
          */
         return user;
     }

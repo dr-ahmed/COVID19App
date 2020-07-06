@@ -13,7 +13,7 @@ public class Constants {
     public static String YES = "YES";
 
     static String POST_METHOD = "POST",
-            SCRIPT_PATH = "http://www.amdrs.org/infectdisdb/", // http://192.168.1.100/
+            SCRIPT_PATH = "http://www.amdrs.org/infectdisdb/",
             LOGIN_SCRIPT_NAME = "login.php",
             ADD_NEW_USER_SCRIPT_NAME = "add_new_user.php",
             CHECKING_DUPLICATE_USER_SCRIPT_NAME = "check_duplicate_user.php",
@@ -36,7 +36,9 @@ public class Constants {
             USER_ASSOCIATE_ADMIN_TAG = "associate_admin",
             USER_WILAYA_TAG = "wilaya",
             USER_MOUGHATAA_TAG = "moughataa",
-            USER_ESTABLISHMENT_TAG = "establishment",
+            USER_TYPE_TAG = "user_type",
+            USER_ESTABLISHMENT_TYPE_TAG = "establishment_type",
+            USER_ESTABLISHMENT_CATEGORY_TAG = "establishment_category",
             USER_CREATION_DATE_TAG = "creation_date";
 
     public static final String EMPTY_STRING = "",

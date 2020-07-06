@@ -77,9 +77,12 @@ public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
                             category = userData.getJSONObject(0).getString(USER_CATEGORY_TAG),
                             associate_admin = userData.getJSONObject(0).getString(USER_ASSOCIATE_ADMIN_TAG),
                             wilaya = userData.getJSONObject(0).getString(USER_WILAYA_TAG),
-                            establishment = removeApostrophe(userData.getJSONObject(0).getString(USER_ESTABLISHMENT_TAG));
+                            moughataa = userData.getJSONObject(0).getString(USER_MOUGHATAA_TAG),
+                            userType = userData.getJSONObject(0).getString(USER_TYPE_TAG),
+                            establishmentType = removeApostrophe(userData.getJSONObject(0).getString(USER_ESTABLISHMENT_TYPE_TAG)),
+                            establishmentCategory = removeApostrophe(userData.getJSONObject(0).getString(USER_ESTABLISHMENT_CATEGORY_TAG));
 
-                    user = new User(id, full_name, email, password, category, Integer.parseInt(associate_admin), wilaya, "", "", establishment, "");
+                    user = new User(id, full_name, email, password, category, Integer.parseInt(associate_admin), wilaya, moughataa, userType, establishmentType, establishmentCategory);
                 } else {
                     Log.e(TAG, "String result from doInBackground method : " + result.toString());
                     return result.toString();
