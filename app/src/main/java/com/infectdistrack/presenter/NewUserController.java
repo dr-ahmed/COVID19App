@@ -2,13 +2,13 @@ package com.infectdistrack.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 
 import com.infectdistrack.model.CheckDuplicateUserAsyncTask;
 import com.infectdistrack.model.NewUserAsyncTask;
 import com.infectdistrack.model.SendingMailAsyncTask;
+import com.infectdistrack.model.Utilities;
 import com.infectdistrack.view.DialogFragmentAboutDoYoWantToTrayAgainSendingEmail;
 import com.infectdistrack.view.DialogFragmentForAskingConfirmationWhenCreatingUser;
 import com.infectdistrack.view.DialogFragmentForAskingUserAboutSendingAccountInformation;
@@ -115,7 +115,7 @@ public class NewUserController {
             } else
                 showMessage(newUserActivity, "Email déjà existant", "Désolé, cet email est deja utilsié, veuillez essayer un autre !");
         } else {
-            if (!isInternetAvailable())
+            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
                 showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
                 showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 004)");
@@ -149,7 +149,7 @@ public class NewUserController {
         if (isUserAdded) {
             askAdminAboutSendingAccountInformation();
         } else {
-            if (!isInternetAvailable())
+            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
                 showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
                 showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 006)");
@@ -215,7 +215,7 @@ public class NewUserController {
             showMessage(newUserActivity, "Opération accomplie", "Le courrier a été envoyé avec succès.");
         } else {
             String title, message;
-            if (!isInternetAvailable()) {
+            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG)) {
                 title = "Pas de connexion internet";
                 message = "Merci de vérifier votre connexion internet!";
             } else {

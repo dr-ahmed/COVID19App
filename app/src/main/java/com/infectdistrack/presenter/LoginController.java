@@ -17,6 +17,8 @@ import com.infectdistrack.view.LoginActivity;
 
 import java.security.NoSuchAlgorithmException;
 
+import static com.infectdistrack.model.Constants.NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
+import static com.infectdistrack.model.Constants.YES;
 import static com.infectdistrack.model.Utilities.SHA256;
 import static com.infectdistrack.model.Utilities.replaceApostrophe;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
@@ -81,9 +83,13 @@ public class LoginController {
             } else // Si les données de session sont identiques avec celles qui sont dans la BD
                 loginActivity.openHomeActivity(userObjectFromSharedPrefs);
         } else {
-            if (!Utilities.isInternetAvailable())
+            // Si le phone n'est pas connecté au net ou s'il y est connecté mais la connexion est faible de sorte qu'on a pas pu faire un ping correctement
+            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
                 showDialogFragmentWithLogOutOrTryAgainOptions();
-            else
+            else // A ce satde, isInternetAvailable peut retourner YES ou NO. YES veut dire que le phone est tout à fait connecté au net. Donc ça reflète pas une exception
+                // Par contre, arrivé là, cela peut faire signe de deux scénarios :
+                // soit une exception a eu lieu lors de l'exécution de la requete dans la classe CheckUserSessionDataValidityAsyncTask
+                // soit isInternetAvailable a retourné NO et donc une exception de type InterruptedException ou ExecutionException a eu lieu!
                 showMessage(loginActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 001)");
             //showMessageUsingDialogFragment(newUserActivity, "Exception", "Une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
         }
@@ -155,7 +161,7 @@ public class LoginController {
             } else
                 showMessage(loginActivity, "Informations incorrectes", "Email ou mot de passe incorrect !");
         } else {
-            if (!Utilities.isInternetAvailable())
+            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
                 showMessage(loginActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
                 showMessage(loginActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 003)");

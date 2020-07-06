@@ -10,7 +10,9 @@ import java.util.LinkedHashMap;
 public class Constants {
     private static final String TAG = "Constants";
 
-    public static String YES = "YES";
+    public static String YES = "YES",
+            NO = "NO",
+            NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG = "NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG";
 
     static String POST_METHOD = "POST",
             SCRIPT_PATH = "http://www.amdrs.org/infectdisdb/",
@@ -32,6 +34,7 @@ public class Constants {
 
     static String USER_ID_TAG = "id",
             USER_FULL_NAME_TAG = "full_name",
+            USER_FIRST_LOGIN_TAG = "first_login",
             USER_EMAIL_TAG = "email",
             USER_PASSWORD_TAG = "password",
             USER_CATEGORY_TAG = "category",
@@ -85,7 +88,7 @@ public class Constants {
             ADMIN_TYPE_LIST = new String[]{DEFAULT_TYPE, "Chef d'équipe", "Médecin chef", "Chef service", "Directeur", "Spécialiste", "Chercheur", "Autre"},
             USER_TYPE_LIST = new String[]{DEFAULT_TYPE, "Agent d'équipe", "Superviseur", "Point focal", "Médecin", "Thésard", "Autre"};
 
-    static final int READ_TIMEOUT = 15000, CONNECTION_TIMEOUT = 15000;
+    static final int READ_TIMEOUT = 10000, CONNECTION_TIMEOUT = 10000;
 
     static String PARENT_USER_ID = "parentUserID",
             PATIENT_NAME = "patientName",

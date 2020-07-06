@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.TimeoutException;
 
 import static com.infectdistrack.model.Constants.*;
 import static com.infectdistrack.model.Utilities.removeApostrophe;
@@ -69,6 +70,9 @@ public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
                 if (!response.isNull(JSON_HEADER_TAG)) {
                     JSONArray userData = response.getJSONArray(JSON_HEADER_TAG);
                     userIsConfirmed = true;
+
+                    boolean isFirstLogin = userData.getJSONObject(0).getBoolean(USER_FIRST_LOGIN_TAG);
+                    Log.e(TAG, "first login : " + isFirstLogin);
 
                     Integer id = Integer.parseInt(userData.getJSONObject(0).getString(USER_ID_TAG));
                     String full_name = removeApostrophe(userData.getJSONObject(0).getString(USER_FULL_NAME_TAG)),

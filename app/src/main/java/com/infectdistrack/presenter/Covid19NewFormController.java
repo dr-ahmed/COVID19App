@@ -6,15 +6,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.infectdistrack.model.Covid19Form;
 import com.infectdistrack.model.Covid19NewFormAsyncTask;
+import com.infectdistrack.model.Utilities;
 import com.infectdistrack.view.Covid19FormPart4;
 import com.infectdistrack.view.DialogFragmentForGoingBackAfterAddingForm;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
+import static com.infectdistrack.model.Constants.NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
 import static com.infectdistrack.model.Utilities.getTodayDate;
-import static com.infectdistrack.model.Utilities.isInternetAvailable;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
 import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
@@ -49,7 +46,7 @@ public class Covid19NewFormController {
         if (isFormAdded) {
             doYouWantToGoBack();
         } else {
-            if (!isInternetAvailable())
+            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
                 showMessage(covid19FormPart4.getActivity(), "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
                 showMessage(covid19FormPart4.getActivity(), "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 007)");

@@ -97,8 +97,9 @@ public class CheckUserSessionDataValidityAsyncTask extends AsyncTask<String, Int
                 sessionDataIsStillValid = false;
             else {
                 JSONObject response = new JSONObject(result.toString());
-                if (response.has(DOES_USER_EXIST_TAG) && response.getString(DOES_USER_EXIST_TAG).equals(YES))
-                    sessionDataIsStillValid = true;
+
+                if (response.has(DOES_USER_EXIST_TAG))
+                    sessionDataIsStillValid = response.getString(DOES_USER_EXIST_TAG).equals(YES);
                 else {
                     Log.e(TAG, "String result from doInBackground method : " + result.toString());
                     return result.toString();
