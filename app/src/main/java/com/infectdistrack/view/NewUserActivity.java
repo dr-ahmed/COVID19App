@@ -12,9 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.infectdistrack.R;
 import com.infectdistrack.model.User;
+import com.infectdistrack.model.Utilities;
 import com.infectdistrack.presenter.NewUserController;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import static com.infectdistrack.model.Constants.ADMIN_LABEL;
 import static com.infectdistrack.model.Constants.ADMIN_TYPE_LIST;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
 import static com.infectdistrack.model.Constants.OTHER_ESTABLISHMENT;
+import static com.infectdistrack.model.Constants.PASSWORD_SIZE;
 import static com.infectdistrack.model.Constants.PRIVATE_ESTABLISHMENT;
 import static com.infectdistrack.model.Constants.PUBLIC_ESTABLISHMENT;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
@@ -33,13 +36,14 @@ import static com.infectdistrack.model.Constants.USER_LABEL;
 import static com.infectdistrack.model.Constants.USER_TYPE_LIST;
 import static com.infectdistrack.model.Constants.setWilayasAndMoughataas;
 import static com.infectdistrack.model.Constants.wilayasAndMoughataas;
+import static com.infectdistrack.model.Utilities.generteNewPassword;
 
 public class NewUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private User parentUser, newUser;
     private static final String TAG = "NewUserActivity";
     private TextView newUserLabelTxt;
-    private EditText newUserFullNameEdt, newUserEmailEdt, newUserPasswordEdt, newUserPasswordConfirmationEdt;
+    private EditText newUserFullNameEdt, newUserEmailEdt;
     private LinearLayout moughataaLayout;
     private Spinner newUserWilayaSpinner, newUserMoughataaSpinner, userTypeSpinner;
     private ArrayAdapter<String> wilayaAdapter, moughataaAdapter, userAdapter;
@@ -65,8 +69,6 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
 
         newUserFullNameEdt = findViewById(R.id.new_user_full_name_edt);
         newUserEmailEdt = findViewById(R.id.new_user_email_edt);
-        newUserPasswordEdt = findViewById(R.id.new_user_password_edt);
-        newUserPasswordConfirmationEdt = findViewById(R.id.new_user_password_confirmation_edt);
 
         newUserWilayaSpinner = findViewById(R.id.new_user_wilaya_spinner);
         wilayaAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, wilayaSet.toArray(new String[wilayaSet.size()]));
@@ -121,14 +123,6 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         return newUserEmailEdt;
     }
 
-    public EditText getNewUserPasswordEdt() {
-        return newUserPasswordEdt;
-    }
-
-    public EditText getNewUserPasswordConfirmationEdt() {
-        return newUserPasswordConfirmationEdt;
-    }
-
     public String getNewUserWilaya() {
         return newUserWilayaSpinner.getSelectedItem().toString();
     }
@@ -181,7 +175,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
             else
                 establishmentCategory = otherEstablishmentCategoryEdt.getText().toString();
 
-            newUser = new User(newUserFullNameEdt.getText().toString(), newUserEmailEdt.getText().toString(), newUserPasswordEdt.getText().toString(),
+            newUser = new User(newUserFullNameEdt.getText().toString(), newUserEmailEdt.getText().toString(), generteNewPassword(PASSWORD_SIZE),
                     getNewUserWilaya(), getNewUserMoughataa(), userType, establishmentType, establishmentCategory);
             NewUserController newUserController = new NewUserController(this);
             newUserController.onClickAddNewUserButtonController();
@@ -268,8 +262,6 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
     public void resetUIComponents() {
         newUserFullNameEdt.setText("");
         newUserEmailEdt.setText("");
-        newUserPasswordEdt.setText("");
-        newUserPasswordConfirmationEdt.setText("");
 
         newUserWilayaSpinner.setSelection(0);
         userTypeSpinner.setSelection(0);

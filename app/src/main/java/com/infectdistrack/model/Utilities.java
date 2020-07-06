@@ -8,7 +8,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static com.infectdistrack.model.Constants.ALLOWED_CHARACTERS;
@@ -51,12 +54,19 @@ public class Utilities {
         return string.contains("''") ? string.replaceAll("''", "'") : string;
     }
 
-    static String generteNewPassword(final int size) {
-        final SecureRandom random = new SecureRandom();
-        final StringBuilder sb = new StringBuilder(size);
-        for (int i = 0; i < size; ++i)
-            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+    private static String FromSetToString(Set<Character> password) {
+        StringBuilder sb = new StringBuilder();
+        for (Character ch : password)
+            sb.append(ch);
         return sb.toString();
+    }
+
+    public static String generteNewPassword(int size) {
+        SecureRandom random = new SecureRandom();
+        Set<Character> password = new LinkedHashSet<>();
+        while (password.size() < size)
+            password.add(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        return FromSetToString(password);
     }
 
     public static String SHA256(String text) throws NoSuchAlgorithmException {

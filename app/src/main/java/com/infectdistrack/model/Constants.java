@@ -28,6 +28,8 @@ public class Constants {
             EMAIL = "amdrs2020@gmail.com",
             PASSWORD = "&_&COVID19";
 
+    public static final int PASSWORD_SIZE = 8;
+
     static String USER_ID_TAG = "id",
             USER_FULL_NAME_TAG = "full_name",
             USER_EMAIL_TAG = "email",

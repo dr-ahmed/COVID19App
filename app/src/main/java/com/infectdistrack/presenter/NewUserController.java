@@ -46,13 +46,6 @@ public class NewUserController {
             newUserActivity.getNewUserEmailEdt().setError("Syntaxe invalide !");
             return;
         }
-        if (isFieldEmpty(newUserActivity.getNewUserPasswordEdt())
-                || isFieldEmpty(newUserActivity.getNewUserPasswordConfirmationEdt()))
-            return;
-        if (!newUserActivity.getNewUserPasswordEdt().getText().toString().equals(newUserActivity.getNewUserPasswordConfirmationEdt().getText().toString())) {
-            showMessage(newUserActivity, "Mots de passe incohérents", "Le mot de passe et sa confirmation ne sont pas identiques!");
-            return;
-        }
         if (newUserActivity.getNewUserWilaya().equals(DEFAULT_WILAYA)) {
             showMessage(newUserActivity, "Wilaya obligatoire", "Veuillez sélectionner une wilaya!");
             return;
@@ -167,10 +160,12 @@ public class NewUserController {
     private void askAdminAboutSendingAccountInformation() {
         MAIL_SUBJECT = "Détails de votre nouveau compte sur l'application d'AMDRS";
         MAIL_ADDRESS = "Bonjour " + newUserActivity.getNewUserFullNameEdt().getText().toString() + ",\n"
-                + "L'administrateur " + newUserActivity.getParentUser().getFullName() + " vous a créé un nouveau compte dont les informations sont :"
+                + "L'administrateur " + newUserActivity.getParentUser().getFullName() + " vous a créé un nouveau compte dont les informations sont comme suit :\n"
                 + newUserActivity.getNewUser().toString()
-                + "\n\nRendez-vous sur l'application d'AMDRS." +
-                "\nA bientôt.";
+                + "\n\nLe mot de passe temporaire de votre compte est : " + newUserActivity.getNewUser().getPassword() + ". " +
+                "L'application vous demandera de changer ce mot de passe lorsque vous accédez à votre compte pour la première fois." +
+                "\n\nRendez-vous sur l'application d'AMDRS." +
+                "\nÀ bientôt.";
 
         FragmentTransaction ft = newUserActivity.getSupportFragmentManager().beginTransaction();
         DialogFragmentForAskingUserAboutSendingAccountInformation dialog = new DialogFragmentForAskingUserAboutSendingAccountInformation(this);
