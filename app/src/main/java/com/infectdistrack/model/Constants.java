@@ -15,7 +15,7 @@ public class Constants {
             NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG = "NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG";
 
     static String POST_METHOD = "POST",
-            SCRIPT_PATH = "http://www.amdrs.org/infectdisdb/",
+            SCRIPT_PATH = "https://www.amdrs.org/infectdisdb/",
             LOGIN_SCRIPT_NAME = "login.php",
             ADD_NEW_USER_SCRIPT_NAME = "add_new_user.php",
             CHECKING_DUPLICATE_USER_SCRIPT_NAME = "check_duplicate_user.php",
@@ -82,11 +82,7 @@ public class Constants {
             ADMIN_LABEL = "administrateur ",
             USER_LABEL = "utilisateur ";
 
-    public static final String[] WILAYAS = new String[]{DEFAULT_WILAYA, "Nouakchott-Sud", "Nouakchott-Ouest",
-            "Nouakchott-Nord", "Hodh Ech-Chargui", "Hodh El Gharbi", "Assaba", "Brakna", "Gorgol", "Guidimakha",
-            "Trarza", "Tagant", "Inchiri", "Adrar", "Tiris Zemour", "Nouadhibou"},
-            AGE_LIST = new String[]{DEFAULT_AGE, "0-5", "6-15", "16-30", "31-40", "41-50", "51-60", "61-80", "81-90", "100 ou plus"},
-            ADMIN_TYPE_LIST = new String[]{DEFAULT_TYPE, "Chef d'équipe", "Médecin chef", "Chef service", "Directeur", "Spécialiste", "Chercheur", "Autre"},
+    public static final String[] ADMIN_TYPE_LIST = new String[]{DEFAULT_TYPE, "Chef d'équipe", "Médecin chef", "Chef service", "Directeur", "Spécialiste", "Chercheur", "Autre"},
             USER_TYPE_LIST = new String[]{DEFAULT_TYPE, "Agent d'équipe", "Superviseur", "Point focal", "Médecin", "Thésard", "Autre"};
 
     static final int READ_TIMEOUT = 10000, CONNECTION_TIMEOUT = 10000;

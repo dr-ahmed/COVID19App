@@ -1,5 +1,6 @@
 package com.infectdistrack.view;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -8,33 +9,44 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.infectdistrack.R;
 import com.infectdistrack.model.Covid19Form;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Set;
 
-import static com.infectdistrack.model.Constants.AGE_LIST;
-import static com.infectdistrack.model.Constants.DEFAULT_AGE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
-import static com.infectdistrack.model.Constants.WILAYAS;
+import static com.infectdistrack.model.Constants.EMPTY_STRING;
 import static com.infectdistrack.model.Constants.YES;
+import static com.infectdistrack.model.Constants.setWilayasAndMoughataas;
+import static com.infectdistrack.model.Constants.wilayasAndMoughataas;
 import static com.infectdistrack.model.Utilities.isPhoneNumberValid;
 
-public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedChangeListener {
+public class Covid19FormPart1 extends Fragment implements DatePicker.OnDateChangedListener, AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "COVID19FormPart1";
     private View rootView;
     private EditText patientNameEdt, patientPhoneNumberEdt;
     private RadioGroup patientGenderRadioGroup, patientSuspectedCasesRadioGroup;
     private String patientGender = "", patientSuspectedCasesDescription = "";
-    private Spinner patientAgeSpinner, patientWilayaSpinner;
-    private ArrayAdapter<String> ageSpinnerAdapter, wilayaSpinnerAdapter;
+    private Spinner patientWilayaSpinner, patientMoughataaSpinner;
+    private LinearLayout moughataaLayout;
+    private ArrayAdapter<String> wilayaSpinnerAdapter, patientMoughataaAdapter;
+    private DatePicker patientAgeDatePicker;
+    private boolean isDateChanged = false;
 
     private Covid19Form covid19FormObject;
 
@@ -47,12 +59,13 @@ public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
 
         rootView = inflater.inflate(R.layout.fragment_covid19_form_part1, container, false);
 
-        initViews(rootView);
+        setWilayasAndMoughataas();
+        initViews(rootView, wilayasAndMoughataas.keySet());
 
         return rootView;
     }
 
-    private void initViews(View rootView) {
+    private void initViews(View rootView, Set<String> wilayaSet) {
         patientNameEdt = rootView.findViewById(R.id.patient_name);
         patientPhoneNumberEdt = rootView.findViewById(R.id.patient_phone_number);
 
@@ -62,13 +75,16 @@ public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
         patientSuspectedCasesRadioGroup = rootView.findViewById(R.id.patient_suspected_cases_radio_group);
         patientSuspectedCasesRadioGroup.setOnCheckedChangeListener(this);
 
-        patientAgeSpinner = rootView.findViewById(R.id.patient_age_spinner);
-        ageSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, AGE_LIST);
-        patientAgeSpinner.setAdapter(ageSpinnerAdapter);
+        patientAgeDatePicker = rootView.findViewById(R.id.patient_birth_date_edt_datepicker);
+        patientAgeDatePicker.init(1960, 10, 28, this);
 
         patientWilayaSpinner = rootView.findViewById(R.id.patient_wilaya_spinner);
-        wilayaSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, WILAYAS);
+        wilayaSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, wilayaSet.toArray(new String[wilayaSet.size()]));
         patientWilayaSpinner.setAdapter(wilayaSpinnerAdapter);
+        patientWilayaSpinner.setOnItemSelectedListener(this);
+
+        moughataaLayout = rootView.findViewById(R.id.patient_moughataa_layout);
+        patientMoughataaSpinner = rootView.findViewById(R.id.patient_moughataa_spinner);
     }
 
     @Override
@@ -98,8 +114,9 @@ public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
 
     public boolean isFieldEmpty() {
         TextView genderTextView = rootView.findViewById(R.id.patient_gender_txt),
-                ageTextView = rootView.findViewById(R.id.patient_age_txt),
+                ageTextView = rootView.findViewById(R.id.patient_birth_date_txt_label),
                 wilayaTextView = rootView.findViewById(R.id.patient_wilaya_txt),
+                moughataaTextView = rootView.findViewById(R.id.patient_moughataa_txt),
                 suspectTextView = rootView.findViewById(R.id.patient_suspected_cases_txt);
 
         if (patientNameEdt.getText().toString().trim().isEmpty()) {
@@ -127,17 +144,23 @@ public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
         } else
             resetTextview(genderTextView, "Genre");
 
-        if (patientAgeSpinner.getSelectedItem().toString().equals(DEFAULT_AGE)) {
-            setRedTextview(ageTextView, "AGE OBLIGATOIRE");
+        if (!isDateChanged) {
+            setRedTextview(ageTextView, "DATE DE NAISSANCE OBLIGATOIRE");
             return true;
         } else
-            resetTextview(ageTextView, "Âge");
+            resetTextview(ageTextView, "Date de naissance");
 
         if (patientWilayaSpinner.getSelectedItem().toString().equals(DEFAULT_WILAYA)) {
             setRedTextview(wilayaTextView, "WILAYA OBLIGATOIRE");
             return true;
         } else
             resetTextview(wilayaTextView, "Wilaya");
+
+        if (patientMoughataaSpinner.getSelectedItem().toString().equals(EMPTY_STRING)) {
+            setRedTextview(moughataaTextView, "MOUGHATAA OBLIGATOIRE");
+            return true;
+        } else
+            resetTextview(moughataaTextView, "Moughataa");
 
         if (patientSuspectedCasesDescription.isEmpty()) {
             setRedTextview(suspectTextView, "CAS SUSPECTS OBLIGATOIRES");
@@ -163,13 +186,32 @@ public class Covid19FormPart1 extends Fragment implements RadioGroup.OnCheckedCh
         covid19FormObject.setPhoneNumber(patientPhoneNumberEdt.getText().toString());
         covid19FormObject.setGendre(patientGender);
 
-        String ageAsString = patientAgeSpinner.getSelectedItem().toString();
-        int ageAsInt = Arrays.asList(AGE_LIST).indexOf(ageAsString);
-
-        covid19FormObject.setAge(ageAsInt);
+        String dateOfBirth = patientAgeDatePicker.getDayOfMonth() + "/" + (patientAgeDatePicker.getMonth() + 1) + "/" + patientAgeDatePicker.getYear();
+        covid19FormObject.setAge(dateOfBirth);
         covid19FormObject.setWilaya(patientWilayaSpinner.getSelectedItem().toString());
         covid19FormObject.setSuspectedCases(patientSuspectedCasesDescription);
 
         //Log.e(TAG, covid19FormObject.toString());
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (parent.getId() == R.id.patient_wilaya_spinner) {
+            moughataaLayout.setVisibility(patientWilayaSpinner.getSelectedItem().toString().equals(DEFAULT_WILAYA) ? GONE : VISIBLE);
+            ArrayList<String> moughataas = wilayasAndMoughataas.get(patientWilayaSpinner.getSelectedItem());
+            patientMoughataaAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));
+            patientMoughataaSpinner.setAdapter(patientMoughataaAdapter);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        if (view.getId() == R.id.patient_birth_date_edt_datepicker)
+            isDateChanged = true;
     }
 }

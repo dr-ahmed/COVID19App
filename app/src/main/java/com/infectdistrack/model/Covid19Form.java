@@ -3,8 +3,8 @@ package com.infectdistrack.model;
 import androidx.annotation.NonNull;
 
 public class Covid19Form {
-    private Integer id, parentUserId, age;
-    private String name, phoneNumber, gendre, wilaya, suspectedCases, symptoms, terrain, confirmedCovid19Case, evolution;
+    private Integer id, parentUserId;
+    private String name, phoneNumber, gendre, wilaya, age, suspectedCases, symptoms, terrain, confirmedCovid19Case, evolution;
 
     public Covid19Form() {
     }
@@ -25,11 +25,11 @@ public class Covid19Form {
         this.parentUserId = parentUserId;
     }
 
-    public Integer getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

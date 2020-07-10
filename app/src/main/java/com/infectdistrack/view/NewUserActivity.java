@@ -12,11 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.infectdistrack.R;
 import com.infectdistrack.model.User;
-import com.infectdistrack.model.Utilities;
 import com.infectdistrack.presenter.NewUserController;
 
 import java.util.ArrayList;
@@ -75,7 +73,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         newUserWilayaSpinner.setAdapter(wilayaAdapter);
         newUserWilayaSpinner.setOnItemSelectedListener(this);
 
-        moughataaLayout = findViewById(R.id.moughataa_layout);
+        moughataaLayout = findViewById(R.id.new_user_moughataa_layout);
         newUserMoughataaSpinner = findViewById(R.id.new_user_moughataa_spinner);
 
         userTypeSpinner = findViewById(R.id.user_type_spinner);
@@ -292,7 +290,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         if (parent.getId() == R.id.new_user_wilaya_spinner) {
             moughataaLayout.setVisibility(newUserWilayaSpinner.getSelectedItem().toString().equals(DEFAULT_WILAYA) ? GONE : VISIBLE);
             ArrayList<String> moughataas = wilayasAndMoughataas.get(newUserWilayaSpinner.getSelectedItem());
-            moughataaAdapter = new ArrayAdapter<>(NewUserActivity.this, R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));
+            moughataaAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));
             newUserMoughataaSpinner.setAdapter(moughataaAdapter);
         } else if (parent.getId() == R.id.user_type_spinner) {
             if (userTypeSpinner.getSelectedItem().toString().equals(USER_TYPE_LIST[6])) {

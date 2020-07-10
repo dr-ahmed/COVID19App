@@ -66,6 +66,7 @@ public class LoginAsyncTask extends AsyncTask<String, Integer, String> {
             if (result.toString().equals("[]"))
                 userIsConfirmed = false;
             else {
+                Log.e(TAG, "resut : " + result.toString());
                 JSONObject response = new JSONObject(result.toString());
                 if (!response.isNull(JSON_HEADER_TAG)) {
                     JSONArray userData = response.getJSONArray(JSON_HEADER_TAG);

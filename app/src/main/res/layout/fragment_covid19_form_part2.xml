@@ -23,7 +23,13 @@
             android:id="@+id/fever_chechbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fièvre" />
+            android:text="Fièvre ou sensation de fièvre" />
+
+        <CheckBox
+            android:id="@+id/frisson_chechbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Frisson" />
 
         <CheckBox
             android:id="@+id/asthenia_chechbox"
@@ -62,6 +68,12 @@
             android:text="Rhinite" />
 
         <CheckBox
+            android:id="@+id/anosmie_chechbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Anosmie ou hyposomnie" />
+
+        <CheckBox
             android:id="@+id/congestion_nasal_chechbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +83,37 @@
             android:id="@+id/dysguesie_chechbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dysgueusie ou agueusie" />
+            android:text="Agueusie ou dysgénésie" />
+
+        <CheckBox
+            android:id="@+id/douleur_thoracique_chechbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Douleur thoracique" />
+
+        <CheckBox
+            android:id="@+id/adenopathie_chechbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adénopathie" />
+
+        <CheckBox
+            android:id="@+id/trouble_de_conscience_chechbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trouble de conscience" />
+
+        <CheckBox
+            android:id="@+id/lesion_cutane_chechbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lésion cutanée" />
+
+        <CheckBox
+            android:id="@+id/anorexie_chechbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Anorexie" />
 
         <CheckBox
             android:id="@+id/diarrhee_chechbox"
@@ -86,16 +128,16 @@
             android:text="Nausées/vomissements" />
 
         <CheckBox
-            android:id="@+id/other_symp_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Autres symptômes" />
-
-        <CheckBox
             android:id="@+id/no_symp_chechbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Aucun symptôme" />
+
+        <CheckBox
+            android:id="@+id/other_symp_chechbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autres symptômes" />
 
     </LinearLayout>
 </ScrollView>
