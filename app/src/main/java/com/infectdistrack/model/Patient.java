@@ -1,6 +1,9 @@
 package com.infectdistrack.model;
 
-public class Patient {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Patient implements Parcelable {
     private String phoneNumber, name, gender, dateOfBirth, wilaya, moughataa;
 
     public Patient(String phoneNumber, String name, String gender, String dateOfBirth, String wilaya, String moughataa) {
@@ -11,6 +14,27 @@ public class Patient {
         this.wilaya = wilaya;
         this.moughataa = moughataa;
     }
+
+    protected Patient(Parcel in) {
+        phoneNumber = in.readString();
+        name = in.readString();
+        gender = in.readString();
+        dateOfBirth = in.readString();
+        wilaya = in.readString();
+        moughataa = in.readString();
+    }
+
+    public static final Creator<Patient> CREATOR = new Creator<Patient>() {
+        @Override
+        public Patient createFromParcel(Parcel in) {
+            return new Patient(in);
+        }
+
+        @Override
+        public Patient[] newArray(int size) {
+            return new Patient[size];
+        }
+    };
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -58,5 +82,20 @@ public class Patient {
 
     public void setMoughataa(String moughataa) {
         this.moughataa = moughataa;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(phoneNumber);
+        dest.writeString(name);
+        dest.writeString(gender);
+        dest.writeString(dateOfBirth);
+        dest.writeString(wilaya);
+        dest.writeString(moughataa);
     }
 }

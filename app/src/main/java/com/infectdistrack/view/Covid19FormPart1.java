@@ -1,6 +1,5 @@
 package com.infectdistrack.view;
 
-import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -17,13 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.infectdistrack.R;
 import com.infectdistrack.model.Covid19Form;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Set;
 
 import static android.view.View.GONE;
@@ -69,7 +66,7 @@ public class Covid19FormPart1 extends Fragment implements DatePicker.OnDateChang
         patientNameEdt = rootView.findViewById(R.id.patient_name);
         patientPhoneNumberEdt = rootView.findViewById(R.id.patient_phone_number);
 
-        patientGenderRadioGroup = rootView.findViewById(R.id.patient_gender_radio_group);
+        patientGenderRadioGroup = rootView.findViewById(R.id.patient_gender_radio_groupXXX);
         patientGenderRadioGroup.setOnCheckedChangeListener(this);
 
         patientSuspectedCasesRadioGroup = rootView.findViewById(R.id.patient_suspected_cases_radio_group);
@@ -78,19 +75,19 @@ public class Covid19FormPart1 extends Fragment implements DatePicker.OnDateChang
         patientAgeDatePicker = rootView.findViewById(R.id.patient_birth_date_edt_datepicker);
         patientAgeDatePicker.init(1960, 10, 28, this);
 
-        patientWilayaSpinner = rootView.findViewById(R.id.patient_wilaya_spinner);
+        patientWilayaSpinner = rootView.findViewById(R.id.patient_wilaya_spinnerXXXX);
         wilayaSpinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, wilayaSet.toArray(new String[wilayaSet.size()]));
         patientWilayaSpinner.setAdapter(wilayaSpinnerAdapter);
         patientWilayaSpinner.setOnItemSelectedListener(this);
 
         moughataaLayout = rootView.findViewById(R.id.patient_moughataa_layout);
-        patientMoughataaSpinner = rootView.findViewById(R.id.patient_moughataa_spinner);
+        patientMoughataaSpinner = rootView.findViewById(R.id.patient_moughataa_spinnerXXX);
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (group.getId()) {
-            case R.id.patient_gender_radio_group: {
+            case R.id.patient_gender_radio_groupXXX: {
                 if (checkedId == R.id.male_item)
                     patientGender = "M";
                 else if (checkedId == R.id.female_item)
@@ -115,7 +112,7 @@ public class Covid19FormPart1 extends Fragment implements DatePicker.OnDateChang
     public boolean isFieldEmpty() {
         TextView genderTextView = rootView.findViewById(R.id.patient_gender_txt),
                 ageTextView = rootView.findViewById(R.id.patient_birth_date_txt_label),
-                wilayaTextView = rootView.findViewById(R.id.patient_wilaya_txt),
+                wilayaTextView = rootView.findViewById(R.id.patient_wilaya_txtXXX),
                 moughataaTextView = rootView.findViewById(R.id.patient_moughataa_txt),
                 suspectTextView = rootView.findViewById(R.id.patient_suspected_cases_txt);
 
@@ -196,7 +193,7 @@ public class Covid19FormPart1 extends Fragment implements DatePicker.OnDateChang
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (parent.getId() == R.id.patient_wilaya_spinner) {
+        if (parent.getId() == R.id.patient_wilaya_spinnerXXXX) {
             moughataaLayout.setVisibility(patientWilayaSpinner.getSelectedItem().toString().equals(DEFAULT_WILAYA) ? GONE : VISIBLE);
             ArrayList<String> moughataas = wilayasAndMoughataas.get(patientWilayaSpinner.getSelectedItem());
             patientMoughataaAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));

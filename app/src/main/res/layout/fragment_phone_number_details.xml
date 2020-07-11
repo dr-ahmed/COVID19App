@@ -18,7 +18,6 @@
             android:id="@+id/patient_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
             android:hint="Numéro de téléphone"
             android:inputType="phone"
             android:maxLength="8" />
@@ -44,13 +43,13 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/male_item"
+                android:id="@+id/patient_male_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Masculin" />
 
             <RadioButton
-                android:id="@+id/female_item"
+                android:id="@+id/patient_female_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Féminin" />

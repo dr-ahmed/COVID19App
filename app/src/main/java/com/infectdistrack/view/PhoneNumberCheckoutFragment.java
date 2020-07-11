@@ -3,8 +3,9 @@ package com.infectdistrack.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.infectdistrack.model.Patient;
 import com.infectdistrack.model.RetrievePatientDataUsingVolley;
 
 import static com.infectdistrack.model.Constants.NO_INTERNET_CONNECTION;
+import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
 import static com.infectdistrack.model.Constants.YES;
 import static com.infectdistrack.model.Utilities.isPhoneNumberValid;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
@@ -101,8 +103,6 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
     public void getPatientPhoneNumberFromVolley(String exceptionInfo, boolean isAlreadyRegistrated, Patient patient) {
         hideProgressDialog();
 
-        Log.e(TAG, exceptionInfo);
-
         if (exceptionInfo.isEmpty()) {
             if (isAlreadyRegistrated)
                 whenPatientIsAlreadyRegistrated(patient);
@@ -123,7 +123,9 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
             if (patient.getPhoneNumber().length() == 8) {
                 associationNumber = 1;
                 associatedPhoneNumber = patient.getPhoneNumber().concat(String.valueOf(associationNumber));
-                Log.e(TAG, "associatedPhoneNumber : " + associatedPhoneNumber);
+
+                patient.setPhoneNumber(associatedPhoneNumber);
+                openPhoneNumberDetailsFragmentAndInflatePatientObject(patient);
             } else if (patient.getPhoneNumber().length() == 9) {
                 associationNumber = Integer.parseInt(patient.getPhoneNumber().substring(patient.getPhoneNumber().length() - 1));
                 if (associationNumber == 9)
@@ -133,8 +135,9 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
                     associationNumber++;
                     String patientPhoneNumberWithoutAssociationNumber = patient.getPhoneNumber().substring(0, patient.getPhoneNumber().length() - 1);
                     associatedPhoneNumber = patientPhoneNumberWithoutAssociationNumber.concat(String.valueOf(associationNumber));
-                    Log.e(TAG, "associationNumber : " + associationNumber);
-                    Log.e(TAG, "associatedPhoneNumber : " + associatedPhoneNumber);
+                    patient.setPhoneNumber(associatedPhoneNumber);
+
+                    openPhoneNumberDetailsFragmentAndInflatePatientObject(patient);
                 }
             } else {
                 Toast.makeText(getActivity(), "Invalid ID length !", Toast.LENGTH_SHORT).show();
@@ -151,8 +154,22 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
             showMessage(getActivity(), "Identifiant introuvable", "Cet identifiant n'existe pas encore. Vous ne pouvez pas donc utiliser l'option \"Associé\"." +
                     " Veuillez sélectionner l'option \"Unique\" si vous voulez ajouter cet identifiant ou saisir un identifiant déjà existant en cas d'association.");
         } else {
-            // diriger le user vers FragmentDetails
-            // patient
+            // diriger le user vers FragmentDetails vierge
+            PhoneNumberDetailsFragment phoneNumberDetailsFragment = new PhoneNumberDetailsFragment(patient);
+            FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container_layout, phoneNumberDetailsFragment, "phoneNumberDetailsFragment");
+            fragTransaction.commit();
         }
+    }
+
+    private void openPhoneNumberDetailsFragmentAndInflatePatientObject(Patient patient) {
+        // diriger le user vers FragmentDetails vierge
+        PhoneNumberDetailsFragment phoneNumberDetailsFragment = new PhoneNumberDetailsFragment(patient);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(PATIENT_OBJECT_TAG, patient);
+        phoneNumberDetailsFragment.setArguments(bundle);
+        FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_layout, phoneNumberDetailsFragment, "phoneNumberDetailsFragment");
+        fragTransaction.commit();
     }
 }

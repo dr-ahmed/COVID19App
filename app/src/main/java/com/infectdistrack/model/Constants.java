@@ -35,7 +35,7 @@ public class Constants {
 
     public static final int PASSWORD_SIZE = 8;
 
-    static String USER_ID_TAG = "id",
+    public static String USER_ID_TAG = "id",
             USER_FULL_NAME_TAG = "full_name",
             USER_FIRST_LOGIN_TAG = "first_login",
             USER_EMAIL_TAG = "email",
@@ -49,7 +49,8 @@ public class Constants {
             USER_ESTABLISHMENT_CATEGORY_TAG = "establishment_category",
             USER_CREATION_DATE_TAG = "creation_date",
             PHONE_NUMBER_PK_TAG = "phone_number_pk",
-            PATIENT_REQUEST_TYPE = "patient_request_type";
+            PATIENT_REQUEST_TYPE = "patient_request_type",
+            PATIENT_OBJECT_TAG = "patientObject";
 
     public static final String EMPTY_STRING = "",
             DEFAULT_WILAYA = "Choisir la wilaya",

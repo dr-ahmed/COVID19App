@@ -45,7 +45,7 @@ public class RetrievePatientDataUsingVolley {
             PATIENT_WILAYA = "wilaya",
             PATIENT_MOUGHATAA = "moughataa";
 
-    private boolean isAlreadyRegistrated;
+    private boolean isAlreadyRegistrated = false;
     private String exceptionInfo = "";
     private Patient patient;
     private String selectedItem;
@@ -114,18 +114,20 @@ public class RetrievePatientDataUsingVolley {
                     if (doesPatientExist.equals(NO))
                         isAlreadyRegistrated = false;
                     else if (doesPatientExist.equals(YES)) {
-                        // Le LAST_ASSOCIATED_PHONE_NUMBER serait "null" si l'id n'existe pas en mode associé
-                        if (patientAsJSON.has(LAST_ASSOCIATED_PHONE_NUMBER) && patientAsJSON.getString(LAST_ASSOCIATED_PHONE_NUMBER).equals("null"))
-                            isAlreadyRegistrated = false;
-                        else if (!patientAsJSON.isNull(PATIENT_DATA_HEADER_OBJECT)) {
-                            isAlreadyRegistrated = true;
+                        if (!patientAsJSON.isNull(PATIENT_DATA_HEADER_OBJECT)) {
                             JSONObject patientDataObject = patientAsJSON.getJSONObject(PATIENT_DATA_HEADER_OBJECT);
-                            patient = new Patient(patientDataObject.getString(PATIENT_PHONE_NUMBER),
-                                    patientDataObject.getString(PATIENT_NAME),
-                                    patientDataObject.getString(PATIENT_GENDER),
-                                    patientDataObject.getString(PATIENT_BIRTH_DATE),
-                                    patientDataObject.getString(PATIENT_WILAYA),
-                                    patientDataObject.getString(PATIENT_MOUGHATAA));
+                            // Le LAST_ASSOCIATED_PHONE_NUMBER serait "null" si l'id n'existe pas en mode associé
+                            if (patientDataObject.has(LAST_ASSOCIATED_PHONE_NUMBER) && patientDataObject.getString(LAST_ASSOCIATED_PHONE_NUMBER).equals("null"))
+                                isAlreadyRegistrated = false;
+                            else {
+                                isAlreadyRegistrated = true;
+                                patient = new Patient(patientDataObject.getString(PATIENT_PHONE_NUMBER),
+                                        patientDataObject.getString(PATIENT_NAME),
+                                        patientDataObject.getString(PATIENT_GENDER),
+                                        patientDataObject.getString(PATIENT_BIRTH_DATE),
+                                        patientDataObject.getString(PATIENT_WILAYA),
+                                        patientDataObject.getString(PATIENT_MOUGHATAA));
+                            }
                         } else
                             exceptionInfo = "Unrecognized value for patient_data tag !" + "\n" + response;
                     } else
