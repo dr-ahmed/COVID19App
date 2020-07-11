@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.infectdistrack.R;
+import com.infectdistrack.model.Patient;
 import com.infectdistrack.model.RetrievePatientDataUsingVolley;
 
 import static com.infectdistrack.model.Constants.NO_INTERNET_CONNECTION;
@@ -97,14 +98,16 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
         }
     }
 
-    public void getPatientPhoneNumberFromVolley(String exceptionInfo, boolean isAlreadyRegistrated, String patientPhoneNumber) {
+    public void getPatientPhoneNumberFromVolley(String exceptionInfo, boolean isAlreadyRegistrated, Patient patient) {
         hideProgressDialog();
+
+        Log.e(TAG, exceptionInfo);
 
         if (exceptionInfo.isEmpty()) {
             if (isAlreadyRegistrated)
-                whenPatientIsAlreadyRegistrated(patientPhoneNumber);
+                whenPatientIsAlreadyRegistrated(patient);
             else
-                whenPatientIsNotYetRegistrated(patientPhoneNumber);
+                whenPatientIsNotYetRegistrated(patient);
         } else {
             if (exceptionInfo.equals(NO_INTERNET_CONNECTION))
                 Toast.makeText(getActivity(), "Veuillez vérifier votre connexion internet !", Toast.LENGTH_LONG).show();
@@ -113,22 +116,22 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
         }
     }
 
-    private void whenPatientIsAlreadyRegistrated(String patientPhoneNumber) {
+    private void whenPatientIsAlreadyRegistrated(Patient patient) {
         if (selectedItem.equals(ASSOCIATED_ITEM)) { // demander au user de confirmer le numéro d'association
             int associationNumber;
             String associatedPhoneNumber;
-            if (patientPhoneNumber.length() == 8) {
+            if (patient.getPhoneNumber().length() == 8) {
                 associationNumber = 1;
-                associatedPhoneNumber = patientPhoneNumber.concat(String.valueOf(associationNumber));
+                associatedPhoneNumber = patient.getPhoneNumber().concat(String.valueOf(associationNumber));
                 Log.e(TAG, "associatedPhoneNumber : " + associatedPhoneNumber);
-            } else if (patientPhoneNumber.length() == 9) {
-                associationNumber = Integer.parseInt(patientPhoneNumber.substring(patientPhoneNumber.length() - 1));
+            } else if (patient.getPhoneNumber().length() == 9) {
+                associationNumber = Integer.parseInt(patient.getPhoneNumber().substring(patient.getPhoneNumber().length() - 1));
                 if (associationNumber == 9)
                     showMessage(getActivity(), "Identifiant saturé", "Savez-vous que 9 identifiants sont déjà associés à celui-ci ?" +
                             " Vous ne pouvez donc plus lui associer des identifiants. Veuillez saisir un identifiant différent.");
                 else {
                     associationNumber++;
-                    String patientPhoneNumberWithoutAssociationNumber = patientPhoneNumber.substring(0, patientPhoneNumber.length() - 1);
+                    String patientPhoneNumberWithoutAssociationNumber = patient.getPhoneNumber().substring(0, patient.getPhoneNumber().length() - 1);
                     associatedPhoneNumber = patientPhoneNumberWithoutAssociationNumber.concat(String.valueOf(associationNumber));
                     Log.e(TAG, "associationNumber : " + associationNumber);
                     Log.e(TAG, "associatedPhoneNumber : " + associatedPhoneNumber);
@@ -142,13 +145,14 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
                     " Veuillez sélectionner l'option \"Associé\" ou saisir un autre ID s'il s'agit d'un nouveau identifiant unique.");
     }
 
-    private void whenPatientIsNotYetRegistrated(String patientPhoneNumber) {
+    private void whenPatientIsNotYetRegistrated(Patient patient) {
         if (selectedItem.equals(ASSOCIATED_ITEM)) {
             // informer le user que l'option associer ne peut etre utilsié avec un id n'existant pas deja
             showMessage(getActivity(), "Identifiant introuvable", "Cet identifiant n'existe pas encore. Vous ne pouvez pas donc utiliser l'option \"Associé\"." +
                     " Veuillez sélectionner l'option \"Unique\" si vous voulez ajouter cet identifiant ou saisir un identifiant déjà existant en cas d'association.");
         } else {
             // diriger le user vers FragmentDetails
+            // patient
         }
     }
 }

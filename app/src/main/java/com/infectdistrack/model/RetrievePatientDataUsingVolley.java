@@ -12,6 +12,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.infectdistrack.view.PhoneNumberCheckoutFragment;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,15 +35,28 @@ public class RetrievePatientDataUsingVolley {
             NO = "NO",
             YES = "YES",
             DOES_PATIENT_EXIST = "does_patient_exist",
-            PATIENT_PHONE_NUMBER = "patient_phone_number";
+            LAST_ASSOCIATED_PHONE_NUMBER = "last_associated_phone_number",
+            PATIENT_MAIN_DATA_HEADER = "patient_as_json",
+            PATIENT_DATA_HEADER_OBJECT = "patient_data",
+            PATIENT_PHONE_NUMBER = "phone_number_pk",
+            PATIENT_NAME = "name",
+            PATIENT_GENDER = "gender",
+            PATIENT_BIRTH_DATE = "date_of_birth",
+            PATIENT_WILAYA = "wilaya",
+            PATIENT_MOUGHATAA = "moughataa";
 
     private boolean isAlreadyRegistrated;
-    private String exceptionInfo = "", patientPhoneNumber = "";
+    private String exceptionInfo = "";
+    private Patient patient;
     private String selectedItem;
 
     public RetrievePatientDataUsingVolley(PhoneNumberCheckoutFragment phoneNumberCheckoutFragment) {
         this.phoneNumberCheckoutFragment = phoneNumberCheckoutFragment;
         requestQueue = Volley.newRequestQueue(phoneNumberCheckoutFragment.getActivity());
+    }
+
+    public void setRequestType(String selectedItem) {
+        this.selectedItem = selectedItem;
     }
 
     public void getDataFromServer() {
@@ -69,7 +83,7 @@ public class RetrievePatientDataUsingVolley {
                 } else
                     exceptionInfo = error.getMessage();
 
-                phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patientPhoneNumber);
+                phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patient);
             }
         }) {
             @Override
@@ -89,28 +103,41 @@ public class RetrievePatientDataUsingVolley {
         try {
             JSONObject result = new JSONObject(response);
 
-            if (!result.has(DOES_PATIENT_EXIST))
+            if (result.isNull(PATIENT_MAIN_DATA_HEADER))
                 exceptionInfo = response;
             else {
-                String doesPatientExist = result.getString(DOES_PATIENT_EXIST);
+                JSONObject patientAsJSON = result.getJSONObject(PATIENT_MAIN_DATA_HEADER);
 
+                if (patientAsJSON.has(DOES_PATIENT_EXIST)) {
+                    String doesPatientExist = patientAsJSON.getString(DOES_PATIENT_EXIST);
 
-                if (doesPatientExist.equals(NO))
-                    isAlreadyRegistrated = false;
-                else if (doesPatientExist.equals(YES)) {
-                    patientPhoneNumber = result.getString(PATIENT_PHONE_NUMBER);
-                    isAlreadyRegistrated = !patientPhoneNumber.equals("null"); // Le doesPatientExist serait "null" si l'id n'existe pas en mode associé
-                }
+                    if (doesPatientExist.equals(NO))
+                        isAlreadyRegistrated = false;
+                    else if (doesPatientExist.equals(YES)) {
+                        // Le LAST_ASSOCIATED_PHONE_NUMBER serait "null" si l'id n'existe pas en mode associé
+                        if (patientAsJSON.has(LAST_ASSOCIATED_PHONE_NUMBER) && patientAsJSON.getString(LAST_ASSOCIATED_PHONE_NUMBER).equals("null"))
+                            isAlreadyRegistrated = false;
+                        else if (!patientAsJSON.isNull(PATIENT_DATA_HEADER_OBJECT)) {
+                            isAlreadyRegistrated = true;
+                            JSONObject patientDataObject = patientAsJSON.getJSONObject(PATIENT_DATA_HEADER_OBJECT);
+                            patient = new Patient(patientDataObject.getString(PATIENT_PHONE_NUMBER),
+                                    patientDataObject.getString(PATIENT_NAME),
+                                    patientDataObject.getString(PATIENT_GENDER),
+                                    patientDataObject.getString(PATIENT_BIRTH_DATE),
+                                    patientDataObject.getString(PATIENT_WILAYA),
+                                    patientDataObject.getString(PATIENT_MOUGHATAA));
+                        } else
+                            exceptionInfo = "Unrecognized value for patient_data tag !" + "\n" + response;
+                    } else
+                        exceptionInfo = "Unrecognized value for does_patient_exist tag !";
+                } else
+                    exceptionInfo = response;
             }
         } catch (JSONException e) {
             Log.e(TAG, "JSONException : " + Log.getStackTraceString(e));
             Log.e(TAG, "response from PHP script : " + response);
         } finally {
-            phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patientPhoneNumber);
+            phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patient);
         }
-    }
-
-    public void setRequestType(String selectedItem) {
-        this.selectedItem = selectedItem;
     }
 }
