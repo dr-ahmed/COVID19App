@@ -13,7 +13,8 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.CommunityWatchActivity"></activity>
+        <activity android:name=".view.PhoneNumberActivity"></activity>
+        <activity android:name=".view.CommunityWatchActivity" />
         <activity
             android:name=".view.Covid19FormActivity"
             android:screenOrientation="portrait"

@@ -6,14 +6,8 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
-
-import com.infectdistrack.presenter.NewUserController;
-
-import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 
 public class DialogFragmentToChooseCovid19FormType extends DialogFragment {
 
@@ -43,7 +37,7 @@ public class DialogFragmentToChooseCovid19FormType extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 if (currentItem == 0)
-                    homeActivity.launchCovid19FormActivity();
+                    homeActivity.launchPhoneNumberCheckoutActivity();
                 else if (currentItem == 1)
                     homeActivity.launchCommunityWatchFragment();
             }

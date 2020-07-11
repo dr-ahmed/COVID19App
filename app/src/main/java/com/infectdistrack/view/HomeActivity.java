@@ -136,14 +136,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        if (formTypeValue.equals("COVID19") && actionTypeValue.equals("REMPLIR")) {
+        if (formTypeValue.equals("COVID19") && actionTypeValue.equals("REMPLIR"))
             chooseCovdid19FormType();
-
-            /*
-
-
-             */
-        } else
+        else
             showMessage(this, "À suivre", "Cette fonctionnalité serait bientôt disponible");
     }
 
@@ -154,8 +149,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ft.commit();
     }
 
-    public void launchCovid19FormActivity() {
-        Intent intent = new Intent(this, Covid19FormActivity.class);
+    public void launchPhoneNumberCheckoutActivity() {
+        Intent intent = new Intent(this, PhoneNumberActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("parentUser", currentUser);
         intent.putExtra("parentUserBundle", bundle);

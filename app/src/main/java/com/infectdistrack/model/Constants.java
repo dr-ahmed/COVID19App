@@ -14,7 +14,7 @@ public class Constants {
             NO = "NO",
             NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG = "NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG";
 
-    static String POST_METHOD = "POST",
+    public static String POST_METHOD = "POST",
             SCRIPT_PATH = "https://www.amdrs.org/infectdisdb/",
             LOGIN_SCRIPT_NAME = "login.php",
             ADD_NEW_USER_SCRIPT_NAME = "add_new_user.php",
@@ -22,7 +22,9 @@ public class Constants {
             CHECKING_USER_SESSION_DATA_VALIDITY_SCRIPT_NAME = "check_user_session_data_validity.php",
             ADD_NEW_FORM_SCRIPT_NAME = "add_new_form.php",
             RESET_PASSWORD_DURING_FIRST_LOGIN_SCRIPT_NAME = "reset_password_during_first_login.php",
+            RETRIEVE_PATIENT_DATA_SCRIPT_NAME = "retrieve_patient_data.php",
             ENCODING = "UTF-8",
+            NO_INTERNET_CONNECTION = "NO_INTERNET_CONNECTION",
             CHAR_SET_NAME = "iso-8859-1",
             JSON_HEADER_TAG = "User",
             DOES_USER_EXIST_TAG = "does_user_exist",
@@ -45,7 +47,8 @@ public class Constants {
             USER_TYPE_TAG = "user_type",
             USER_ESTABLISHMENT_TYPE_TAG = "establishment_type",
             USER_ESTABLISHMENT_CATEGORY_TAG = "establishment_category",
-            USER_CREATION_DATE_TAG = "creation_date";
+            USER_CREATION_DATE_TAG = "creation_date",
+            PHONE_NUMBER_PK_TAG = "phone_number_pk";
 
     public static final String EMPTY_STRING = "",
             DEFAULT_WILAYA = "Choisir la wilaya",
