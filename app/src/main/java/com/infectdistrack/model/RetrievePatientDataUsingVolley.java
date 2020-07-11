@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.infectdistrack.model.Constants.NO_INTERNET_CONNECTION;
+import static com.infectdistrack.model.Constants.PATIENT_REQUEST_TYPE;
 import static com.infectdistrack.model.Constants.PHONE_NUMBER_PK_TAG;
 import static com.infectdistrack.model.Constants.RETRIEVE_PATIENT_DATA_SCRIPT_NAME;
 import static com.infectdistrack.model.Constants.SCRIPT_PATH;
@@ -36,7 +37,8 @@ public class RetrievePatientDataUsingVolley {
             PATIENT_PHONE_NUMBER = "patient_phone_number";
 
     private boolean isAlreadyRegistrated;
-    private String exceptionOccured = "", patientPhoneNumber = "";
+    private String exceptionInfo = "", patientPhoneNumber = "";
+    private String selectedItem;
 
     public RetrievePatientDataUsingVolley(PhoneNumberCheckoutFragment phoneNumberCheckoutFragment) {
         this.phoneNumberCheckoutFragment = phoneNumberCheckoutFragment;
@@ -50,7 +52,7 @@ public class RetrievePatientDataUsingVolley {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.e(TAG, "response = " + response);
+                        // Log.e(TAG, "response = " + response);
                         getDataFromJSONDocument(response);
                     }
                 }, new Response.ErrorListener() {
@@ -63,18 +65,18 @@ public class RetrievePatientDataUsingVolley {
                 Log.e(TAG, Log.getStackTraceString(error));
 
                 if (error instanceof NoConnectionError || error instanceof TimeoutError) {
-                    exceptionOccured = NO_INTERNET_CONNECTION;
+                    exceptionInfo = NO_INTERNET_CONNECTION;
                 } else
-                    exceptionOccured = error.getMessage();
+                    exceptionInfo = error.getMessage();
 
-                phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionOccured == null ? "NullPointerException" : exceptionOccured,
-                        isAlreadyRegistrated, patientPhoneNumber);
+                phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patientPhoneNumber);
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put(PHONE_NUMBER_PK_TAG, phoneNumberCheckoutFragment.getPhoneNumber());
+                params.put(PATIENT_REQUEST_TYPE, selectedItem);
 
                 return params;
             }
@@ -88,22 +90,27 @@ public class RetrievePatientDataUsingVolley {
             JSONObject result = new JSONObject(response);
 
             if (!result.has(DOES_PATIENT_EXIST))
-                exceptionOccured = response;
+                exceptionInfo = response;
             else {
-                String authorized_user = result.getString(DOES_PATIENT_EXIST);
+                String doesPatientExist = result.getString(DOES_PATIENT_EXIST);
 
-                if (authorized_user.equals(NO))
+
+                if (doesPatientExist.equals(NO))
                     isAlreadyRegistrated = false;
-                else if (authorized_user.equals(YES)) {
-                    isAlreadyRegistrated = true;
+                else if (doesPatientExist.equals(YES)) {
                     patientPhoneNumber = result.getString(PATIENT_PHONE_NUMBER);
+                    isAlreadyRegistrated = !patientPhoneNumber.equals("null"); // Le doesPatientExist serait "null" si l'id n'existe pas en mode associé
                 }
             }
         } catch (JSONException e) {
             Log.e(TAG, "JSONException : " + Log.getStackTraceString(e));
             Log.e(TAG, "response from PHP script : " + response);
         } finally {
-            phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionOccured, isAlreadyRegistrated, patientPhoneNumber);
+            phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patientPhoneNumber);
         }
+    }
+
+    public void setRequestType(String selectedItem) {
+        this.selectedItem = selectedItem;
     }
 }

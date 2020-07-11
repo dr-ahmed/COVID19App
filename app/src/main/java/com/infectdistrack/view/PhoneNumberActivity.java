@@ -21,8 +21,6 @@ public class PhoneNumberActivity extends AppCompatActivity {
         PhoneNumberCheckoutFragment phoneNumberCheckoutFragment = new PhoneNumberCheckoutFragment();
         FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_layout, phoneNumberCheckoutFragment, "phoneNumberCheckoutFragment");
-        // Ajouter le fragment au BackStack pour qu'il soit récupérable plus tard via popBackStack du FragmentManager
-        fragTransaction.addToBackStack(null);
         fragTransaction.commit();
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +17,24 @@ import com.infectdistrack.R;
 import com.infectdistrack.model.RetrievePatientDataUsingVolley;
 
 import static com.infectdistrack.model.Constants.NO_INTERNET_CONNECTION;
+import static com.infectdistrack.model.Constants.YES;
+import static com.infectdistrack.model.Utilities.isPhoneNumberValid;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
+import static com.infectdistrack.presenter.UIBasicController.showMessage;
 import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
 
-public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClickListener {
+public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+
+    private static final String TAG = "PhoneNumberCheckoutFrag";
 
     private View rootView;
     private EditText patientPhoneNumberEdt;
     private RadioGroup patientIdTypeRadioGroup;
     private Button checkoutBtn;
+    private String selectedItem = "";
+
+    private final String UNIQUE_ITEM = "UNIQUE_ITEM", ASSOCIATED_ITEM = "ASSOCIATED_ITEM";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +47,7 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
     private void initViews() {
         patientPhoneNumberEdt = rootView.findViewById(R.id.patient_phone_number_checkout);
         patientIdTypeRadioGroup = rootView.findViewById(R.id.patient_id_radio_group);
+        patientIdTypeRadioGroup.setOnCheckedChangeListener(this);
         checkoutBtn = rootView.findViewById(R.id.verify_patient_btn);
         checkoutBtn.setOnClickListener(this);
     }
@@ -46,29 +57,98 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
     }
 
     @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (group.getId() == R.id.patient_id_radio_group) {
+            switch (checkedId) {
+                case R.id.associated_item:
+                    selectedItem = ASSOCIATED_ITEM;
+                    break;
+                case R.id.unique_item:
+                    selectedItem = UNIQUE_ITEM;
+                    break;
+                default: {
+
+                }
+            }
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getId() == R.id.verify_patient_btn) {
+            String phoneNumberFeedback = isPhoneNumberValid(patientPhoneNumberEdt.getText().toString());
+            if (!phoneNumberFeedback.equals(YES)) {
+                patientPhoneNumberEdt.requestFocus();
+                patientPhoneNumberEdt.setError(phoneNumberFeedback);
+                return;
+            }
+
+            if (selectedItem.isEmpty()) {
+                showMessage(getActivity(), "Choix obligatoire", "Veuillez préciser si cet identifiant est unique ou associé !");
+                return;
+            }
+
             showProgressDialog(getActivity(), "Vérification de l'identifiant en cours ...");
 
             RetrievePatientDataUsingVolley retrievePatientDataUsingVolley = new RetrievePatientDataUsingVolley(this);
+            retrievePatientDataUsingVolley.setRequestType(selectedItem);
             retrievePatientDataUsingVolley.getDataFromServer();
 
         }
     }
 
-    public void getPatientPhoneNumberFromVolley(String exceptionOccured, boolean isAlreadyRegistrated, String patientPhoneNumber) {
+    public void getPatientPhoneNumberFromVolley(String exceptionInfo, boolean isAlreadyRegistrated, String patientPhoneNumber) {
         hideProgressDialog();
 
-        if (exceptionOccured.isEmpty()) {
+        if (exceptionInfo.isEmpty()) {
             if (isAlreadyRegistrated)
-                Toast.makeText(getActivity(), "Already registred !", Toast.LENGTH_LONG).show();
+                whenPatientIsAlreadyRegistrated(patientPhoneNumber);
             else
-                Toast.makeText(getActivity(), "NOT already registred !", Toast.LENGTH_LONG).show();
+                whenPatientIsNotYetRegistrated(patientPhoneNumber);
         } else {
-            if (exceptionOccured.equals(NO_INTERNET_CONNECTION))
+            if (exceptionInfo.equals(NO_INTERNET_CONNECTION))
                 Toast.makeText(getActivity(), "Veuillez vérifier votre connexion internet !", Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(getActivity(), "Fatal error ...", Toast.LENGTH_LONG).show();
+            else // show exceptionInfo for more details !
+                showMessage(getActivity(), "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 008)");
+        }
+    }
+
+    private void whenPatientIsAlreadyRegistrated(String patientPhoneNumber) {
+        if (selectedItem.equals(ASSOCIATED_ITEM)) { // demander au user de confirmer le numéro d'association
+            int associationNumber;
+            String associatedPhoneNumber;
+            if (patientPhoneNumber.length() == 8) {
+                associationNumber = 1;
+                associatedPhoneNumber = patientPhoneNumber.concat(String.valueOf(associationNumber));
+                Log.e(TAG, "associatedPhoneNumber : " + associatedPhoneNumber);
+            } else if (patientPhoneNumber.length() == 9) {
+                associationNumber = Integer.parseInt(patientPhoneNumber.substring(patientPhoneNumber.length() - 1));
+                if (associationNumber == 9)
+                    showMessage(getActivity(), "Identifiant saturé", "Savez-vous que 9 identifiants sont déjà associés à celui-ci ?" +
+                            " Vous ne pouvez donc plus lui associer des identifiants. Veuillez saisir un identifiant différent.");
+                else {
+                    associationNumber++;
+                    String patientPhoneNumberWithoutAssociationNumber = patientPhoneNumber.substring(0, patientPhoneNumber.length() - 1);
+                    associatedPhoneNumber = patientPhoneNumberWithoutAssociationNumber.concat(String.valueOf(associationNumber));
+                    Log.e(TAG, "associationNumber : " + associationNumber);
+                    Log.e(TAG, "associatedPhoneNumber : " + associatedPhoneNumber);
+                }
+            } else {
+                Toast.makeText(getActivity(), "Invalid ID length !", Toast.LENGTH_SHORT).show();
+            }
+        } else
+            // informer le user que ce patient existe deja et qu'il doit opter pour l'option associé ou saisir new different ID
+            showMessage(getActivity(), "Identifiant dupliqué", "Cet identifiant existe déjà, vous ne pouvez donc pas l'ajouter comme unique." +
+                    " Veuillez sélectionner l'option \"Associé\" ou saisir un autre ID s'il s'agit d'un nouveau identifiant unique.");
+    }
+
+    private void whenPatientIsNotYetRegistrated(String patientPhoneNumber) {
+        if (selectedItem.equals(ASSOCIATED_ITEM)) {
+            // informer le user que l'option associer ne peut etre utilsié avec un id n'existant pas deja
+            showMessage(getActivity(), "Identifiant introuvable", "Cet identifiant n'existe pas encore. Vous ne pouvez pas donc utiliser l'option \"Associé\"." +
+                    " Veuillez sélectionner l'option \"Unique\" si vous voulez ajouter cet identifiant ou saisir un identifiant déjà existant en cas d'association.");
+        } else {
+            // diriger le user vers FragmentDetails
         }
     }
 }

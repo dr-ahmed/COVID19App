@@ -48,7 +48,8 @@ public class Constants {
             USER_ESTABLISHMENT_TYPE_TAG = "establishment_type",
             USER_ESTABLISHMENT_CATEGORY_TAG = "establishment_category",
             USER_CREATION_DATE_TAG = "creation_date",
-            PHONE_NUMBER_PK_TAG = "phone_number_pk";
+            PHONE_NUMBER_PK_TAG = "phone_number_pk",
+            PATIENT_REQUEST_TYPE = "patient_request_type";
 
     public static final String EMPTY_STRING = "",
             DEFAULT_WILAYA = "Choisir la wilaya",
