@@ -150,7 +150,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void launchPhoneNumberCheckoutActivity() {
-        Intent intent = new Intent(this, PhoneNumberActivity.class);
+        Intent intent = new Intent(this, PhoneNumberCheckoutActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("parentUser", currentUser);
         intent.putExtra("parentUserBundle", bundle);

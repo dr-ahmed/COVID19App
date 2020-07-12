@@ -1,13 +1,12 @@
 package com.infectdistrack.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -18,6 +17,7 @@ import com.infectdistrack.model.Patient;
 import com.infectdistrack.model.RetrievePatientDataUsingVolley;
 
 import static com.infectdistrack.model.Constants.ASSOCIATED_ITEM;
+import static com.infectdistrack.model.Constants.BUNDLE_EXTRA_TAG;
 import static com.infectdistrack.model.Constants.NO_INTERNET_CONNECTION;
 import static com.infectdistrack.model.Constants.OPTION_TAG;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
@@ -29,29 +29,28 @@ import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
 import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
 
-public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class PhoneNumberCheckoutActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    private static final String TAG = "PhoneNumberCheckoutFrag";
+    private static final String TAG = "PhoneNumberCheckoutActi";
 
-    private View rootView;
     private EditText patientPhoneNumberEdt;
     private RadioGroup patientIdTypeRadioGroup;
     private Button checkoutBtn;
     private String selectedItem = "";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_phone_number_checkout, container, false);
-        initViews();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_phone_number_checkout);
 
-        return rootView;
+        initViews();
     }
 
     private void initViews() {
-        patientPhoneNumberEdt = rootView.findViewById(R.id.patient_phone_number_checkout);
-        patientIdTypeRadioGroup = rootView.findViewById(R.id.patient_id_radio_group);
+        patientPhoneNumberEdt = findViewById(R.id.patient_phone_number_checkout);
+        patientIdTypeRadioGroup = findViewById(R.id.patient_id_radio_group);
         patientIdTypeRadioGroup.setOnCheckedChangeListener(this);
-        checkoutBtn = rootView.findViewById(R.id.verify_patient_btn);
+        checkoutBtn = findViewById(R.id.verify_patient_btn);
         checkoutBtn.setOnClickListener(this);
     }
 
@@ -87,11 +86,11 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
             }
 
             if (selectedItem.isEmpty()) {
-                showMessage(getActivity(), "Choix obligatoire", "Veuillez préciser si cet identifiant est unique ou associé !");
+                showMessage(this, "Choix obligatoire", "Veuillez préciser si cet identifiant est unique ou associé !");
                 return;
             }
 
-            showProgressDialog(getActivity(), "Vérification de l'identifiant en cours ...");
+            showProgressDialog(this, "Vérification de l'identifiant en cours ...");
 
             RetrievePatientDataUsingVolley retrievePatientDataUsingVolley = new RetrievePatientDataUsingVolley(this);
             retrievePatientDataUsingVolley.setRequestType(selectedItem);
@@ -110,9 +109,9 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
                 whenPatientIsNotYetRegistrated(patient);
         } else {
             if (exceptionInfo.equals(NO_INTERNET_CONNECTION))
-                Toast.makeText(getActivity(), "Veuillez vérifier votre connexion internet !", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Veuillez vérifier votre connexion internet !", Toast.LENGTH_LONG).show();
             else // show exceptionInfo for more details !
-                showMessage(getActivity(), "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 008)");
+                showMessage(this, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 008)");
         }
     }
 
@@ -129,7 +128,7 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
             } else if (patient.getPhoneNumber().length() == 9) {
                 associatedNumber = Integer.parseInt(patient.getPhoneNumber().substring(patient.getPhoneNumber().length() - 1));
                 if (associatedNumber == 9)
-                    showMessage(getActivity(), "Identifiant saturé", "Savez-vous que 9 identifiants sont déjà associés à celui-ci ?" +
+                    showMessage(this, "Identifiant saturé", "Savez-vous que 9 identifiants sont déjà associés à celui-ci ?" +
                             " Vous ne pouvez donc plus lui associer des identifiants. Veuillez saisir un identifiant différent.");
                 else {
                     associatedNumber++;
@@ -140,7 +139,7 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
                     doYouConfirmTheAssociatedNumber(patient, associatedNumber - 1);
                 }
             } else {
-                Toast.makeText(getActivity(), "Invalid ID length !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Invalid ID length !", Toast.LENGTH_SHORT).show();
             }
         } else
             doYouToContinueWithSuchUniquePhoneNumber(patient);
@@ -149,23 +148,19 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
     private void whenPatientIsNotYetRegistrated(Patient patient) {
         if (selectedItem.equals(ASSOCIATED_ITEM)) {
             // informer le user que l'option associer ne peut etre utilsié avec un id n'existant pas deja
-            showMessage(getActivity(), "Identifiant introuvable", "Cet identifiant n'existe pas encore. Vous ne pouvez pas donc utiliser l'option \"Associé\"." +
+            showMessage(this, "Identifiant introuvable", "Cet identifiant n'existe pas encore. Vous ne pouvez pas donc utiliser l'option \"Associé\"." +
                     " Veuillez sélectionner l'option \"Unique\" si vous voulez ajouter cet identifiant ou saisir un identifiant déjà existant en cas d'association.");
         } else {
             // diriger le user vers FragmentDetails vierge
-            PhoneNumberDetailsFragment phoneNumberDetailsFragment = new PhoneNumberDetailsFragment(patient);
-            Bundle bundle = new Bundle();
-            bundle.putString(PHONE_NUMBER_TAG, patientPhoneNumberEdt.getText().toString());
-            bundle.putString(OPTION_TAG, UNIQUE_ITEM);
-            phoneNumberDetailsFragment.setArguments(bundle);
-            FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container_layout, phoneNumberDetailsFragment, "phoneNumberDetailsFragment");
-            fragTransaction.commit();
+            Intent intent = new Intent(this, PhoneNumberDetailsActivity.class);
+            intent.putExtra(PHONE_NUMBER_TAG, patientPhoneNumberEdt.getText().toString());
+            intent.putExtra(OPTION_TAG, UNIQUE_ITEM);
+            startActivity(intent);
         }
     }
 
     public void doYouConfirmTheAssociatedNumber(Patient patient, int associatedNumber) {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
         DialogFragmentAboutConfirmingAssociatedPhoneNumber dialog =
                 new DialogFragmentAboutConfirmingAssociatedPhoneNumber(this, patient, associatedNumber);
 
@@ -174,7 +169,7 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
     }
 
     public void doYouToContinueWithSuchUniquePhoneNumber(Patient patient) {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
         DialogFragmentAboutPhoneNumberConfirmation dialog =
                 new DialogFragmentAboutPhoneNumberConfirmation(this, patient);
 
@@ -185,13 +180,11 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
 
     public void openPhoneNumberDetailsFragmentAndInflatePatientObject(Patient patient, String option) {
         // diriger le user vers FragmentDetails vierge
-        PhoneNumberDetailsFragment phoneNumberDetailsFragment = new PhoneNumberDetailsFragment(patient);
+        Intent intent = new Intent(this, PhoneNumberDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(PATIENT_OBJECT_TAG, patient);
         bundle.putString(OPTION_TAG, option);
-        phoneNumberDetailsFragment.setArguments(bundle);
-        FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_layout, phoneNumberDetailsFragment, "phoneNumberDetailsFragment");
-        fragTransaction.commit();
+        intent.putExtra(BUNDLE_EXTRA_TAG, bundle);
+        startActivity(intent);
     }
 }

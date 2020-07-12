@@ -10,9 +10,8 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.infectdistrack.view.PhoneNumberCheckoutFragment;
+import com.infectdistrack.view.PhoneNumberCheckoutActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,7 +26,7 @@ import static com.infectdistrack.model.Constants.SCRIPT_PATH;
 
 public class RetrievePatientDataUsingVolley {
 
-    private PhoneNumberCheckoutFragment phoneNumberCheckoutFragment;
+    private PhoneNumberCheckoutActivity phoneNumberCheckoutActivity;
     private RequestQueue requestQueue;
 
     private static final String TAG = "RetrievePatientData",
@@ -50,9 +49,9 @@ public class RetrievePatientDataUsingVolley {
     private Patient patient;
     private String selectedItem;
 
-    public RetrievePatientDataUsingVolley(PhoneNumberCheckoutFragment phoneNumberCheckoutFragment) {
-        this.phoneNumberCheckoutFragment = phoneNumberCheckoutFragment;
-        requestQueue = Volley.newRequestQueue(phoneNumberCheckoutFragment.getActivity());
+    public RetrievePatientDataUsingVolley(PhoneNumberCheckoutActivity phoneNumberCheckoutActivity) {
+        this.phoneNumberCheckoutActivity = phoneNumberCheckoutActivity;
+        requestQueue = Volley.newRequestQueue(phoneNumberCheckoutActivity);
     }
 
     public void setRequestType(String selectedItem) {
@@ -83,13 +82,13 @@ public class RetrievePatientDataUsingVolley {
                 } else
                     exceptionInfo = error.getMessage();
 
-                phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patient);
+                phoneNumberCheckoutActivity.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patient);
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put(PHONE_NUMBER_PK_TAG, phoneNumberCheckoutFragment.getPhoneNumber());
+                params.put(PHONE_NUMBER_PK_TAG, phoneNumberCheckoutActivity.getPhoneNumber());
                 params.put(PATIENT_REQUEST_TYPE, selectedItem);
 
                 return params;
@@ -139,7 +138,7 @@ public class RetrievePatientDataUsingVolley {
             Log.e(TAG, "JSONException : " + Log.getStackTraceString(e));
             Log.e(TAG, "response from PHP script : " + response);
         } finally {
-            phoneNumberCheckoutFragment.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patient);
+            phoneNumberCheckoutActivity.getPatientPhoneNumberFromVolley(exceptionInfo, isAlreadyRegistrated, patient);
         }
     }
 }

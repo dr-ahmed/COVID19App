@@ -7,23 +7,20 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.infectdistrack.model.Patient;
-import com.infectdistrack.presenter.NewUserController;
 
 import static com.infectdistrack.model.Constants.ASSOCIATED_ITEM;
-import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 
 public class DialogFragmentAboutConfirmingAssociatedPhoneNumber extends DialogFragment {
 
-    private PhoneNumberCheckoutFragment phoneNumberCheckoutFragment;
+    private PhoneNumberCheckoutActivity phoneNumberCheckoutActivity;
     private Patient patient;
     private int associatedNumber;
 
-    public DialogFragmentAboutConfirmingAssociatedPhoneNumber(PhoneNumberCheckoutFragment phoneNumberCheckoutFragment, Patient patient, int associatedNumber) {
-        this.phoneNumberCheckoutFragment = phoneNumberCheckoutFragment;
+    public DialogFragmentAboutConfirmingAssociatedPhoneNumber(PhoneNumberCheckoutActivity phoneNumberCheckoutActivity, Patient patient, int associatedNumber) {
+        this.phoneNumberCheckoutActivity = phoneNumberCheckoutActivity;
         this.patient = patient;
         this.associatedNumber = associatedNumber;
     }
@@ -38,7 +35,7 @@ public class DialogFragmentAboutConfirmingAssociatedPhoneNumber extends DialogFr
         dialogBuiler.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                phoneNumberCheckoutFragment.openPhoneNumberDetailsFragmentAndInflatePatientObject(patient, ASSOCIATED_ITEM);
+                phoneNumberCheckoutActivity.openPhoneNumberDetailsFragmentAndInflatePatientObject(patient, ASSOCIATED_ITEM);
             }
         });
         dialogBuiler.setNegativeButton("Non", null);

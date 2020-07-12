@@ -11,16 +11,15 @@ import androidx.fragment.app.DialogFragment;
 
 import com.infectdistrack.model.Patient;
 
-import static com.infectdistrack.model.Constants.ASSOCIATED_ITEM;
 import static com.infectdistrack.model.Constants.UNIQUE_ITEM;
 
 public class DialogFragmentAboutPhoneNumberConfirmation extends DialogFragment {
 
-    private PhoneNumberCheckoutFragment phoneNumberCheckoutFragment;
+    private PhoneNumberCheckoutActivity phoneNumberCheckoutActivity;
     private Patient patient;
 
-    public DialogFragmentAboutPhoneNumberConfirmation(PhoneNumberCheckoutFragment phoneNumberCheckoutFragment, Patient patient) {
-        this.phoneNumberCheckoutFragment = phoneNumberCheckoutFragment;
+    public DialogFragmentAboutPhoneNumberConfirmation(PhoneNumberCheckoutActivity phoneNumberCheckoutActivity, Patient patient) {
+        this.phoneNumberCheckoutActivity = phoneNumberCheckoutActivity;
         this.patient = patient;
     }
 
@@ -32,7 +31,7 @@ public class DialogFragmentAboutPhoneNumberConfirmation extends DialogFragment {
         dialogBuiler.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                phoneNumberCheckoutFragment.openPhoneNumberDetailsFragmentAndInflatePatientObject(patient, UNIQUE_ITEM);
+                phoneNumberCheckoutActivity.openPhoneNumberDetailsFragmentAndInflatePatientObject(patient, UNIQUE_ITEM);
             }
         });
         dialogBuiler.setNegativeButton("Non", null);
