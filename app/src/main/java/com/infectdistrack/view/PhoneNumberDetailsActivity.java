@@ -41,7 +41,7 @@ import static com.infectdistrack.model.Constants.setWilayasAndMoughataas;
 import static com.infectdistrack.model.Constants.wilayasAndMoughataas;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
 
-public class PhoneNumberDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class PhoneNumberDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private static final String TAG = "PhoneNumberDetailsActi";
 
@@ -142,7 +142,9 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Ada
         moughataaSpinner = findViewById(R.id.patient_moughataa_spinner);
 
         cancelBtn = findViewById(R.id.patient_cancel_btn);
+        cancelBtn.setOnClickListener(this);
         continueBtn = findViewById(R.id.patient_continue_btn);
+        continueBtn.setOnClickListener(this);
     }
 
     // Cette méthode permet de créer un adapter du spinner avec un seul élément qui est la wilaya ou la moughataa du patient
@@ -175,5 +177,14 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Ada
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.patient_cancel_btn) {
+            finish();
+        } else if (v.getId() == R.id.patient_continue_btn) {
+            // Lancer le formulaire de covid19
+        }
     }
 }
