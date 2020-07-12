@@ -1,16 +1,11 @@
 package com.infectdistrack.view;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.text.InputFilter;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,6 +16,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.infectdistrack.R;
 import com.infectdistrack.model.Patient;
@@ -36,14 +34,11 @@ import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
 import static com.infectdistrack.model.Constants.EMPTY_STRING;
 import static com.infectdistrack.model.Constants.OPTION_TAG;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
-import static com.infectdistrack.model.Constants.PHONE_NUMBER_PK_TAG;
 import static com.infectdistrack.model.Constants.PHONE_NUMBER_TAG;
 import static com.infectdistrack.model.Constants.UNIQUE_ITEM;
-import static com.infectdistrack.model.Constants.USER_TYPE_LIST;
 import static com.infectdistrack.model.Constants.setWilayasAndMoughataas;
 import static com.infectdistrack.model.Constants.wilayasAndMoughataas;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
-import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
 
 public class PhoneNumberDetailsActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
         AdapterView.OnItemSelectedListener, View.OnClickListener, DatePicker.OnDateChangedListener {
@@ -104,7 +99,6 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
                 if (bundle.getString(OPTION_TAG).equals(UNIQUE_ITEM)) {
                     phoneNumberEdt.setText(patient.getPhoneNumber());
                     setMaxLengthForPhoneNumberEditText(9);
-                    phoneNumberEdt.setEnabled(false);
                     nameEdt.setText(patient.getName());
                     nameEdt.setEnabled(false);
 
@@ -126,7 +120,6 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
                     if (bundle.getString(OPTION_TAG).equals(ASSOCIATED_ITEM)) {
                         phoneNumberEdt.setText(patient.getPhoneNumber());
                         setMaxLengthForPhoneNumberEditText(9);
-                        phoneNumberEdt.setEnabled(false);
                         birthDateTxt.setVisibility(View.GONE);
 
                         initWilayaSpinner();
@@ -142,12 +135,15 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
     private void initViews() {
         phoneNumberEdt = findViewById(R.id.patient_phone_number);
         nameEdt = findViewById(R.id.patient_name);
+
         radioGroup = findViewById(R.id.patient_gender_radio_group);
+        radioGroup.setOnCheckedChangeListener(this);
         genderM = findViewById(R.id.patient_male_item);
         genderF = findViewById(R.id.patient_female_item);
 
         birthDateTxt = findViewById(R.id.patient_birth_date_edt_textview);
         birthDateDtPicker = findViewById(R.id.patient_birth_date_edt_datepicker);
+        birthDateDtPicker.init(1960, 10, 28, this);
 
         wilayaSpinner = findViewById(R.id.patient_wilaya_spinner);
         moughataaLayout = findViewById(R.id.patient_moughataa_layout);
@@ -217,6 +213,9 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
                     - Sinon, on alerte le user
              */
 
+            if (patient == null)
+                patient = new Patient();
+
             if (isUserUnique || areAllViewsFilled())
                 launchCovid19Activity();
         }
@@ -233,8 +232,7 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
     private boolean areAllViewsFilled() {
 
         if (phoneNumberEdt.getText().toString().trim().isEmpty()) {
-            phoneNumberEdt.requestFocus();
-            phoneNumberEdt.setError("Le numéro de téléphone du patient est obligatoire!");
+            Toast.makeText(this, "ID invalide !", Toast.LENGTH_SHORT).show();
             return false;
         } else
             patient.setPhoneNumber(phoneNumberEdt.getText().toString());
@@ -244,10 +242,10 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
             nameEdt.setError("Le nom du patient est obligatoire!");
             return false;
         } else
-            patient.setPhoneNumber(nameEdt.getText().toString());
+            patient.setName(nameEdt.getText().toString());
 
         if (patientGender.isEmpty()) {
-            showProgressDialog(this, "Veuillez préciser le genre du patient");
+            showMessage(this, "Genre obligatoire", "Veuillez préciser le genre du patient");
             return false;
         } else
             patient.setGender(patientGender);
@@ -257,18 +255,18 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
         else if (isDateChanged)
             patient.setDateOfBirth(birthDateDtPicker.getDayOfMonth() + "/" + (birthDateDtPicker.getMonth() + 1) + "/" + birthDateDtPicker.getYear());
         else {
-            showProgressDialog(this, "Veuillez préciser la date du patient");
+            showMessage(this, "Date obligatoire", "Veuillez préciser la date du patient");
             return false;
         }
 
         if (wilayaSpinner.getSelectedItem().equals(DEFAULT_WILAYA)) {
-            showProgressDialog(this, "Veuillez préciser la wilaya du patient");
+            showMessage(this, "Wilaya obligatoire", "Veuillez préciser la wilaya du patient");
             return false;
         } else
             patient.setWilaya(wilayaSpinner.getSelectedItem().toString());
 
         if (moughataaSpinner.getSelectedItem().equals(EMPTY_STRING)) {
-            showProgressDialog(this, "Veuillez préciser la wilaya du patient");
+            showMessage(this, "Moughataa obligatoire", "Veuillez préciser la moughataa du patient");
             return false;
         } else
             patient.setMoughataa(moughataaSpinner.getSelectedItem().toString());
@@ -278,6 +276,7 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
 
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        isDateChanged = true;
+        if (view.getId() == R.id.patient_birth_date_edt_datepicker)
+            isDateChanged = true;
     }
 }

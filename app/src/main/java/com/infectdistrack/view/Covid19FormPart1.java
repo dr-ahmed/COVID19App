@@ -72,7 +72,7 @@ public class Covid19FormPart1 extends Fragment implements DatePicker.OnDateChang
         patientSuspectedCasesRadioGroup = rootView.findViewById(R.id.patient_suspected_cases_radio_group);
         patientSuspectedCasesRadioGroup.setOnCheckedChangeListener(this);
 
-        patientAgeDatePicker = rootView.findViewById(R.id.patient_birth_date_edt_datepicker);
+        patientAgeDatePicker = rootView.findViewById(R.id.patient_birth_date_edt_datepickerXXX);
         patientAgeDatePicker.init(1960, 10, 28, this);
 
         patientWilayaSpinner = rootView.findViewById(R.id.patient_wilaya_spinnerXXXX);
@@ -208,7 +208,7 @@ public class Covid19FormPart1 extends Fragment implements DatePicker.OnDateChang
 
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        if (view.getId() == R.id.patient_birth_date_edt_datepicker)
+        if (view.getId() == R.id.patient_birth_date_edt_datepickerXXX)
             isDateChanged = true;
     }
 }

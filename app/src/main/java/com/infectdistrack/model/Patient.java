@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 public class Patient implements Parcelable {
     private String phoneNumber, name, gender, dateOfBirth, wilaya, moughataa;
 
+    public Patient() {
+    }
+
     public Patient(String phoneNumber, String name, String gender, String dateOfBirth, String wilaya, String moughataa) {
         this.phoneNumber = phoneNumber;
         this.name = name;
