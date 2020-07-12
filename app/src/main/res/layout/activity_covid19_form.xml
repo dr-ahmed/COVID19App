@@ -4,9 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical"
+    android:padding="10dp"
     android:weightSum="100"
     tools:context=".view.Covid19FormActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Formulaire COVID-19"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <com.infectdistrack.view.CustomViewPager
         android:id="@+id/view_pager"

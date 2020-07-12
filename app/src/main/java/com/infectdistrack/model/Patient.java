@@ -3,6 +3,8 @@ package com.infectdistrack.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 public class Patient implements Parcelable {
     private String phoneNumber, name, gender, dateOfBirth, wilaya, moughataa;
 
@@ -97,5 +99,16 @@ public class Patient implements Parcelable {
         dest.writeString(dateOfBirth);
         dest.writeString(wilaya);
         dest.writeString(moughataa);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Phone number : " + phoneNumber + "\n"
+                + "Name : " + name + "\n"
+                + "Gender : " + gender + "\n"
+                + "Date of birth : " + dateOfBirth + "\n"
+                + "Wilaya : " + wilaya + "\n"
+                + "Moughataa : " + moughataa;
     }
 }

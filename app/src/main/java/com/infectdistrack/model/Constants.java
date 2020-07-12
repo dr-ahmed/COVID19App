@@ -50,7 +50,7 @@ public class Constants {
             USER_CREATION_DATE_TAG = "creation_date",
             PHONE_NUMBER_PK_TAG = "phone_number_pk",
             PATIENT_REQUEST_TYPE = "patient_request_type",
-            PATIENT_OBJECT_TAG = "patientObject";
+            PATIENT_OBJECT_TAG = "patient_object_tag";
 
     public static final String EMPTY_STRING = "",
             DEFAULT_WILAYA = "Choisir la wilaya",

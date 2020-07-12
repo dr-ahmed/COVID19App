@@ -1,5 +1,6 @@
 package com.infectdistrack.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,21 +33,26 @@ import static android.view.View.VISIBLE;
 import static com.infectdistrack.model.Constants.ASSOCIATED_ITEM;
 import static com.infectdistrack.model.Constants.BUNDLE_EXTRA_TAG;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
+import static com.infectdistrack.model.Constants.EMPTY_STRING;
 import static com.infectdistrack.model.Constants.OPTION_TAG;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
+import static com.infectdistrack.model.Constants.PHONE_NUMBER_PK_TAG;
 import static com.infectdistrack.model.Constants.PHONE_NUMBER_TAG;
 import static com.infectdistrack.model.Constants.UNIQUE_ITEM;
 import static com.infectdistrack.model.Constants.USER_TYPE_LIST;
 import static com.infectdistrack.model.Constants.setWilayasAndMoughataas;
 import static com.infectdistrack.model.Constants.wilayasAndMoughataas;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
+import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
 
-public class PhoneNumberDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class PhoneNumberDetailsActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
+        AdapterView.OnItemSelectedListener, View.OnClickListener, DatePicker.OnDateChangedListener {
 
     private static final String TAG = "PhoneNumberDetailsActi";
 
     private EditText phoneNumberEdt, nameEdt;
     private RadioGroup radioGroup;
+    private String patientGender = "";
     private RadioButton genderM, genderF;
     private TextView birthDateTxt;
     private DatePicker birthDateDtPicker;
@@ -58,6 +64,9 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Ada
     private Button cancelBtn, continueBtn;
 
     private Patient patient;
+
+    private boolean isUserUnique = false;
+    private boolean isDateChanged = false;
 
     private void setMaxLengthForPhoneNumberEditText(int maxLengthofEditText) {
         phoneNumberEdt.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLengthofEditText)});
@@ -74,7 +83,8 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Ada
         // Si le user saisit un ID qui n'existe pas dans la BD et choisit l'option Unique
         if (getIntent().getStringExtra(OPTION_TAG) != null && getIntent().getStringExtra(OPTION_TAG).equals(UNIQUE_ITEM)
                 && getIntent().getStringExtra(PHONE_NUMBER_TAG) != null) {
-            phoneNumberEdt.setText(getIntent().getStringExtra(PHONE_NUMBER_TAG));
+            String phoneNumber = getIntent().getStringExtra(PHONE_NUMBER_TAG);
+            phoneNumberEdt.setText(phoneNumber);
             setMaxLengthForPhoneNumberEditText(8);
             birthDateTxt.setVisibility(View.GONE);
 
@@ -110,6 +120,8 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Ada
 
                     initAdapterAndSpinner(wilayaAdapter, wilayaSpinner, patient.getWilaya());
                     initAdapterAndSpinner(moughataaAdapter, moughataaSpinner, patient.getMoughataa());
+
+                    isUserUnique = true;
                 } else // Si le user choisit l'option Associé, on affiche le phone number dans l'edittext et on le désactive. Les autres Views restent enabled
                     if (bundle.getString(OPTION_TAG).equals(ASSOCIATED_ITEM)) {
                         phoneNumberEdt.setText(patient.getPhoneNumber());
@@ -147,6 +159,14 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Ada
         continueBtn.setOnClickListener(this);
     }
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (checkedId == R.id.patient_male_item)
+            patientGender = "M";
+        else if (checkedId == R.id.patient_female_item)
+            patientGender = "F";
+    }
+
     // Cette méthode permet de créer un adapter du spinner avec un seul élément qui est la wilaya ou la moughataa du patient
     // et  affiche la wilaya ou la moughataa sur le spinner via SetSelection
     private void initAdapterAndSpinner(ArrayAdapter<String> adapter, Spinner spinner, String item) {
@@ -181,10 +201,83 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Ada
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.patient_cancel_btn) {
+        if (v.getId() == R.id.patient_cancel_btn)
             finish();
-        } else if (v.getId() == R.id.patient_continue_btn) {
-            // Lancer le formulaire de covid19
+        else if (v.getId() == R.id.patient_continue_btn) {
+            /*
+                On peut basculer vers le formulaire de COVID-19 dans 3 cas :
+                1. si le user veut associer un nouveau identifiant à un identifiant deja existant
+                2. si le user veut remplir un nouveau formulaire pour un nouveau patient
+                3. si le user veut remplir un nouveau formulaire pour un patient deja existant
+
+                Pour s'assurer que les infos du patient sont deja fournies avant de basculer vers le formulaire de COVID-19, on vérifie :
+                - S'il s'agit de 3., on bascule.
+                - S'il s'agit de 1. ou 2., on vérifie si tous les champs sont remplis:
+                    - Si oui, on bascule
+                    - Sinon, on alerte le user
+             */
+
+            if (isUserUnique || areAllViewsFilled())
+                launchCovid19Activity();
         }
+    }
+
+    private void launchCovid19Activity() {
+        Log.e(TAG, "patient data : " + patient.toString());
+
+        Intent intent = new Intent(this, Covid19FormActivity.class);
+        intent.putExtra(PATIENT_OBJECT_TAG, patient);
+        startActivity(intent);
+    }
+
+    private boolean areAllViewsFilled() {
+
+        if (phoneNumberEdt.getText().toString().trim().isEmpty()) {
+            phoneNumberEdt.requestFocus();
+            phoneNumberEdt.setError("Le numéro de téléphone du patient est obligatoire!");
+            return false;
+        } else
+            patient.setPhoneNumber(phoneNumberEdt.getText().toString());
+
+        if (nameEdt.getText().toString().trim().isEmpty()) {
+            nameEdt.requestFocus();
+            nameEdt.setError("Le nom du patient est obligatoire!");
+            return false;
+        } else
+            patient.setPhoneNumber(nameEdt.getText().toString());
+
+        if (patientGender.isEmpty()) {
+            showProgressDialog(this, "Veuillez préciser le genre du patient");
+            return false;
+        } else
+            patient.setGender(patientGender);
+
+        if (birthDateTxt.getVisibility() == VISIBLE)
+            patient.setDateOfBirth(patientGender.isEmpty() ? "NONE!!!" : birthDateTxt.getText().toString());
+        else if (isDateChanged)
+            patient.setDateOfBirth(birthDateDtPicker.getDayOfMonth() + "/" + (birthDateDtPicker.getMonth() + 1) + "/" + birthDateDtPicker.getYear());
+        else {
+            showProgressDialog(this, "Veuillez préciser la date du patient");
+            return false;
+        }
+
+        if (wilayaSpinner.getSelectedItem().equals(DEFAULT_WILAYA)) {
+            showProgressDialog(this, "Veuillez préciser la wilaya du patient");
+            return false;
+        } else
+            patient.setWilaya(wilayaSpinner.getSelectedItem().toString());
+
+        if (moughataaSpinner.getSelectedItem().equals(EMPTY_STRING)) {
+            showProgressDialog(this, "Veuillez préciser la wilaya du patient");
+            return false;
+        } else
+            patient.setMoughataa(moughataaSpinner.getSelectedItem().toString());
+
+        return true;
+    }
+
+    @Override
+    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        isDateChanged = true;
     }
 }
