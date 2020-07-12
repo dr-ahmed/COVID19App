@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,12 @@ import com.infectdistrack.R;
 import com.infectdistrack.model.Patient;
 import com.infectdistrack.model.RetrievePatientDataUsingVolley;
 
+import static com.infectdistrack.model.Constants.ASSOCIATED_ITEM;
 import static com.infectdistrack.model.Constants.NO_INTERNET_CONNECTION;
+import static com.infectdistrack.model.Constants.OPTION_TAG;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
+import static com.infectdistrack.model.Constants.PHONE_NUMBER_TAG;
+import static com.infectdistrack.model.Constants.UNIQUE_ITEM;
 import static com.infectdistrack.model.Constants.YES;
 import static com.infectdistrack.model.Utilities.isPhoneNumberValid;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
@@ -35,9 +38,6 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
     private RadioGroup patientIdTypeRadioGroup;
     private Button checkoutBtn;
     private String selectedItem = "";
-
-    private final String UNIQUE_ITEM = "UNIQUE_ITEM", ASSOCIATED_ITEM = "ASSOCIATED_ITEM";
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -118,34 +118,32 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
 
     private void whenPatientIsAlreadyRegistrated(Patient patient) {
         if (selectedItem.equals(ASSOCIATED_ITEM)) { // demander au user de confirmer le numéro d'association
-            int associationNumber;
+            int associatedNumber;
             String associatedPhoneNumber;
             if (patient.getPhoneNumber().length() == 8) {
-                associationNumber = 1;
-                associatedPhoneNumber = patient.getPhoneNumber().concat(String.valueOf(associationNumber));
+                associatedNumber = 1;
+                associatedPhoneNumber = patient.getPhoneNumber().concat(String.valueOf(associatedNumber));
 
                 patient.setPhoneNumber(associatedPhoneNumber);
-                openPhoneNumberDetailsFragmentAndInflatePatientObject(patient);
+                doYouConfirmTheAssociatedNumber(patient, 0);
             } else if (patient.getPhoneNumber().length() == 9) {
-                associationNumber = Integer.parseInt(patient.getPhoneNumber().substring(patient.getPhoneNumber().length() - 1));
-                if (associationNumber == 9)
+                associatedNumber = Integer.parseInt(patient.getPhoneNumber().substring(patient.getPhoneNumber().length() - 1));
+                if (associatedNumber == 9)
                     showMessage(getActivity(), "Identifiant saturé", "Savez-vous que 9 identifiants sont déjà associés à celui-ci ?" +
                             " Vous ne pouvez donc plus lui associer des identifiants. Veuillez saisir un identifiant différent.");
                 else {
-                    associationNumber++;
+                    associatedNumber++;
                     String patientPhoneNumberWithoutAssociationNumber = patient.getPhoneNumber().substring(0, patient.getPhoneNumber().length() - 1);
-                    associatedPhoneNumber = patientPhoneNumberWithoutAssociationNumber.concat(String.valueOf(associationNumber));
+                    associatedPhoneNumber = patientPhoneNumberWithoutAssociationNumber.concat(String.valueOf(associatedNumber));
                     patient.setPhoneNumber(associatedPhoneNumber);
 
-                    openPhoneNumberDetailsFragmentAndInflatePatientObject(patient);
+                    doYouConfirmTheAssociatedNumber(patient, associatedNumber - 1);
                 }
             } else {
                 Toast.makeText(getActivity(), "Invalid ID length !", Toast.LENGTH_SHORT).show();
             }
         } else
-            // informer le user que ce patient existe deja et qu'il doit opter pour l'option associé ou saisir new different ID
-            showMessage(getActivity(), "Identifiant dupliqué", "Cet identifiant existe déjà, vous ne pouvez donc pas l'ajouter comme unique." +
-                    " Veuillez sélectionner l'option \"Associé\" ou saisir un autre ID s'il s'agit d'un nouveau identifiant unique.");
+            doYouToContinueWithSuchUniquePhoneNumber(patient);
     }
 
     private void whenPatientIsNotYetRegistrated(Patient patient) {
@@ -156,17 +154,41 @@ public class PhoneNumberCheckoutFragment extends Fragment implements View.OnClic
         } else {
             // diriger le user vers FragmentDetails vierge
             PhoneNumberDetailsFragment phoneNumberDetailsFragment = new PhoneNumberDetailsFragment(patient);
+            Bundle bundle = new Bundle();
+            bundle.putString(PHONE_NUMBER_TAG, patientPhoneNumberEdt.getText().toString());
+            bundle.putString(OPTION_TAG, UNIQUE_ITEM);
+            phoneNumberDetailsFragment.setArguments(bundle);
             FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container_layout, phoneNumberDetailsFragment, "phoneNumberDetailsFragment");
             fragTransaction.commit();
         }
     }
 
-    private void openPhoneNumberDetailsFragmentAndInflatePatientObject(Patient patient) {
+    public void doYouConfirmTheAssociatedNumber(Patient patient, int associatedNumber) {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        DialogFragmentAboutConfirmingAssociatedPhoneNumber dialog =
+                new DialogFragmentAboutConfirmingAssociatedPhoneNumber(this, patient, associatedNumber);
+
+        ft.add(dialog, "dialogFragmentAboutConfirmingAssociatedPhoneNumber");
+        ft.commit();
+    }
+
+    public void doYouToContinueWithSuchUniquePhoneNumber(Patient patient) {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        DialogFragmentAboutPhoneNumberConfirmation dialog =
+                new DialogFragmentAboutPhoneNumberConfirmation(this, patient);
+
+        ft.add(dialog, "dialogFragmentAboutConfirmingAssociatedPhoneNumber");
+        ft.commit();
+    }
+
+
+    public void openPhoneNumberDetailsFragmentAndInflatePatientObject(Patient patient, String option) {
         // diriger le user vers FragmentDetails vierge
         PhoneNumberDetailsFragment phoneNumberDetailsFragment = new PhoneNumberDetailsFragment(patient);
         Bundle bundle = new Bundle();
         bundle.putParcelable(PATIENT_OBJECT_TAG, patient);
+        bundle.putString(OPTION_TAG, option);
         phoneNumberDetailsFragment.setArguments(bundle);
         FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_layout, phoneNumberDetailsFragment, "phoneNumberDetailsFragment");

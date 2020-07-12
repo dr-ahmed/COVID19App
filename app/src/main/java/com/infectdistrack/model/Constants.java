@@ -62,6 +62,8 @@ public class Constants {
 
     public static LinkedHashMap<String, ArrayList<String>> wilayasAndMoughataas = new LinkedHashMap<>();
 
+    public final static String UNIQUE_ITEM = "UNIQUE_ITEM", ASSOCIATED_ITEM = "ASSOCIATED_ITEM", OPTION_TAG = "OPTION_TAG", PHONE_NUMBER_TAG = "PHONE_NUMBER_TAG";
+
     public static void setWilayasAndMoughataas() {
         wilayasAndMoughataas.put(DEFAULT_WILAYA, new ArrayList<>(Collections.singletonList(EMPTY_STRING)));
         wilayasAndMoughataas.put("Adrar", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Aoujeft", "Atar", "Chinguetti", "Ouadane")));

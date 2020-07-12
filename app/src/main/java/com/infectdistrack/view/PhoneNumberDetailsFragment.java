@@ -23,9 +23,14 @@ import com.infectdistrack.model.Patient;
 import java.util.ArrayList;
 import java.util.Set;
 
+import static com.infectdistrack.model.Constants.ASSOCIATED_ITEM;
+import static com.infectdistrack.model.Constants.OPTION_TAG;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
+import static com.infectdistrack.model.Constants.PHONE_NUMBER_TAG;
+import static com.infectdistrack.model.Constants.UNIQUE_ITEM;
 import static com.infectdistrack.model.Constants.setWilayasAndMoughataas;
 import static com.infectdistrack.model.Constants.wilayasAndMoughataas;
+import static com.infectdistrack.presenter.UIBasicController.showMessage;
 
 public class PhoneNumberDetailsFragment extends Fragment {
 
@@ -57,33 +62,54 @@ public class PhoneNumberDetailsFragment extends Fragment {
         setWilayasAndMoughataas();
         initViews();
 
-        if (getArguments() != null && getArguments().getParcelable(PATIENT_OBJECT_TAG) != null) {
-            patient = getArguments().getParcelable(PATIENT_OBJECT_TAG);
-            phoneNumberEdt.setText(patient.getPhoneNumber());
-            setMaxLengthForPhoneNumberEditText(19);//patient.getPhoneNumber().length()
-            phoneNumberEdt.setEnabled(false);
-            nameEdt.setText(patient.getName());
-            nameEdt.setEnabled(false);
-
-            if (patient.getGender().equals("M"))
-                genderM.setChecked(true);
-            else if (patient.getGender().equals("F"))
-                genderF.setChecked(true);
-            genderM.setEnabled(false);
-            genderF.setEnabled(false);
-
-            birthDateDtPicker.setVisibility(View.GONE);
-            birthDateTxt.setText(patient.getDateOfBirth());
-            wilayaSpinner.setSelection(new ArrayList<>(wilayaSet).indexOf(patient.getWilaya()));
-            wilayaSpinner.setEnabled(false);
-
-            ArrayList<String> moughataas = wilayasAndMoughataas.get(patient.getWilaya());
-            moughataaAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));
-            moughataaSpinner.setAdapter(moughataaAdapter);
-            moughataaSpinner.setSelection(moughataas.indexOf(patient.getMoughataa()));
-            moughataaSpinner.setEnabled(false);
-        } else
+        if (getArguments().getString(OPTION_TAG) != null && getArguments().getString(OPTION_TAG).equals(UNIQUE_ITEM)
+                && getArguments().getString(PHONE_NUMBER_TAG) != null) {
+            phoneNumberEdt.setText(getArguments().getString(PHONE_NUMBER_TAG));
+            setMaxLengthForPhoneNumberEditText(8);
             birthDateTxt.setVisibility(View.GONE);
+
+            return rootView;
+        }
+
+        if (getArguments().getParcelable(PATIENT_OBJECT_TAG) != null) {
+            patient = getArguments().getParcelable(PATIENT_OBJECT_TAG);
+
+            if (getArguments().getString(OPTION_TAG) != null) {
+                if (getArguments().getString(OPTION_TAG).equals(UNIQUE_ITEM)) {
+                    phoneNumberEdt.setText(patient.getPhoneNumber());
+                    setMaxLengthForPhoneNumberEditText(9);
+                    phoneNumberEdt.setEnabled(false);
+                    nameEdt.setText(patient.getName());
+                    nameEdt.setEnabled(false);
+
+                    if (patient.getGender().equals("M"))
+                        genderM.setChecked(true);
+                    else if (patient.getGender().equals("F"))
+                        genderF.setChecked(true);
+                    genderM.setEnabled(false);
+                    genderF.setEnabled(false);
+
+                    birthDateDtPicker.setVisibility(View.GONE);
+                    birthDateTxt.setText(patient.getDateOfBirth());
+                    wilayaSpinner.setSelection(new ArrayList<>(wilayaSet).indexOf(patient.getWilaya()));
+                    wilayaSpinner.setEnabled(false);
+
+                    ArrayList<String> moughataas = wilayasAndMoughataas.get(patient.getWilaya());
+                    moughataaAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));
+                    moughataaSpinner.setAdapter(moughataaAdapter);
+                    moughataaSpinner.setSelection(moughataas.indexOf(patient.getMoughataa()));
+                    moughataaSpinner.setEnabled(false);
+                } else if (getArguments().getString(OPTION_TAG).equals(ASSOCIATED_ITEM)) {
+                    phoneNumberEdt.setText(patient.getPhoneNumber());
+                    setMaxLengthForPhoneNumberEditText(9);
+                    phoneNumberEdt.setEnabled(false);
+                    birthDateTxt.setVisibility(View.GONE);
+                } else
+                    showMessage(getActivity(), "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 010)");
+            } else
+                showMessage(getActivity(), "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 011)");
+        } else
+            showMessage(getActivity(), "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 012)");
 
         return rootView;
     }
