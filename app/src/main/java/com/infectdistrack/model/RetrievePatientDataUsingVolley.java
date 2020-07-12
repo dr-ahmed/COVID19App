@@ -115,12 +115,15 @@ public class RetrievePatientDataUsingVolley {
                     else if (doesPatientExist.equals(YES)) {
                         if (!patientAsJSON.isNull(PATIENT_DATA_HEADER_OBJECT)) {
                             JSONObject patientDataObject = patientAsJSON.getJSONObject(PATIENT_DATA_HEADER_OBJECT);
-                            // Le LAST_ASSOCIATED_PHONE_NUMBER serait "null" si l'id n'existe pas en mode associé
+                            // Le LAST_ASSOCIATED_PHONE_NUMBER serait "null" si le user choisit l'option Associé et fournit un ID qui n'existe pas dans la BD
                             if (patientDataObject.has(LAST_ASSOCIATED_PHONE_NUMBER) && patientDataObject.getString(LAST_ASSOCIATED_PHONE_NUMBER).equals("null"))
                                 isAlreadyRegistrated = false;
                             else {
                                 isAlreadyRegistrated = true;
-                                patient = new Patient(patientDataObject.getString(PATIENT_PHONE_NUMBER),
+                                patient = new Patient(
+                                        // Si le user choisit l'option Associé, on récupère le dernier item associé via LAST_ASSOCIATED_PHONE_NUMBER
+                                        // Si le user choisit l'option Unique, on récuprère l'id du patient via PATIENT_PHONE_NUMBER
+                                        patientDataObject.getString(patientDataObject.has(LAST_ASSOCIATED_PHONE_NUMBER) ? LAST_ASSOCIATED_PHONE_NUMBER : PATIENT_PHONE_NUMBER),
                                         patientDataObject.getString(PATIENT_NAME),
                                         patientDataObject.getString(PATIENT_GENDER),
                                         patientDataObject.getString(PATIENT_BIRTH_DATE),
