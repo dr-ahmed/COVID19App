@@ -19,6 +19,7 @@ import com.infectdistrack.model.User;
 import com.infectdistrack.presenter.HomeController;
 
 import static com.infectdistrack.model.Constants.ADMIN_LABEL;
+import static com.infectdistrack.model.Constants.CURRENT_USER;
 import static com.infectdistrack.model.Constants.SUPER_ADMIN;
 import static com.infectdistrack.model.Constants.USER;
 import static com.infectdistrack.model.Constants.USER_LABEL;
@@ -151,15 +152,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public void launchPhoneNumberCheckoutActivity() {
         Intent intent = new Intent(this, PhoneNumberCheckoutActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("parentUser", currentUser);
-        intent.putExtra("parentUserBundle", bundle);
+        CURRENT_USER = currentUser;
         startActivity(intent);
     }
 
     public void launchCommunityWatchFragment() {
         Intent intent = new Intent(this, CommunityWatchActivity.class);
-        Bundle bundle = new Bundle();
         startActivity(intent);
     }
 

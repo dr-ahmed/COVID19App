@@ -110,4 +110,6 @@ public class Constants {
             PATIENT_COVID19_CONFIRMED = "patientCovidConfirm",
             PATIENT_EVOLUTION = "patientEvolution",
             FORM_ADDITION_DATE = "additionDate";
+
+    public static User CURRENT_USER;
 }

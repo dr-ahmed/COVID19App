@@ -10,10 +10,14 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.infectdistrack.R;
 import com.infectdistrack.model.Covid19Form;
+import com.infectdistrack.model.Patient;
 import com.infectdistrack.model.User;
 import com.infectdistrack.model.ViewPagerAdapter;
 
 import java.util.ArrayList;
+
+import static com.infectdistrack.model.Constants.CURRENT_USER;
+import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
 
 public class Covid19FormActivity extends AppCompatActivity {
 
@@ -27,6 +31,7 @@ public class Covid19FormActivity extends AppCompatActivity {
     private Covid19FormPart3 covid19FormPart3;
     private Covid19FormPart4 covid19FormPart4;
 
+    private Patient patient;
     private User parentUser;
     private Covid19Form covid19CurrentForm;
 
@@ -39,16 +44,18 @@ public class Covid19FormActivity extends AppCompatActivity {
     }
 
     private void init() {
-        try {
-            Bundle bundle = getIntent().getBundleExtra("parentUserBundle");
-            parentUser = bundle.getParcelable("parentUser");
+        if (CURRENT_USER == null) {
+            Toast.makeText(this, "Désolé, l'identifiant de l'utilisateur parent n'est pas valide !", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            parentUser = CURRENT_USER;
+            patient = getIntent().getParcelableExtra(PATIENT_OBJECT_TAG);
+
+            Log.e(TAG, "user : " + parentUser.getEmail());
+            Log.e(TAG, "patien : " + patient.getPhoneNumber());
 
             covid19CurrentForm = new Covid19Form();
             covid19CurrentForm.setParentUserId(parentUser.getId());
-        } catch (Exception e) {
-            Toast.makeText(this, "Désolé, l'identifiant de l'utilisateur parent n'est pas valide !", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "Prent user Id is not valid !!!!!");
-            return;
         }
 
         tabLayout = findViewById(R.id.tab_layout);
