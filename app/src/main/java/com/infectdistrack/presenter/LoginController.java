@@ -76,11 +76,14 @@ public class LoginController {
     }
 
     public void checkUserSessionData(Intent intent) {
-        if (userObjectFromSharedPrefs != null)  // Si les données du user sont deja sauvegardées dans les shared prefs, vérifier si elles sont encore conformes avec les infos in DB
+        // Si les données du user sont deja sauvegardées dans les shared prefs, vérifier si elles sont encore conformes avec les infos in DB
+        if (userObjectFromSharedPrefs != null) {
+            // afficher le mail du user dans l'edittext
+            loginActivity.getEmailEdt().setText(userObjectFromSharedPrefs.getEmail());
             checkUserSessionDataValidity();
-        else { // Si les données du user ne sont pas saved in shared prefs
-            if (isUserJustLoggedOut(intent) != null) { // Si le user vient de se déconnecter
-                loginActivity.getEmailEdt().setText(isUserJustLoggedOut(intent));
+        } else { // Si les données du user ne sont pas saved in shared prefs
+            if (getUserEmailFromSharedPrefs(intent) != null) { // Si le user vient de se déconnecter
+                loginActivity.getEmailEdt().setText(getUserEmailFromSharedPrefs(intent));
                 loginActivity.getPasswordEdt().requestFocus();
             } else // Si l'activity de Login est lancée pour la première fois (sans etre precédée pour une action de logging)
                 Log.e(TAG, "checkUserPrefs: empty session data !");
@@ -137,7 +140,7 @@ public class LoginController {
         sharedPrefsManager.clearUserData();
     }
 
-    private String isUserJustLoggedOut(Intent intent) {
+    private String getUserEmailFromSharedPrefs(Intent intent) {
         if (intent.hasExtra("userloggedOutBundle")) {
             try {
                 Bundle bundle = intent.getBundleExtra("userloggedOutBundle");

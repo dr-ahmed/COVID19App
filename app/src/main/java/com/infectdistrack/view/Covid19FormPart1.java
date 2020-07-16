@@ -20,7 +20,7 @@ public class Covid19FormPart1 extends Fragment {
 
     private View rootView;
     private TextView textView;
-    private CheckBox feverBox, astheniaBox, cephaleeBox, touxBox, dyspneeBox, malDeGorgeBox, rhiniteBox,
+    private CheckBox feverBox, astheniaBox, cephaleeBox, touxBox, dyspneeBox, malDeGorgeBox,
             congestionNasalBox, dysguesieBox, diarrheeBox, nauseesBox, otherSympBox, noSympBox;
     private Covid19Form covid19FormObject;
 
@@ -39,7 +39,7 @@ public class Covid19FormPart1 extends Fragment {
     }
 
     private void initViews(View rootView) {
-        textView = rootView.findViewById(R.id.form_symptomes_respiratoires_txt);
+        textView = rootView.findViewById(R.id.form_signes_primaires_txt);
 
         feverBox = rootView.findViewById(R.id.fever_chechbox);
         astheniaBox = rootView.findViewById(R.id.fever_chechbox);
@@ -47,7 +47,6 @@ public class Covid19FormPart1 extends Fragment {
         touxBox = rootView.findViewById(R.id.toux_chechbox);
         dyspneeBox = rootView.findViewById(R.id.dyspnee_chechbox);
         malDeGorgeBox = rootView.findViewById(R.id.mal_de_gorge_chechbox);
-        rhiniteBox = rootView.findViewById(R.id.rhinite_chechbox);
         congestionNasalBox = rootView.findViewById(R.id.fever_chechbox);
         dysguesieBox = rootView.findViewById(R.id.fever_chechbox);
         diarrheeBox = rootView.findViewById(R.id.diarrhee_chechbox);
@@ -58,7 +57,7 @@ public class Covid19FormPart1 extends Fragment {
 
     private boolean isAtLeastCheckboxChecked() {
         return feverBox.isChecked() || astheniaBox.isChecked() || cephaleeBox.isChecked() || touxBox.isChecked()
-                || dyspneeBox.isChecked() || malDeGorgeBox.isChecked() || rhiniteBox.isChecked()
+                || dyspneeBox.isChecked() || malDeGorgeBox.isChecked()
                 || congestionNasalBox.isChecked() || dysguesieBox.isChecked() || diarrheeBox.isChecked()
                 || nauseesBox.isChecked() || otherSympBox.isChecked() || noSympBox.isChecked();
     }
@@ -79,7 +78,7 @@ public class Covid19FormPart1 extends Fragment {
     }
 
     private void resetTextview() {
-        textView.setText("Symptômes respiratoires");
+        textView.setText("Signes primaires");
         textView.setTextColor(Color.DKGRAY);
     }
 
@@ -98,8 +97,6 @@ public class Covid19FormPart1 extends Fragment {
             symptoms.append("Dyspnée").append(";");
         if (malDeGorgeBox.isChecked())
             symptoms.append("Mal de gorge").append(";");
-        if (rhiniteBox.isChecked())
-            symptoms.append("Rhinite").append(";");
         if (congestionNasalBox.isChecked())
             symptoms.append("Congestion nasale").append(";");
         if (dysguesieBox.isChecked())
