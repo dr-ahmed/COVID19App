@@ -15,9 +15,11 @@ import android.widget.Toast;
 import com.infectdistrack.R;
 import com.infectdistrack.model.Patient;
 import com.infectdistrack.model.RetrievePatientDataUsingVolley;
+import com.infectdistrack.model.Utilities;
 
 import static com.infectdistrack.model.Constants.ASSOCIATED_ITEM;
 import static com.infectdistrack.model.Constants.BUNDLE_EXTRA_TAG;
+import static com.infectdistrack.model.Constants.DEVICE_NOT_CONNECTED_TO_INTERNET;
 import static com.infectdistrack.model.Constants.NO_INTERNET_CONNECTION;
 import static com.infectdistrack.model.Constants.OPTION_TAG;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
@@ -87,6 +89,11 @@ public class PhoneNumberCheckoutActivity extends AppCompatActivity implements Vi
 
             if (selectedItem.isEmpty()) {
                 showMessage(this, "Choix obligatoire", "Veuillez préciser si cet identifiant est unique ou associé !");
+                return;
+            }
+
+            if (Utilities.checkInternetConnectionAvailability().equals(DEVICE_NOT_CONNECTED_TO_INTERNET)) {
+                showMessage(this, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
                 return;
             }
 

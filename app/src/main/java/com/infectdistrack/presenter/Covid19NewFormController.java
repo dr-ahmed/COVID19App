@@ -10,7 +10,7 @@ import com.infectdistrack.model.Utilities;
 import com.infectdistrack.view.Covid19FormPart4;
 import com.infectdistrack.view.DialogFragmentForGoingBackAfterAddingForm;
 
-import static com.infectdistrack.model.Constants.NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
+import static com.infectdistrack.model.Constants.DEVICE_NOT_CONNECTED_TO_INTERNET;
 import static com.infectdistrack.model.Constants.SOCKET_TIMEOUT_EXCEPTION;
 import static com.infectdistrack.model.Utilities.getTodayDate;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
@@ -34,6 +34,11 @@ public class Covid19NewFormController {
     }
 
     public void insertForm() {
+        if (Utilities.checkInternetConnectionAvailability().equals(DEVICE_NOT_CONNECTED_TO_INTERNET)) {
+            showMessage(covid19FormPart4.getActivity(), "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
+            return;
+        }
+
         Covid19NewFormAsyncTask covid19NewFormAsyncTask = new Covid19NewFormAsyncTask(this);
         showProgressDialog(covid19FormPart4.getActivity(), "Insertion du formulaire en cours ...");
 

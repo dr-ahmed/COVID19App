@@ -101,6 +101,11 @@ public class NewUserController {
     }
 
     private void checkDuplicateUser() {
+        if (Utilities.checkInternetConnectionAvailability().equals(DEVICE_NOT_CONNECTED_TO_INTERNET)) {
+            showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
+            return;
+        }
+
         showProgressDialog(newUserActivity, "Vérification des informations du compte en cours ...");
 
         CheckDuplicateUserAsyncTask checkDuplicateUserAsyncTask = new CheckDuplicateUserAsyncTask(this);
@@ -124,6 +129,11 @@ public class NewUserController {
     }
 
     public void insertUser() {
+        if (Utilities.checkInternetConnectionAvailability().equals(DEVICE_NOT_CONNECTED_TO_INTERNET)) {
+            showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
+            return;
+        }
+
         NewUserAsyncTask newUserAsyncTask = new NewUserAsyncTask(this);
         try {
             String fullName = replaceApostrophe(newUserActivity.getNewUser().getFullName()),
@@ -203,6 +213,11 @@ public class NewUserController {
     }
 
     public void sendUserAccountInformationWithEmail() {
+        if (Utilities.checkInternetConnectionAvailability().equals(DEVICE_NOT_CONNECTED_TO_INTERNET)) {
+            showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
+            return;
+        }
+
         SendingMailAsyncTask sendingMailAsyncTask = new SendingMailAsyncTask(this);
         showProgressDialog(newUserActivity, "Envoi du courrier électronique en cours ...");
         sendingMailAsyncTask.execute(newUserActivity.getNewUserEmailEdt().getText().toString(), MAIL_SUBJECT, MAIL_ADDRESS);

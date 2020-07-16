@@ -24,10 +24,11 @@ import com.infectdistrack.presenter.LoginController;
 
 import java.security.NoSuchAlgorithmException;
 
-import static com.infectdistrack.model.Constants.NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
+import static com.infectdistrack.model.Constants.DEVICE_NOT_CONNECTED_TO_INTERNET;
 import static com.infectdistrack.model.Constants.SOCKET_TIMEOUT_EXCEPTION;
 import static com.infectdistrack.model.Utilities.SHA256;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
+import static com.infectdistrack.presenter.UIBasicController.showMessage;
 import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
 
 public class DialogFragmentToResetPasswordDuringFirstLogin extends DialogFragment {
@@ -104,6 +105,11 @@ public class DialogFragmentToResetPasswordDuringFirstLogin extends DialogFragmen
                         if (!newPasswordEdt.getText().toString().equals(newPasswordConfirmationEdt.getText().toString())) {
                             newPasswordConfirmationEdt.requestFocus();
                             newPasswordConfirmationEdt.setError("Le mot de passe et sa confirmation ne sont pas identiques!");
+                            return;
+                        }
+
+                        if (Utilities.checkInternetConnectionAvailability().equals(DEVICE_NOT_CONNECTED_TO_INTERNET)) {
+                            showMessage(loginController.getLoginActivity(), "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
                             return;
                         }
 

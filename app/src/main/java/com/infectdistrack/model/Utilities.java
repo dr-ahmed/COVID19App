@@ -16,7 +16,7 @@ import java.util.concurrent.TimeoutException;
 
 import static com.infectdistrack.model.Constants.ALLOWED_CHARACTERS;
 import static com.infectdistrack.model.Constants.NO;
-import static com.infectdistrack.model.Constants.NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
+import static com.infectdistrack.model.Constants.DEVICE_NOT_CONNECTED_TO_INTERNET;
 import static com.infectdistrack.model.Constants.YES;
 
 public class Utilities {
@@ -37,23 +37,19 @@ public class Utilities {
             return "Le numéro de téléphone doit commencer par 2, 3 ou 4";
     }
 
-    /**
-     * Voir les commentaires que j'ai mentionnées dans la méthode whenUserSessionDataIsSavedInSharedPrefs de la classe {@link com.infectdistrack.presenter.LoginController}
-     * pour plus de détails sur l'interpretation du retour de la méthode isInternetAvailable :)
-     */
-    public static String isInternetAvailable() {
+    public static String checkInternetConnectionAvailability() {
         String netAddress;
         try {
             netAddress = new InternetCheckingAsyncTask().execute("google.com").get(100, TimeUnit.MILLISECONDS);
             // La vérification ci-dessous provient de la condition (return address != null ? address.getHostAddress() : null) dans la classe InternetCheckingAsyncTask
-            return netAddress == null ? NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG : YES;
+            return netAddress == null ? DEVICE_NOT_CONNECTED_TO_INTERNET : YES;
             // Si netAddress = null, càd soit le phone n'est pas conencté à Internet, soit l'adresse pinguée n'est pas correcte
         } catch (Exception e) { // Ce catch permet de catcher InterruptedException, ExecutionException et TimeoutException
             Log.e(TAG, Log.getStackTraceString(e));
             // L'exception TimeoutException se déclanche si le phone est théoriquement connecté au net mais on arrive pas
             // à recevoir le résultat de ping au bout de 100 millisecondes. Voir les params de get : get(100, TimeUnit.MILLISECONDS)
             if (e instanceof TimeoutException)
-                return NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
+                return DEVICE_NOT_CONNECTED_TO_INTERNET;
             return NO;
         }
     }

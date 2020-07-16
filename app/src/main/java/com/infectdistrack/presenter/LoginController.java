@@ -1,22 +1,11 @@
 package com.infectdistrack.presenter;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.infectdistrack.R;
 import com.infectdistrack.model.CheckUserSessionDataValidityAsyncTask;
 import com.infectdistrack.model.LoginAsyncTask;
 import com.infectdistrack.model.SharedPrefsManager;
@@ -29,9 +18,8 @@ import com.infectdistrack.view.LoginActivity;
 
 import java.security.NoSuchAlgorithmException;
 
-import static com.infectdistrack.model.Constants.NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
+import static com.infectdistrack.model.Constants.DEVICE_NOT_CONNECTED_TO_INTERNET;
 import static com.infectdistrack.model.Constants.SOCKET_TIMEOUT_EXCEPTION;
-import static com.infectdistrack.model.Constants.YES;
 import static com.infectdistrack.model.Utilities.SHA256;
 import static com.infectdistrack.model.Utilities.replaceApostrophe;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
@@ -65,6 +53,13 @@ public class LoginController {
     }
 
     public void checkUserSessionDataValidity() {
+
+        // Si le phone n'est pas connecté au net ou s'il y est connecté mais la connexion est faible de sorte qu'on a pas pu faire un ping correctement
+        if (Utilities.checkInternetConnectionAvailability().equals(DEVICE_NOT_CONNECTED_TO_INTERNET)) {
+            showMessage(loginActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
+            return;
+        }
+
         CheckUserSessionDataValidityAsyncTask checkUserSessionDataValidityAsyncTask = new CheckUserSessionDataValidityAsyncTask(this);
         showProgressDialog(loginActivity, "Vérification des données de session ...");
         // L'appel de replaceApostrophe permet de gérer le ' (exemple : centre d'appels)
@@ -103,10 +98,7 @@ public class LoginController {
             // Si le phone n'est pas connecté au net ou s'il y est connecté mais la connexion est faible de sorte qu'on a pas pu faire un ping correctement
             if (exceptionInfo.equals(SOCKET_TIMEOUT_EXCEPTION))
                 showDialogFragmentWithLogOutOrTryAgainOptions();
-            else // A ce satde, isInternetAvailable peut retourner YES ou NO. YES veut dire que le phone est tout à fait connecté au net. Donc ça reflète pas une exception
-                // Par contre, arrivé là, cela peut faire signe de deux scénarios :
-                // soit une exception a eu lieu lors de l'exécution de la requete dans la classe CheckUserSessionDataValidityAsyncTask
-                // soit isInternetAvailable a retourné NO et donc une exception de type SocketTimeoutException, InterruptedException ou ExecutionException a eu lieu!
+            else
                 showMessage(loginActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 001)");
             //showMessageUsingDialogFragment(newUserActivity, "Exception", "Une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
         }
@@ -159,6 +151,11 @@ public class LoginController {
     }
 
     private void verifyUser() {
+        if (Utilities.checkInternetConnectionAvailability().equals(DEVICE_NOT_CONNECTED_TO_INTERNET)) {
+            showMessage(loginActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
+            return;
+        }
+
         LoginAsyncTask loginAsyncTask = new LoginAsyncTask(this);
         String email = loginActivity.getEmailEdt().getText().toString(), password = loginActivity.getPasswordEdt().getText().toString();
         try {

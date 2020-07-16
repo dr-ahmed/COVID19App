@@ -11,12 +11,13 @@
     tools:context=".view.Covid19FormActivity">
 
     <TextView
+        android:id="@+id/form_label_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:text="Formulaire COVID-19"
+        android:text="Diagnostic clinique"
         android:textColor="@color/black"
         android:textSize="20sp" />
 

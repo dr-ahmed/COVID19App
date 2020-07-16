@@ -9,10 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.infectdistrack.model.CheckDuplicateUserAsyncTask;
 import com.infectdistrack.presenter.NewUserController;
-
-import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
 
 public class DialogFragmentForAskingConfirmationWhenCreatingUser extends DialogFragment {
 
