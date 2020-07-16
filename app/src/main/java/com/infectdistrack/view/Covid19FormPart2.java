@@ -35,6 +35,7 @@ import static com.infectdistrack.model.Utilities.isPhoneNumberValid;
 public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChangedListener, AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "COVID19FormPart1";
+
     private View rootView;
     private EditText patientNameEdt, patientPhoneNumberEdt;
     private RadioGroup patientGenderRadioGroup, patientSuspectedCasesRadioGroup;
@@ -66,6 +67,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         patientNameEdt = rootView.findViewById(R.id.patient_name);
         patientPhoneNumberEdt = rootView.findViewById(R.id.patient_phone_number);
 
+        /*
         patientGenderRadioGroup = rootView.findViewById(R.id.patient_gender_radio_groupXXX);
         patientGenderRadioGroup.setOnCheckedChangeListener(this);
 
@@ -82,10 +84,13 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
 
         moughataaLayout = rootView.findViewById(R.id.patient_moughataa_layout);
         patientMoughataaSpinner = rootView.findViewById(R.id.patient_moughataa_spinnerXXX);
+
+         */
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        /*
         switch (group.getId()) {
             case R.id.patient_gender_radio_groupXXX: {
                 if (checkedId == R.id.male_item)
@@ -107,9 +112,12 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
                 }
             }
         }
+
+         */
     }
 
     public boolean isFieldEmpty() {
+        /*
         TextView genderTextView = rootView.findViewById(R.id.patient_gender_txt),
                 ageTextView = rootView.findViewById(R.id.patient_birth_date_txt_label),
                 wilayaTextView = rootView.findViewById(R.id.patient_wilaya_txtXXX),
@@ -165,6 +173,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         } else
             resetTextview(suspectTextView, "Cas suspects");
 
+        */
         return false;
     }
 
@@ -193,12 +202,14 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        /*
         if (parent.getId() == R.id.patient_wilaya_spinnerXXXX) {
             moughataaLayout.setVisibility(patientWilayaSpinner.getSelectedItem().toString().equals(DEFAULT_WILAYA) ? GONE : VISIBLE);
             ArrayList<String> moughataas = wilayasAndMoughataas.get(patientWilayaSpinner.getSelectedItem());
             patientMoughataaAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, moughataas.toArray(new String[moughataas.size()]));
             patientMoughataaSpinner.setAdapter(patientMoughataaAdapter);
         }
+         */
     }
 
     @Override
@@ -208,7 +219,9 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
 
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        /*
         if (view.getId() == R.id.patient_birth_date_edt_datepickerXXX)
             isDateChanged = true;
+         */
     }
 }

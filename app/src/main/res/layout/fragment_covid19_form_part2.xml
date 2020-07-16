@@ -4,146 +4,375 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    tools:context=".view.Covid19FormPart2">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:padding="10dp"
-        tools:context=".view.Covid19FormPart2">
+        android:padding="10dp">
 
-        <EditText
-            android:id="@+id/patient_name"
+        <LinearLayout
+            android:id="@+id/layout_for_consulter_medecin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nom"
-            android:inputType="text" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/patient_phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tel"
-            android:inputType="phone"
-            android:maxLength="8" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L'un des symptômes a-t-il obligé le patient à consulter un médecin ?"
+                android:textColor="#000" />
+
+            <RadioGroup
+                android:id="@+id/radio_group_for_consulter_medecin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/yes_item_from_consulter_medecin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Oui" />
+
+                <RadioButton
+                    android:id="@+id/no_item_from_consulter_medecin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/layout_for_structure_medecin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dans quelle structure est le médecin ?"
+                    android:textColor="#000" />
+
+                <RadioGroup
+                    android:id="@+id/radio_group_for_structure_medecin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/hopital_item_from_structure_medecin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hôpital" />
+
+                    <RadioButton
+                        android:id="@+id/pharmacie_item_from_structure_medecin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pharmacie" />
+
+                    <RadioButton
+                        android:id="@+id/centre_de_sante_item_from_structure_medecin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Centre de santé" />
+
+                    <RadioButton
+                        android:id="@+id/numero_vert_item_from_structure_medecin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Numéro vert" />
+
+                    <RadioButton
+                        android:id="@+id/clinique_prive_item_from_structure_medecin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Clinique privé" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_for_raison_de_pourquoi_du_patient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pourquoi? De quel problème s'agit-il ?"
+                    android:textColor="#000" />
+
+                <RadioGroup
+                    android:id="@+id/radio_group_for_raison_de_pourquoi_du_patient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/confiance_item_from_raison_de_pourquoi_du_patient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Confiance" />
+
+                    <RadioButton
+                        android:id="@+id/transport_item_from_raison_de_pourquoi_du_patient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Transport" />
+
+                    <RadioButton
+                        android:id="@+id/accessibilite_item_from_raison_de_pourquoi_du_patient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Accessibilité" />
+
+                    <RadioButton
+                        android:id="@+id/social_item_from_raison_de_pourquoi_du_patient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Social" />
+
+                    <RadioButton
+                        android:id="@+id/phobie_item_from_raison_de_pourquoi_du_patient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phobie" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L'un des symptômes a-t-il obligé le patient à s'absenter du travail ?"
+                android:textColor="#000" />
+
+            <RadioGroup
+                android:id="@+id/radio_group_for_sabsenter_du_travail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/yes_item_from_sabsenter_du_travail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Oui" />
+
+                <RadioButton
+                    android:id="@+id/no_item_from_sabsenter_du_travail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pour combien de jours ?"
+                android:textColor="#000" />
+
+            <NumberPicker
+                android:id="@+id/mber_main_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/patient_gender_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genre" />
+            android:text="Le patient était-il en contact avec une personne présumée ou confirmée atteinte de COVID-19 ?"
+            android:textColor="#000" />
 
         <RadioGroup
-            android:id="@+id/patient_gender_radio_groupXXX"
+            android:id="@+id/radio_group_for_atteint_de_covid19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/yes_item_from_atteint_de_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Oui" />
+
+            <RadioButton
+                android:id="@+id/no_item_from_atteint_de_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non" />
+
+            <RadioButton
+                android:id="@+id/not_know_item_from_atteint_de_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Il ne sait pas" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Niveau socio-économique"
+            android:textColor="#000" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_for_niveau_socio_economique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/yes_item_from_niveau_socio_economique"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Bas" />
+
+            <RadioButton
+                android:id="@+id/no_item_from_niveau_socio_economique"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Moyen" />
+
+            <RadioButton
+                android:id="@+id/not_know_item_from_niveau_socio_economique"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Élevé" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Le patient avait-il une condition pré-disposante ?"
+            android:textColor="#000" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_for_condition_pre_disposante"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/male_item"
+                android:id="@+id/yes_item_from_condition_pre_disposante"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Masculin" />
+                android:layout_marginRight="10dp"
+                android:text="Oui" />
 
             <RadioButton
-                android:id="@+id/female_item"
+                android:id="@+id/no_item_from_condition_pre_disposante"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Féminin" />
+                android:text="Non" />
         </RadioGroup>
-
-        <TextView
-            android:id="@+id/patient_birth_date_txt_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Date de naissance" />
-
-        <DatePicker
-            android:id="@+id/patient_birth_date_edt_datepickerXXX"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            android:spinnersShown="true" />
 
         <LinearLayout
+            android:id="@+id/layout_for_quelle_condition_pre_disposante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="10">
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:orientation="vertical">
+                android:text="Laquelle ?"
+                android:textColor="#000" />
 
-                <TextView
-                    android:id="@+id/patient_wilaya_txtXXX"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Wilaya" />
-
-                <Spinner
-                    android:id="@+id/patient_wilaya_spinnerXXXX"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/patient_moughataa_layout"
-                android:layout_width="0dp"
+            <CheckBox
+                android:id="@+id/asthme_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:orientation="vertical">
+                android:text="Asthme" />
 
-                <TextView
-                    android:id="@+id/patient_moughataa_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Moughataa" />
+            <CheckBox
+                android:id="@+id/autre_que_asthme_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Maladie respiratoire chronique (autre qu'asthme)" />
 
-                <Spinner
-                    android:id="@+id/patient_moughataa_spinnerXXX"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+            <CheckBox
+                android:id="@+id/hypertension_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Maladie cardiorespiratoire y compris l'hypertension artérielle" />
 
-            </LinearLayout>
+            <CheckBox
+                android:id="@+id/nephropathies_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Néphropathies" />
+
+            <CheckBox
+                android:id="@+id/hepatique_chronique_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Maladie hépatique chronique" />
+
+            <CheckBox
+                android:id="@+id/neuromusculaire_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Maladie neurologique ou neuromusculaire chronique" />
+
+            <CheckBox
+                android:id="@+id/diabete_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diabète sous insuline ou traitement oral par hypoglycémiant" />
+
+            <CheckBox
+                android:id="@+id/cancer_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancer" />
+
+            <CheckBox
+                android:id="@+id/grossesse_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grossesse ou allaitement" />
+
+            <CheckBox
+                android:id="@+id/obesite_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Obésité" />
+
+            <CheckBox
+                android:id="@+id/tabac_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tabac" />
+
+            <CheckBox
+                android:id="@+id/immunosuppression_hiv_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Immunosuppression (due à une maladie, y compris HIV)" />
+
+            <CheckBox
+                android:id="@+id/immunosuppression_traitement_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Immunosuppression (due à un traitement)" />
+
+            <CheckBox
+                android:id="@+id/autre_condition_chechbox_from_quelle_condition_pre_disposante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Autre condition médicale" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/patient_suspected_cases_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cas suspects" />
-
-        <RadioGroup
-            android:id="@+id/patient_suspected_cases_radio_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/direct_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contact direct" />
-
-            <RadioButton
-                android:id="@+id/direct_contact_with_symptoms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contact direct avec des symptômes" />
-
-            <RadioButton
-                android:id="@+id/patient_having_covid19_symptoms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Malade présentant des symptômes de COVID-19" />
-        </RadioGroup>
     </LinearLayout>
 </ScrollView>
