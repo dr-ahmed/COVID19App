@@ -115,7 +115,7 @@ public class NewUserController {
             } else
                 showMessage(newUserActivity, "Email déjà existant", "Désolé, cet email est deja utilsié, veuillez essayer un autre !");
         } else {
-            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
+            if (exceptionInfo.equals(SOCKET_TIMEOUT_EXCEPTION))
                 showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
                 showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 004)");
@@ -149,7 +149,7 @@ public class NewUserController {
         if (isUserAdded) {
             askAdminAboutSendingAccountInformation();
         } else {
-            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
+            if (exceptionInfo.equals(SOCKET_TIMEOUT_EXCEPTION))
                 showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
                 showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 006)");
@@ -208,14 +208,14 @@ public class NewUserController {
         sendingMailAsyncTask.execute(newUserActivity.getNewUserEmailEdt().getText().toString(), MAIL_SUBJECT, MAIL_ADDRESS);
     }
 
-    public void onMailSent(boolean noExceptionOccurred) {
+    public void onMailSent(String exceptionInfo) {
         hideProgressDialog();
-        if (noExceptionOccurred) {
+        if (exceptionInfo.isEmpty()) {
             newUserActivity.resetUIComponents();
             showMessage(newUserActivity, "Opération accomplie", "Le courrier a été envoyé avec succès.");
         } else {
             String title, message;
-            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG)) {
+            if (exceptionInfo.equals(SOCKET_TIMEOUT_EXCEPTION)) {
                 title = "Pas de connexion internet";
                 message = "Merci de vérifier votre connexion internet!";
             } else {

@@ -90,7 +90,9 @@ public class ResetPasswordDuringFirstLoginAsyncTask extends AsyncTask<String, In
             return result.toString();
         } catch (Exception e) {
             Log.e(TAG, "doInBackground: " + Log.getStackTraceString(e));
-            return "Exception name : " + e.getClass().getName() + "\nException message : " + e.getMessage();
+
+            return e.getClass().getName();
+            //return "Exception name : " + e.getClass().getName() + "\nException message : " + e.getMessage();
         }
     }
 

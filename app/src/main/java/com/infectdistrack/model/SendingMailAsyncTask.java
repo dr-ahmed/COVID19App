@@ -19,7 +19,6 @@ public class SendingMailAsyncTask extends AsyncTask<String, Void, String> {
     private static final String TAG = "SendingMailAsyncTask";
 
     private NewUserController newUserController;
-    private boolean isMailSent = true;
 
     public SendingMailAsyncTask(NewUserController newUserController) {
         this.newUserController = newUserController;
@@ -64,14 +63,15 @@ public class SendingMailAsyncTask extends AsyncTask<String, Void, String> {
             return "";
         } catch (Exception e) {
             Log.e(TAG, "doInBackground: " + Log.getStackTraceString(e));
-            isMailSent = false;
-            return "Exception name : " + e.getClass().getName() + "\nException message : " + e.getMessage();
+
+            return e.getClass().getName();
+            //return "Exception name : " + e.getClass().getName() + "\nException message : " + e.getMessage();
         }
     }
 
     @Override
-    protected void onPostExecute(String excpetionInfo) {
-        super.onPostExecute(excpetionInfo);
-        newUserController.onMailSent(isMailSent);
+    protected void onPostExecute(String exceptionInfo) {
+        super.onPostExecute(exceptionInfo);
+        newUserController.onMailSent(exceptionInfo);
     }
 }

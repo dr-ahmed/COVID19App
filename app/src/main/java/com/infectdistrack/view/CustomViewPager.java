@@ -32,23 +32,23 @@ public class CustomViewPager extends ViewPager {
 
         switch (getCurrentItem()) {
             case 0: {
-                pagingEnabled = parentActivity.isPart1FormDone();
-                if (pagingEnabled) {
-                    parentActivity.getCovid19FormPart1().setValues();
-                    return super.onInterceptTouchEvent(event);
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    parentActivity.getCovid19FormPart1().isFieldEmpty();
-                    return pagingEnabled;
-                }
-            }
-            break;
-            case 1: {
                 pagingEnabled = parentActivity.isPart2FormDone();
                 if (pagingEnabled) {
                     parentActivity.getCovid19FormPart2().setValues();
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    parentActivity.getCovid19FormPart2().IsCheckboxChecked();
+                    parentActivity.getCovid19FormPart2().isFieldEmpty();
+                    return pagingEnabled;
+                }
+            }
+            break;
+            case 1: {
+                pagingEnabled = parentActivity.isPart1FormDone();
+                if (pagingEnabled) {
+                    parentActivity.getCovid19FormPart1().setValues();
+                    return super.onInterceptTouchEvent(event);
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    parentActivity.getCovid19FormPart1().IsCheckboxChecked();
                     return pagingEnabled;
                 }
             }

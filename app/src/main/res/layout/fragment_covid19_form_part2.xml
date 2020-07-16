@@ -1,143 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:padding="10dp"
         tools:context=".view.Covid19FormPart2">
 
+        <EditText
+            android:id="@+id/patient_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nom"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/patient_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tel"
+            android:inputType="phone"
+            android:maxLength="8" />
+
         <TextView
-            android:id="@+id/patient_symptoms_txt"
+            android:id="@+id/patient_gender_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Symptômes" />
+            android:text="Genre" />
 
-        <CheckBox
-            android:id="@+id/fever_chechbox"
+        <RadioGroup
+            android:id="@+id/patient_gender_radio_groupXXX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fièvre ou sensation de fièvre" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/frisson_chechbox"
+            <RadioButton
+                android:id="@+id/male_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Masculin" />
+
+            <RadioButton
+                android:id="@+id/female_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Féminin" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/patient_birth_date_txt_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date de naissance" />
+
+        <DatePicker
+            android:id="@+id/patient_birth_date_edt_datepickerXXX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Frisson" />
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true" />
 
-        <CheckBox
-            android:id="@+id/asthenia_chechbox"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/patient_wilaya_txtXXX"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wilaya" />
+
+                <Spinner
+                    android:id="@+id/patient_wilaya_spinnerXXXX"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/patient_moughataa_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/patient_moughataa_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Moughataa" />
+
+                <Spinner
+                    android:id="@+id/patient_moughataa_spinnerXXX"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/patient_suspected_cases_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Asthénie" />
+            android:text="Cas suspects" />
 
-        <CheckBox
-            android:id="@+id/cephalee_chechbox"
+        <RadioGroup
+            android:id="@+id/patient_suspected_cases_radio_group"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Céphalée" />
+            android:layout_height="wrap_content">
 
-        <CheckBox
-            android:id="@+id/toux_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Toux" />
+            <RadioButton
+                android:id="@+id/direct_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact direct" />
 
-        <CheckBox
-            android:id="@+id/dyspnee_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dyspnée" />
+            <RadioButton
+                android:id="@+id/direct_contact_with_symptoms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact direct avec des symptômes" />
 
-        <CheckBox
-            android:id="@+id/mal_de_gorge_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mal de gorge" />
-
-        <CheckBox
-            android:id="@+id/rhinite_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rhinite" />
-
-        <CheckBox
-            android:id="@+id/anosmie_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Anosmie ou hyposomnie" />
-
-        <CheckBox
-            android:id="@+id/congestion_nasal_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Congestion nasale" />
-
-        <CheckBox
-            android:id="@+id/dysguesie_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Agueusie ou dysgénésie" />
-
-        <CheckBox
-            android:id="@+id/douleur_thoracique_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Douleur thoracique" />
-
-        <CheckBox
-            android:id="@+id/adenopathie_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Adénopathie" />
-
-        <CheckBox
-            android:id="@+id/trouble_de_conscience_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Trouble de conscience" />
-
-        <CheckBox
-            android:id="@+id/lesion_cutane_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lésion cutanée" />
-
-        <CheckBox
-            android:id="@+id/anorexie_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Anorexie" />
-
-        <CheckBox
-            android:id="@+id/diarrhee_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Diarrhée" />
-
-        <CheckBox
-            android:id="@+id/nausees_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nausées/vomissements" />
-
-        <CheckBox
-            android:id="@+id/no_symp_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aucun symptôme" />
-
-        <CheckBox
-            android:id="@+id/other_symp_chechbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Autres symptômes" />
-
+            <RadioButton
+                android:id="@+id/patient_having_covid19_symptoms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Malade présentant des symptômes de COVID-19" />
+        </RadioGroup>
     </LinearLayout>
 </ScrollView>

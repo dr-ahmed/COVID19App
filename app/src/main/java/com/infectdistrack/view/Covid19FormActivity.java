@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -47,12 +46,12 @@ public class Covid19FormActivity extends AppCompatActivity {
         if (CURRENT_USER == null) {
             Toast.makeText(this, "Désolé, l'identifiant de l'utilisateur parent n'est pas valide !", Toast.LENGTH_SHORT).show();
             return;
+        } else if (!getIntent().hasExtra(PATIENT_OBJECT_TAG)) {
+            Toast.makeText(this, "Désolé, l'identifiant du patient n'est pas valide !", Toast.LENGTH_SHORT).show();
+            return;
         } else {
             parentUser = CURRENT_USER;
             patient = getIntent().getParcelableExtra(PATIENT_OBJECT_TAG);
-
-            Log.e(TAG, "user : " + parentUser.getEmail());
-            Log.e(TAG, "patien : " + patient.getPhoneNumber());
 
             covid19CurrentForm = new Covid19Form();
             covid19CurrentForm.setParentUserId(parentUser.getId());
@@ -80,11 +79,11 @@ public class Covid19FormActivity extends AppCompatActivity {
     }
 
     public boolean isPart1FormDone() {
-        return !covid19FormPart1.isFieldEmpty();
+        return covid19FormPart1.IsCheckboxChecked();
     }
 
     public boolean isPart2FormDone() {
-        return covid19FormPart2.IsCheckboxChecked();
+        return !covid19FormPart2.isFieldEmpty();
     }
 
     public boolean isPart3FormDone() {

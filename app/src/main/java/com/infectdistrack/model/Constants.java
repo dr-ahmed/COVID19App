@@ -12,6 +12,7 @@ public class Constants {
 
     public static String YES = "YES",
             NO = "NO",
+            SOCKET_TIMEOUT_EXCEPTION = "java.net.SocketTimeoutException",
             NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG = "NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG";
 
     public static String POST_METHOD = "POST",

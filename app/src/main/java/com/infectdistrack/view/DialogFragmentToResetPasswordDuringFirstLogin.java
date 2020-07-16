@@ -25,6 +25,7 @@ import com.infectdistrack.presenter.LoginController;
 import java.security.NoSuchAlgorithmException;
 
 import static com.infectdistrack.model.Constants.NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
+import static com.infectdistrack.model.Constants.SOCKET_TIMEOUT_EXCEPTION;
 import static com.infectdistrack.model.Utilities.SHA256;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
@@ -130,7 +131,7 @@ public class DialogFragmentToResetPasswordDuringFirstLogin extends DialogFragmen
             } else
                 Toast.makeText(loginController.getLoginActivity(), "Désolé, une erreur s'est produite (Code d'erreur RP01)", Toast.LENGTH_LONG).show();
         } else {
-            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
+            if (exceptionInfo.equals(SOCKET_TIMEOUT_EXCEPTION))
                 Toast.makeText(loginController.getLoginActivity(), "Merci de vérifier votre connexion internet!", Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(loginController.getLoginActivity(), "Désolé, une erreur s'est produite (Code d'erreur RP02)", Toast.LENGTH_SHORT).show();

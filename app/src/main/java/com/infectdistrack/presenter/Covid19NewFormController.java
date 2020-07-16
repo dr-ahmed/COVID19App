@@ -11,6 +11,7 @@ import com.infectdistrack.view.Covid19FormPart4;
 import com.infectdistrack.view.DialogFragmentForGoingBackAfterAddingForm;
 
 import static com.infectdistrack.model.Constants.NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG;
+import static com.infectdistrack.model.Constants.SOCKET_TIMEOUT_EXCEPTION;
 import static com.infectdistrack.model.Utilities.getTodayDate;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
@@ -46,7 +47,7 @@ public class Covid19NewFormController {
         if (isFormAdded) {
             doYouWantToGoBack();
         } else {
-            if (Utilities.isInternetAvailable().equals(NO_CONNECTION_OR_TIMEOUT_EXCEPTION_TAG))
+            if (exceptionInfo.equals(SOCKET_TIMEOUT_EXCEPTION))
                 showMessage(covid19FormPart4.getActivity(), "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
                 showMessage(covid19FormPart4.getActivity(), "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 007)");

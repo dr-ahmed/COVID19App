@@ -222,7 +222,7 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
     }
 
     private void launchCovid19Activity() {
-        Log.e(TAG, "patient data : " + patient.toString());
+        //Log.e(TAG, "patient data : " + patient.toString());
 
         Intent intent = new Intent(this, Covid19FormActivity.class);
         intent.putExtra(PATIENT_OBJECT_TAG, patient);
