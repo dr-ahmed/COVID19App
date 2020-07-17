@@ -81,7 +81,7 @@ public class Constants {
         wilayasAndMoughataas.put("Hodh El Gharbi", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Aïoun El Atrouss", "Kobenni", "Tamchekett", "Tintane")));
         wilayasAndMoughataas.put("Inchiri", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Akjoujt")));
         wilayasAndMoughataas.put("Nouakchott-Nord", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Dar Naim", "Teyareth", "Toujounine")));
-        wilayasAndMoughataas.put("Nouakchott-Ouest", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Ksar", "Sebkha", "Tevragh Zeïna")));
+        wilayasAndMoughataas.put("Nouakchott-Ouest", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Ksar", "Sebkha", "Tevragh Zeina")));
         wilayasAndMoughataas.put("Nouakchott-Sud", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Araffat", "El Mina", "Riyadh")));
         wilayasAndMoughataas.put("Tagant", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Moudjeria", "Tichitt", "Tidjikdja")));
         wilayasAndMoughataas.put("Tiris Zemmour", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Bir Moghreïn", "F'Derick", "Zouerate")));

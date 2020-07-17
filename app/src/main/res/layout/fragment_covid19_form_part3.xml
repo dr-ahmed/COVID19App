@@ -2,69 +2,163 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".view.Covid19FormPart3">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:padding="10dp"
-        tools:context=".view.Covid19FormPart3">
+        android:padding="10dp">
 
         <TextView
-            android:id="@+id/terrain_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Terrain" />
+            android:text="Avez-vous fait un test COVID-19 ?"
+            android:textColor="#000" />
 
-        <CheckBox
-            android:id="@+id/diabete_box"
+        <RadioGroup
+            android:id="@+id/radio_group_for_test_covid19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Diabète" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/hta_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HTA / Cardiopathies" />
+            <RadioButton
+                android:id="@+id/yes_item_from_test_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Oui" />
 
-        <CheckBox
-            android:id="@+id/grossesse_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Grossesse" />
+            <RadioButton
+                android:id="@+id/no_item_from_test_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non" />
+        </RadioGroup>
 
-        <CheckBox
-            android:id="@+id/immuno_box"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Immunosuppression / Immunodépression" />
+            android:text="De quel test s'agit-il ?"
+            android:textColor="#000" />
 
-        <CheckBox
-            android:id="@+id/pathies_box"
+        <RadioGroup
+            android:id="@+id/radio_group_for_type_de_test_covid19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pneumopathies" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-        <CheckBox
-            android:id="@+id/fumeur_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fumeur" />
+            <RadioButton
+                android:id="@+id/depistage_item_from_type_de_test_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Dépistage" />
 
-        <CheckBox
-            android:id="@+id/autres_terrain_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Autres" />
+            <RadioButton
+                android:id="@+id/controle_item_from_type_de_test_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contrôle" />
+        </RadioGroup>
 
-        <CheckBox
-            android:id="@+id/aucun_terrain_box"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aucun" />
+            android:layout_marginBottom="5dp"
+            android:text="Date" />
+
+        <DatePicker
+            android:id="@+id/patient_birth_date_edt_datepicker"
+            style="@style/CustomDatPickerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_for_type_du_test_covid19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/tdr_item_from_type_du_test_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="TDR" />
+
+            <RadioButton
+                android:id="@+id/pcr_item_from_type_du_test_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PCR" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Résultat" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_for_resultat_type_du_test_covid19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/tdr_item_from_resultat_type_du_test_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Positif" />
+
+            <RadioButton
+                android:id="@+id/pcr_item_from_resultat_type_du_test_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Négatif" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Détails" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_for_details_test_tdr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/igm_item_from_details_test_tdr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="IgM" />
+
+            <RadioButton
+                android:id="@+id/igg_item_from_details_test_tdr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IgG" />
+
+            <RadioButton
+                android:id="@+id/not_know_item_from_details_test_tdr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Il ne sait pas" />
+        </RadioGroup>
+
     </LinearLayout>
 </ScrollView>

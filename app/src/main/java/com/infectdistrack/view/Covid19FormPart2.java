@@ -188,6 +188,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
     }
 
     public void setValues() {
+        /*
         covid19FormObject.setName(patientNameEdt.getText().toString());
         covid19FormObject.setPhoneNumber(patientPhoneNumberEdt.getText().toString());
         covid19FormObject.setGendre(patientGender);
@@ -196,6 +197,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         covid19FormObject.setAge(dateOfBirth);
         covid19FormObject.setWilaya(patientWilayaSpinner.getSelectedItem().toString());
         covid19FormObject.setSuspectedCases(patientSuspectedCasesDescription);
+         */
 
         //Log.e(TAG, covid19FormObject.toString());
     }

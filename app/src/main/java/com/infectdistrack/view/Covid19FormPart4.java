@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,16 +55,18 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
     }
 
     private void initViews(View rootView) {
-        confirmedCasesTxt = rootView.findViewById(R.id.confirmed_cases_covid19_txt);
+        /*
+        confirmedCasesTxt = rootView.findViewById(R.id.status_actuel_txt);
         evolutionTxt = rootView.findViewById(R.id.form_evolution_txt);
 
-        confirmedCasesRadioGroup = rootView.findViewById(R.id.patient_confirmed_cases_covid19_radio_group);
+        confirmedCasesRadioGroup = rootView.findViewById(R.id.radio_group_status_actuel);
         confirmedCasesRadioGroup.setOnCheckedChangeListener(this);
 
         evolutionRadioGroup = rootView.findViewById(R.id.patient_evolution_radio_group);
         evolutionRadioGroup.setOnCheckedChangeListener(this);
+         */
 
-        submitBtn = rootView.findViewById(R.id.patien_submit_button);
+        submitBtn = rootView.findViewById(R.id.patient_submit_button);
         submitBtn.setVisibility(View.GONE);
         submitBtn.setOnClickListener(this);
 
@@ -74,8 +75,9 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        /*
         switch (group.getId()) {
-            case R.id.patient_confirmed_cases_covid19_radio_group: {
+            case R.id.radio_group_status_actuel: {
                 if (checkedId == R.id.co_cov_tdr_item)
                     confirmedCasesValue = "TDR / ELISA positif";
                 else if (checkedId == R.id.co_cov_pcr_item)
@@ -105,6 +107,7 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
                 checkSpinners();
             }
         }
+        */
     }
 
     private void checkSpinners() {
@@ -135,7 +138,7 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.patien_submit_button) {
+        if (v.getId() == R.id.patient_submit_button) {
             setValues();
             Covid19NewFormController covid19NewFormController = new Covid19NewFormController(this);
             covid19NewFormController.insertForm();

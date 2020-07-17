@@ -175,16 +175,24 @@
                     android:text="Non" />
             </RadioGroup>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout_for_les_details_sabsenter_du_travail"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pour combien de jours ?"
-                android:textColor="#000" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <NumberPicker
-                android:id="@+id/mber_main_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pour combien de jours ?"
+                    android:textColor="#000" />
+
+                <NumberPicker
+                    android:id="@+id/nombre_de_jours_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
         </LinearLayout>
 
