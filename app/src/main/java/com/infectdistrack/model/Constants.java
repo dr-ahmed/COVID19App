@@ -10,8 +10,8 @@ import java.util.LinkedHashMap;
 public class Constants {
     private static final String TAG = "Constants";
 
-    public static String YES = "YES",
-            NO = "NO",
+    public static String OUI = "OUI", NON = "NON", NOT_KNOW = "SAIT_PAS", YES = "YES", NO = "NO",
+            BAS = "BAS", MOYEN = "MOYEN", ELEVE = "ELEVE",
             SOCKET_TIMEOUT_EXCEPTION = "java.net.SocketTimeoutException",
             DEVICE_NOT_CONNECTED_TO_INTERNET = "DEVICE_NOT_CONNECTED_TO_INTERNET";
 

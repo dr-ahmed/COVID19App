@@ -15,7 +15,7 @@
         android:padding="10dp">
 
         <LinearLayout
-            android:id="@+id/layout_for_consulter_medecin"
+            android:id="@+id/layout_for_symptoms_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -203,29 +203,61 @@
             android:textColor="#000" />
 
         <RadioGroup
-            android:id="@+id/radio_group_for_atteint_de_covid19"
+            android:id="@+id/radio_group_for_dernier_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <RadioButton
-                android:id="@+id/yes_item_from_atteint_de_covid19"
+                android:id="@+id/yes_item_from_dernier_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="Oui" />
 
             <RadioButton
-                android:id="@+id/no_item_from_atteint_de_covid19"
+                android:id="@+id/no_item_from_dernier_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Non" />
 
             <RadioButton
-                android:id="@+id/not_know_item_from_atteint_de_covid19"
+                android:id="@+id/not_know_item_from_dernier_contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Il ne sait pas" />
         </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/layout_for_details_du_dernier_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Numéro de téléphone de la personne suspecte" />
+
+            <EditText
+                android:id="@+id/phone_number_for_personne_suspecte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="À preciser" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Date du dernier contact" />
+
+            <DatePicker
+                android:id="@+id/dernier_contact_personne_suspecte_datepicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/CustomDatPickerStyle" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -239,20 +271,20 @@
             android:layout_height="wrap_content">
 
             <RadioButton
-                android:id="@+id/yes_item_from_niveau_socio_economique"
+                android:id="@+id/bas_item_from_niveau_socio_economique"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="Bas" />
 
             <RadioButton
-                android:id="@+id/no_item_from_niveau_socio_economique"
+                android:id="@+id/moyen_item_from_niveau_socio_economique"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Moyen" />
 
             <RadioButton
-                android:id="@+id/not_know_item_from_niveau_socio_economique"
+                android:id="@+id/eleve_item_from_niveau_socio_economique"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Élevé" />
@@ -381,6 +413,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Autre condition médicale" />
+
+            <EditText
+                android:id="@+id/autre_condition_from_condition_pre_disposante_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="À preciser" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -29,7 +29,9 @@ public class Covid19FormActivity extends AppCompatActivity {
     private TabLayout tabLayout;
 
     private Covid19FormPart1 covid19FormPart1;
-    private boolean symptomsLayoutVisibility = false;
+    // we set as true the default visibility of symptom layout car le checkbox noSympBox est par défaut non coché
+    // donc, on part du principe que si noSympBox est coché, on cache le symptom layout, sinon, on l'affiche
+    private boolean symptomsLayoutVisibility = true;
 
     private Covid19FormPart2 covid19FormPart2;
     private Covid19FormPart3 covid19FormPart3;

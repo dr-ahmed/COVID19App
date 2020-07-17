@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import com.infectdistrack.model.Covid19Form;
 
 public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
-    private static final String TAG = "COVID19FormPart2";
+    private static final String TAG = "COVID19FormPart1";
 
     private Covid19FormActivity covid19FormActivity;
     private View rootView;
@@ -87,7 +88,7 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
         switch (buttonView.getId()) {
             case R.id.no_symp_chechbox:
                 setEnabledAllOtherCheckBox(!isChecked);
-                covid19FormActivity.setSymptomsLayoutVisibility(isChecked);
+                covid19FormActivity.setSymptomsLayoutVisibility(!isChecked);
                 break;
             case R.id.autres_signes_de_gravite_chechbox:
                 autresSignesDeGraviteEdt.setVisibility(isChecked ? View.VISIBLE : View.GONE);

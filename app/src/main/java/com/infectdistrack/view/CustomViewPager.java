@@ -23,6 +23,8 @@ public class CustomViewPager extends ViewPager {
                         break;
                     case 1:
                         parentActivity.setFragmentCurrentLabel("Facteurs associés");
+                        // Mettre à jour la visibilité du layout des symptomes
+                        parentActivity.getCovid19FormPart2().setSymptomsLayoutVisibility();
                         break;
                     case 2:
                         parentActivity.setFragmentCurrentLabel("Dépistage ou contrôle");
