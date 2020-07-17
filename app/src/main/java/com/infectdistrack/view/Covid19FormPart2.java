@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 
 import com.infectdistrack.R;
@@ -27,7 +29,7 @@ import static com.infectdistrack.model.Constants.OUI;
 import static com.infectdistrack.model.Constants.YES;
 import static com.infectdistrack.model.Utilities.isPhoneNumberValid;
 
-public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChangedListener, RadioGroup.OnCheckedChangeListener {
+public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChangedListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "COVID19FormPart2";
 
@@ -40,9 +42,10 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
     private RadioGroup consulterMedecinRadioGroup, sabsenterDuTravailRadioGroup, dernierContactRadioGroup, niveauSocioEconomiqueRadioGroup, conditionPreDisposanteRadioGroup;
     private String reponseFromyesConsulter_medecin = "", reponseFromsabsenterDuTravail = "",
             reposerFromDernierContact = "", reponseFromNiveauSocioEconomique = "", reposerFromConditionPreDisposante = "";
+    private NumberPicker nombreDeJoursPicker;
     private EditText phoneNumberDernierContact, autreConditionPreDisposanteEdt;
     private DatePicker dernierContactDatePicker;
-    CheckBox asthmeChechbox, autreQuAsthmeChechbox, hypertensionChechbox, nephropathiesChechbox, hepatiqueChechbox, neuromusculaireChechbox, diabeteChechbox,
+    private CheckBox asthmeChechbox, autreQuAsthmeChechbox, hypertensionChechbox, nephropathiesChechbox, hepatiqueChechbox, neuromusculaireChechbox, diabeteChechbox,
             cancerChechbox, grossesseChechbox, obesiteChechbox, tabacChechbox, immunosuppressionChechbox, immunosuppressionTraitementChechbox, autreConditionChechbox;
 
     private Covid19Form covid19FormObject;
@@ -81,6 +84,11 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         dernierContactRadioGroup = rootView.findViewById(R.id.radio_group_for_dernier_contact);
         dernierContactRadioGroup.setOnCheckedChangeListener(this);
         phoneNumberDernierContact = rootView.findViewById(R.id.phone_number_for_personne_suspecte);
+
+        nombreDeJoursPicker = rootView.findViewById(R.id.nombre_de_jours_picker);
+        nombreDeJoursPicker.setMinValue(0);
+        nombreDeJoursPicker.setMaxValue(100);
+
         dernierContactDatePicker = rootView.findViewById(R.id.dernier_contact_personne_suspecte_datepicker);
         niveauSocioEconomiqueRadioGroup = rootView.findViewById(R.id.radio_group_for_niveau_socio_economique);
         niveauSocioEconomiqueRadioGroup.setOnCheckedChangeListener(this);
@@ -103,6 +111,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         immunosuppressionChechbox = rootView.findViewById(R.id.immunosuppression_hiv_chechbox_from_quelle_condition_pre_disposante);
         immunosuppressionTraitementChechbox = rootView.findViewById(R.id.immunosuppression_traitement_chechbox_from_quelle_condition_pre_disposante);
         autreConditionChechbox = rootView.findViewById(R.id.autre_condition_chechbox_from_quelle_condition_pre_disposante);
+        autreConditionChechbox.setOnCheckedChangeListener(this);
         autreConditionPreDisposanteEdt = rootView.findViewById(R.id.autre_condition_from_condition_pre_disposante_edt);
     }
 
@@ -230,5 +239,11 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         if (view.getId() == R.id.dernier_contact_personne_suspecte_datepicker)
             isDateChanged = true;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (buttonView.getId() == R.id.autre_condition_chechbox_from_quelle_condition_pre_disposante)
+            autreConditionPreDisposanteEdt.setVisibility(isChecked ? VISIBLE : GONE);
     }
 }
