@@ -74,7 +74,7 @@
 
         <DatePicker
             android:id="@+id/patient_birth_date_edt_datepicker"
-            style="@style/CustomDatPickerStyle"
+            android:theme="@style/CustomDatPickerStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

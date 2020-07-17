@@ -10,5 +10,6 @@
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
     <color name="darkerBrown">#9F5E53</color>
+    <color name="primaryBrown">#B37A70</color>
     <color name="progressDialogBackgroundColor">#F4D0CA</color>
 </resources>

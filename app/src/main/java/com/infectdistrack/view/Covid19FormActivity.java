@@ -3,7 +3,9 @@ package com.infectdistrack.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -22,10 +24,13 @@ public class Covid19FormActivity extends AppCompatActivity {
 
     private static final String TAG = "COVID19FormActivity";
 
+    private TextView fragmentCurrentLabel, errorLabelTextView;
     private CustomViewPager customViewPager;
     private TabLayout tabLayout;
 
     private Covid19FormPart1 covid19FormPart1;
+    private boolean symptomsLayoutVisibility = false;
+
     private Covid19FormPart2 covid19FormPart2;
     private Covid19FormPart3 covid19FormPart3;
     private Covid19FormPart4 covid19FormPart4;
@@ -57,6 +62,8 @@ public class Covid19FormActivity extends AppCompatActivity {
             covid19CurrentForm.setParentUserId(parentUser.getId());
         }
 
+        fragmentCurrentLabel = findViewById(R.id.fragment_current_label_txt);
+        errorLabelTextView = findViewById(R.id.error_label_txt);
         tabLayout = findViewById(R.id.tab_layout);
         customViewPager = findViewById(R.id.view_pager);
         customViewPager.setParentActivity(this);
@@ -76,6 +83,28 @@ public class Covid19FormActivity extends AppCompatActivity {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 1, fragments);
         customViewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(customViewPager, true);
+    }
+
+    public boolean getSymptomsLayoutVisibility() {
+        return symptomsLayoutVisibility;
+    }
+
+    public void setSymptomsLayoutVisibility(boolean symptomsLayoutVisibility) {
+        this.symptomsLayoutVisibility = symptomsLayoutVisibility;
+    }
+
+    public void setFragmentCurrentLabel(String fragmentTitle) {
+        fragmentCurrentLabel.setText(fragmentTitle);
+    }
+
+    public void setErrorMessage(String message) {
+        errorLabelTextView.setText(message);
+        errorLabelTextView.setTextColor(Color.RED);
+    }
+
+    public void resetErrorLabel() {
+        errorLabelTextView.setText("");
+        errorLabelTextView.setTextColor(Color.DKGRAY);
     }
 
     public boolean isPart1FormDone() {

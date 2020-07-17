@@ -19,7 +19,6 @@
             android:text="Aucun symptôme" />
 
         <TextView
-            android:id="@+id/form_signes_primaires_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Signes primaires" />
@@ -73,7 +72,6 @@
             android:text="Douleurs articulaires (arthralgies)" />
 
         <TextView
-            android:id="@+id/form_signes_secondaires_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Signes secondaires" />
@@ -115,7 +113,6 @@
             android:text="Perte de goût (agueusie)" />
 
         <TextView
-            android:id="@+id/form_signes_tertiaires_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Signes tertiaires" />
@@ -133,7 +130,7 @@
             android:text="Saignements de nez (épistaxis)" />
 
         <CheckBox
-            android:id="@+id/form_hemoptysie_txt"
+            android:id="@+id/hemoptysie_chechbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hémoptysie" />
@@ -151,13 +148,12 @@
             android:text="Éruption cutanée" />
 
         <TextView
-            android:id="@+id/form_signes_de_gravite_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Signes de gravité" />
 
         <CheckBox
-            android:id="@+id/dyspnee_chechbox"
+            android:id="@+id/essoufflement_chechbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Essoufflement (dyspnée)" />
@@ -180,8 +176,14 @@
             android:layout_height="wrap_content"
             android:text="Autres symptômes neurologiques" />
 
+        <EditText
+            android:id="@+id/autres_signes_de_gravite_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="À preciser"
+            android:visibility="gone" />
+
         <TextView
-            android:id="@+id/form_autres_symptomes_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Symptômes non mentionnés" />
@@ -191,5 +193,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Autres symptômes" />
+
+        <EditText
+            android:id="@+id/other_symp_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="À preciser"
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>

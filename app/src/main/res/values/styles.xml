@@ -16,9 +16,8 @@
     </style>
 
     <style name="CustomDatPickerStyle" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">#ff6d00</item>
-        <item name="colorAccent">#ff6d00</item>
-        <item name="colorControlActivated">#33691e</item>
+        <item name="colorAccent">@color/primaryBrown</item>
+        <item name="colorControlActivated">@color/primaryBrown</item>
         <item name="colorControlHighlight">#d50000</item>
     </style>
 

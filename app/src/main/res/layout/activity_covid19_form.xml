@@ -9,16 +9,24 @@
     tools:context=".view.Covid19FormActivity">
 
     <TextView
-        android:id="@+id/form_label_txt"
+        android:id="@+id/fragment_current_label_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="Diagnostic clinique"
         android:textColor="@color/black"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/error_label_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Message d'erreur" />
 
     <com.infectdistrack.view.CustomViewPager
         android:id="@+id/view_pager"
