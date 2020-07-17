@@ -151,4 +151,8 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
 
         //Log.e(TAG, covid19FormObject.toString());
     }
+
+    public boolean areAllRequiredFieldsCompleted() {
+        return false;
+    }
 }

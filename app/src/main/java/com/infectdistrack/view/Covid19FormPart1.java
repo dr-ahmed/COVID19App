@@ -37,6 +37,11 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
 
         rootView = inflater.inflate(R.layout.fragment_covid19_form_part1, container, false);
         covid19FormActivity = (Covid19FormActivity) getActivity();
+        /**
+         * L'appel de setFragmentCurrentLabel ici permet d'afficher le label pour la première fois sur le premier fragment car la méthode
+         * onPageSelected de la classe OnPageChangeListener de {@link CustomViewPager} ne serait appelée que lors de swiping entre les fragment du ViewPager.
+         */
+        covid19FormActivity.setFragmentCurrentLabel("Diagnostic clinique");
 
         initViews(rootView);
 
@@ -133,15 +138,9 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
 
     public boolean IsCheckboxChecked() {
         if (isAtLeastCheckboxChecked()) {
-            if (noEdittextIsEmpty()) {
-                covid19FormActivity.resetErrorLabel();
-                return true;
-            } else
-                return false;
-        } else {
-            covid19FormActivity.setErrorMessage("CHOIX OBLIGATOIRE !");
+            return noEdittextIsEmpty();
+        } else
             return false;
-        }
     }
 
     private boolean noEdittextIsEmpty() {
@@ -211,9 +210,9 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
             if (alterationCeConscienceBox.isChecked())
                 symptoms.append(alterationCeConscienceBox.getText()).append(";");
             if (autresSignesDeGraviteBox.isChecked())
-                symptoms.append(autresSignesDeGraviteBox.getText()).append(";");
+                symptoms.append(autresSignesDeGraviteBox.getText()).append(":").append(autresSignesDeGraviteEdt.getText()).append(";");
             if (otherSympBox.isChecked())
-                symptoms.append(otherSympBox.getText());
+                symptoms.append(otherSympBox.getText()).append(":").append(otherSympEdt.getText());
         }
 
         return symptoms.toString();

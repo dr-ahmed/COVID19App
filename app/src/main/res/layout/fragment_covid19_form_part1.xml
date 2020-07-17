@@ -178,7 +178,7 @@
 
         <EditText
             android:id="@+id/autres_signes_de_gravite_edittext"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="À preciser"
             android:visibility="gone" />
@@ -196,7 +196,7 @@
 
         <EditText
             android:id="@+id/other_symp_edittext"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="À preciser"
             android:visibility="gone" />

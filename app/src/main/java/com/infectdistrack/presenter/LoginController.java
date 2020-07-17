@@ -156,6 +156,11 @@ public class LoginController {
     private void verifyUser() {
         if (Utilities.checkInternetConnectionAvailability().equals(DEVICE_NOT_CONNECTED_TO_INTERNET)) {
             showMessage(loginActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
+            /**
+             * Faire disparaitre le ProgressDialog s'il n'y a pas de connexion internet
+             * Sinon, on va le faire disparaitre dans la méthode onLoginResponse lors de la recpetion de la réponse de {@link LoginAsyncTask}
+             */
+            hideProgressDialog();
             return;
         }
 

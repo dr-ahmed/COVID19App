@@ -15,7 +15,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Diagnostic clinique"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
@@ -25,8 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="Message d'erreur" />
+        android:gravity="center" />
 
     <com.infectdistrack.view.CustomViewPager
         android:id="@+id/view_pager"

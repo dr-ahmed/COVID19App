@@ -119,6 +119,10 @@ public class Covid19FormActivity extends AppCompatActivity {
         return covid19FormPart3.IsCheckboxChecked();
     }
 
+    public boolean isPart4FormDone() {
+        return covid19FormPart4.areAllRequiredFieldsCompleted();
+    }
+
     public Covid19FormPart1 getCovid19FormPart1() {
         return covid19FormPart1;
     }
