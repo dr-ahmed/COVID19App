@@ -94,7 +94,7 @@ public class Constants {
         wilayasAndMoughataas.put("Trarza", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Boutilimit", "Keurmacen", "Mederdra", "Ouad Naga", "R'Kiz", "Rosso")));
     }
 
-    public static final String STRUCTURES_SANITAIRES[] = {"CNC", "CNH", "INHV", "HCZ", "H Amitié", "H M-E", "CNO", "H Militaire", "H Khalifa",
+    public static final String STRUCTURES_SANITAIRES[] = {EMPTY_STRING, "CNC", "CNH", "INHV", "HCZ", "H Amitié", "H M-E", "CNO", "H Militaire", "H Khalifa",
             "Néma", "Aioun", "Kiffa", "Kaédi", "Sélibaby", "Aleg", "Rosso", "Atar", "Zoueratt", "Nouadhibou", "Tidjikdja", "Akjoujt"};
 
     public static final String SUPER_ADMIN = "SUPER_ADMIN",

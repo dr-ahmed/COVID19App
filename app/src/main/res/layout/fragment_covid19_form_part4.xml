@@ -146,6 +146,13 @@
                     android:text="Autre" />
             </RadioGroup>
 
+            <EditText
+                android:id="@+id/autre_a_preciser_pour_vivant_radiobutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="À preciser"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:id="@+id/details_hospitalisation_layout"
                 android:layout_width="match_parent"
@@ -174,13 +181,6 @@
                     android:id="@+id/structure_sanitaire_pour_hospitalisation_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
-                <EditText
-                    android:id="@+id/autre_a_preciser_pour_vivant_radiobutton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="À preciser"
-                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
