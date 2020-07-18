@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:padding="10dp">
@@ -39,114 +38,134 @@
                 android:text="Vivant" />
         </RadioGroup>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Date" />
-
-        <DatePicker
-            android:id="@+id/datepicker_pour_deces"
-            style="@style/CustomDatPickerStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Où fut le décès ?" />
-
-        <RadioGroup
-            android:id="@+id/radio_group_lieu_du_deces"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/domicile_item_from_lieu_du_deces"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Domicile" />
-
-            <RadioButton
-                android:id="@+id/structure_sanitaire_item_from_lieu_du_deces"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dans une structure sanitaire" />
-        </RadioGroup>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Durée d'hospitalisation" />
-
-        <NumberPicker
-            android:id="@+id/duree_d_hospitalisation_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Structure sanitaire" />
-
-        <Spinner
-            android:id="@+id/structure_sanitaire_pour_deces_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <RadioButton
-            android:id="@+id/hospitalisation_from_radiobutton_from_statut_actuel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hospitalisé" />
-
-        <RadioButton
-            android:id="@+id/confineça_domicile_radiobutton_from_statut_actuel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confiné à domicile" />
-
-        <RadioButton
-            android:id="@+id/gueri_radiobutton_from_statut_actuel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Guéri" />
-
-        <RadioButton
-            android:id="@+id/autre_radiobutton_from_statut_actuel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Autre" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Date d'admission" />
-
-        <DatePicker
-            android:id="@+id/datepicker_pour_hospitalisation"
-            android:theme="@style/CustomDatPickerStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Structure sanitaire" />
-
-        <Spinner
-            android:id="@+id/structure_sanitaire_pour_hospitalisation_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/autre_a_preciser_pour_vivant_radiobutton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="À preciser" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Date du décès" />
+
+            <DatePicker
+                android:id="@+id/datepicker_pour_deces"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/CustomDatPickerStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Où fut le décès ?" />
+
+            <RadioGroup
+                android:id="@+id/radio_group_lieu_du_deces"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/domicile_item_from_lieu_du_deces"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="À domicile" />
+
+                <RadioButton
+                    android:id="@+id/structure_sanitaire_item_from_lieu_du_deces"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dans une structure sanitaire" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/hospitalisation_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Durée d'hospitalisation" />
+
+                <NumberPicker
+                    android:id="@+id/duree_d_hospitalisation_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Structure sanitaire" />
+
+                <Spinner
+                    android:id="@+id/structure_sanitaire_pour_deces_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/hospitalisation_from_radiobutton_from_statut_actuel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hospitalisé" />
+
+            <RadioButton
+                android:id="@+id/confineça_domicile_radiobutton_from_statut_actuel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confiné à domicile" />
+
+            <RadioButton
+                android:id="@+id/gueri_radiobutton_from_statut_actuel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guéri" />
+
+            <RadioButton
+                android:id="@+id/autre_radiobutton_from_statut_actuel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Autre" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Date d'admission" />
+
+            <DatePicker
+                android:id="@+id/datepicker_pour_hospitalisation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/CustomDatPickerStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Structure sanitaire" />
+
+            <Spinner
+                android:id="@+id/structure_sanitaire_pour_hospitalisation_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/autre_a_preciser_pour_vivant_radiobutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="À preciser" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/patient_submit_button"
