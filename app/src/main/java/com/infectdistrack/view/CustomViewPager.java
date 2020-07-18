@@ -10,6 +10,7 @@ public class CustomViewPager extends ViewPager {
 
     private boolean pagingEnabled;
     private Covid19FormActivity parentActivity;
+    private final String NOTICE = "Champ obligatoire manquant !";
 
     public CustomViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -71,7 +72,7 @@ public class CustomViewPager extends ViewPager {
                     parentActivity.getCovid19FormPart1().setValues();
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    parentActivity.setErrorMessage("Veuillez cocher au moin une case !");
+                    parentActivity.setErrorMessage(NOTICE);
                     parentActivity.getCovid19FormPart1().IsCheckboxChecked();
                     return pagingEnabled;
                 }
@@ -84,7 +85,7 @@ public class CustomViewPager extends ViewPager {
                     parentActivity.getCovid19FormPart2().setValues();
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    parentActivity.setErrorMessage("Vous avez raté un champs obligatoire !");
+                    parentActivity.setErrorMessage(NOTICE);
                     parentActivity.getCovid19FormPart2().isFieldEmpty();
                     return pagingEnabled;
                 }
@@ -97,7 +98,7 @@ public class CustomViewPager extends ViewPager {
                     parentActivity.getCovid19FormPart3().setValues();
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    parentActivity.setErrorMessage("Vous avez raté un champs obligatoire !");
+                    parentActivity.setErrorMessage(NOTICE);
                     parentActivity.getCovid19FormPart3().IsCheckboxChecked();
                     return pagingEnabled;
                 }

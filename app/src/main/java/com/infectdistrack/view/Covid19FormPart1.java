@@ -26,7 +26,7 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
             perteDodoratBox, perteDeGoutBox, perteDappetiBox, saignementsDeNezBox, hemoptysieBox, conjonctiviteBox,
             eruptionCutaneeBox, essoufflementBox, convulsionsBox, alterationCeConscienceBox, autresSignesDeGraviteBox, otherSympBox;
     private EditText autresSignesDeGraviteEdt, otherSympEdt;
-    private final String PLEASE_SPECIFY_SYMPTOMS = "Veuillez préciser les symptômes !";
+    private final String PLEASE_SPECIFY_SYMPTOMS = "Veuillez préciser les autres symptômes !";
     private Covid19Form covid19FormObject;
 
     public Covid19FormPart1(Covid19Form covid19FormObject) {
@@ -38,11 +38,6 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
 
         rootView = inflater.inflate(R.layout.fragment_covid19_form_part1, container, false);
         covid19FormActivity = (Covid19FormActivity) getActivity();
-        /**
-         * L'appel de setFragmentCurrentLabel ici permet d'afficher le label pour la première fois sur le premier fragment car la méthode
-         * onPageSelected de la classe OnPageChangeListener de {@link CustomViewPager} ne serait appelée que lors de swiping entre les fragment du ViewPager.
-         */
-        covid19FormActivity.setFragmentCurrentLabel("Diagnostic clinique");
 
         initViews(rootView);
 

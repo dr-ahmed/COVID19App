@@ -16,6 +16,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
+        android:text="Diagnostic clinique"
         android:textColor="@color/black"
         android:textSize="20sp" />
 

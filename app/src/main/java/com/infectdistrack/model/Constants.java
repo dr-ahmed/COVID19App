@@ -95,7 +95,7 @@ public class Constants {
     }
 
     public static final String STRUCTURES_SANITAIRES[] = {EMPTY_STRING, "CNC", "CNH", "INHV", "HCZ", "H Amitié", "H M-E", "CNO", "H Militaire", "H Khalifa",
-            "Néma", "Aioun", "Kiffa", "Kaédi", "Sélibaby", "Aleg", "Rosso", "Atar", "Zoueratt", "Nouadhibou", "Tidjikdja", "Akjoujt"};
+            "H Néma", "H Aioun", "H Kiffa", "H Kaédi", "H Sélibaby", "H Aleg", "H Rosso", "H Atar", "H Zoueratt", "H Nouadhibou", "H Tidjikdja", "H Akjoujt"};
 
     public static final String SUPER_ADMIN = "SUPER_ADMIN",
             ADMIN = "ADMIN",
