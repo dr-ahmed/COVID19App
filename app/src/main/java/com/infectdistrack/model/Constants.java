@@ -15,6 +15,9 @@ public class Constants {
             DEPISTAGE = "DEPISTAGE", CONTROLE = "CONTROLE",
             POSITIF = "POSITIF", NEGATIF = "NEGATIF",
             IGG = "IGG", IGM = "IGM",
+            DECEDE = "DECEDE", VIVANT = "VIVANT",
+            DOMICILE = "DOMICILE", STRUCTURE_SANITAIRE = "STRUCTURE_SANITAIRE",
+            HOSPITALISE = "HOSPITALISE", CONFINE_A_DOMICILE = "CONFINE_A_DOMICILE", GUERI = "GUERI", AUTRE = "AUTRE",
             SOCKET_TIMEOUT_EXCEPTION = "java.net.SocketTimeoutException",
             DEVICE_NOT_CONNECTED_TO_INTERNET = "DEVICE_NOT_CONNECTED_TO_INTERNET";
 
@@ -90,6 +93,9 @@ public class Constants {
         wilayasAndMoughataas.put("Tiris Zemmour", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Bir Moghreïn", "F'Derick", "Zouerate")));
         wilayasAndMoughataas.put("Trarza", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Boutilimit", "Keurmacen", "Mederdra", "Ouad Naga", "R'Kiz", "Rosso")));
     }
+
+    public static final String STRUCTURES_SANITAIRES[] = {"CNC", "CNH", "INHV", "HCZ", "H Amitié", "H M-E", "CNO", "H Militaire", "H Khalifa",
+            "Néma", "Aioun", "Kiffa", "Kaédi", "Sélibaby", "Aleg", "Rosso", "Atar", "Zoueratt", "Nouadhibou", "Tidjikdja", "Akjoujt"};
 
     public static final String SUPER_ADMIN = "SUPER_ADMIN",
             ADMIN = "ADMIN",
