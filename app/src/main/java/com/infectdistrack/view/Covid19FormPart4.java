@@ -22,7 +22,6 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
     private static final String TAG = "COVID19FormPart4";
 
     private View rootView;
-    private TextView confirmedCasesTxt, evolutionTxt;
     private RadioGroup confirmedCasesRadioGroup, evolutionRadioGroup;
     private String confirmedCasesValue = "", evolutionValue = "";
     private Button submitBtn;
@@ -111,6 +110,7 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
     }
 
     private void checkSpinners() {
+        /*
         if (confirmedCasesValue.isEmpty()) {
             setRedTextview(confirmedCasesTxt);
             return;
@@ -122,18 +122,9 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
             return;
         } else
             resetTextview(evolutionTxt, "Évolution");
+         */
 
         submitBtn.setVisibility(View.VISIBLE);
-    }
-
-    private void setRedTextview(TextView textView) {
-        textView.setText("CHOIX OBLIGATOIRE");
-        textView.setTextColor(Color.RED);
-    }
-
-    private void resetTextview(TextView textView, String s) {
-        textView.setText(s);
-        textView.setTextColor(Color.DKGRAY);
     }
 
     @Override

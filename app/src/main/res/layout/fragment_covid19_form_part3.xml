@@ -39,126 +39,226 @@
                 android:text="Non" />
         </RadioGroup>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/depistage_controle_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="De quel test s'agit-il ?"
-            android:textColor="#000" />
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <RadioGroup
-            android:id="@+id/radio_group_for_type_de_test_covid19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/depistage_item_from_type_de_test_covid19"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="Dépistage" />
+                android:text="De quel test s'agit-il ?"
+                android:textColor="#000" />
 
-            <RadioButton
-                android:id="@+id/controle_item_from_type_de_test_covid19"
+            <RadioGroup
+                android:id="@+id/radio_group_for_type_de_test_covid19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contrôle" />
-        </RadioGroup>
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="Date" />
+                <RadioButton
+                    android:id="@+id/depistage_item_from_type_de_test_covid19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Dépistage" />
 
-        <DatePicker
-            android:id="@+id/patient_birth_date_edt_datepicker"
-            android:theme="@style/CustomDatPickerStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/controle_item_from_type_de_test_covid19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contrôle" />
+            </RadioGroup>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type" />
-
-        <RadioGroup
-            android:id="@+id/radio_group_for_type_du_test_covid19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/tdr_item_from_type_du_test_covid19"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout_for_type_et_date_de_test"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="TDR" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <RadioButton
-                android:id="@+id/pcr_item_from_type_du_test_covid19"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Date" />
+
+                <DatePicker
+                    android:id="@+id/date_test_datepicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/CustomDatPickerStyle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Type" />
+
+                <CheckBox
+                    android:id="@+id/tdr_item_from_type_du_test_covid19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="TDR" />
+
+                <CheckBox
+                    android:id="@+id/pcr_item_from_type_du_test_covid19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PCR" />
+
+                <CheckBox
+                    android:id="@+id/scanner_item_from_type_du_test_covid19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CT-scan" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_for_resultat_test_tdr"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PCR" />
-        </RadioGroup>
+                android:orientation="vertical"
+                android:visibility="gone">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Résultat" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Résultat TDR" />
 
-        <RadioGroup
-            android:id="@+id/radio_group_for_resultat_type_du_test_covid19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+                <RadioGroup
+                    android:id="@+id/radio_group_for_resultat_test_tdr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/tdr_item_from_resultat_type_du_test_covid19"
-                android:layout_width="wrap_content"
+                    <RadioButton
+                        android:id="@+id/positif_item_from_resultat_test_tdr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="Positif" />
+
+                    <RadioButton
+                        android:id="@+id/negatif_item_from_resultat_test_tdr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Négatif" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_for_details_test_tdr"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="Positif" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <RadioButton
-                android:id="@+id/pcr_item_from_resultat_type_du_test_covid19"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Détails" />
+
+                <RadioGroup
+                    android:id="@+id/radio_group_for_details_test_tdr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/igm_item_from_details_test_tdr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="IgM" />
+
+                    <RadioButton
+                        android:id="@+id/igg_item_from_details_test_tdr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IgG" />
+
+                    <RadioButton
+                        android:id="@+id/not_know_item_from_details_test_tdr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Il ne sait pas" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_for_resultat_test_pcr"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Négatif" />
-        </RadioGroup>
+                android:orientation="vertical"
+                android:visibility="gone">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Détails" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Résultat PCR" />
 
-        <RadioGroup
-            android:id="@+id/radio_group_for_details_test_tdr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+                <RadioGroup
+                    android:id="@+id/radio_group_for_resultat_test_pcr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/igm_item_from_details_test_tdr"
-                android:layout_width="wrap_content"
+                    <RadioButton
+                        android:id="@+id/tdr_item_from_resultat_test_pcr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="Positif" />
+
+                    <RadioButton
+                        android:id="@+id/pcr_item_from_resultat_test_pcr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Négatif" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_for_resultat_test_scanner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="IgM" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <RadioButton
-                android:id="@+id/igg_item_from_details_test_tdr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="IgG" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Résultat scanner" />
 
-            <RadioButton
-                android:id="@+id/not_know_item_from_details_test_tdr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Il ne sait pas" />
-        </RadioGroup>
+                <RadioGroup
+                    android:id="@+id/radio_group_for_resultat_test_scanner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/compatible_item_from_resultat_test_scanner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="Compatible" />
+
+                    <RadioButton
+                        android:id="@+id/incompatible_item_from_resultat_test_scanner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Incompatible" />
+                </RadioGroup>
+
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

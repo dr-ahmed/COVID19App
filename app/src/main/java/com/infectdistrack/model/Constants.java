@@ -12,6 +12,9 @@ public class Constants {
 
     public static String OUI = "OUI", NON = "NON", NOT_KNOW = "SAIT_PAS", YES = "YES", NO = "NO",
             BAS = "BAS", MOYEN = "MOYEN", ELEVE = "ELEVE",
+            DEPISTAGE = "DEPISTAGE", CONTROLE = "CONTROLE",
+            POSITIF = "POSITIF", NEGATIF = "NEGATIF",
+            IGG = "IGG", IGM = "IGM",
             SOCKET_TIMEOUT_EXCEPTION = "java.net.SocketTimeoutException",
             DEVICE_NOT_CONNECTED_TO_INTERNET = "DEVICE_NOT_CONNECTED_TO_INTERNET";
 
