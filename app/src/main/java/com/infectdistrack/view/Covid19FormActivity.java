@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.infectdistrack.model.ViewPagerAdapter;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
 import static com.infectdistrack.model.Constants.CURRENT_USER;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
 
@@ -100,6 +102,7 @@ public class Covid19FormActivity extends AppCompatActivity {
     }
 
     public void setErrorMessage(String message) {
+        errorLabelTextView.setVisibility(View.VISIBLE);
         errorLabelTextView.setText(message);
         errorLabelTextView.setTextColor(Color.RED);
     }
@@ -107,6 +110,7 @@ public class Covid19FormActivity extends AppCompatActivity {
     public void resetErrorLabel() {
         errorLabelTextView.setText("");
         errorLabelTextView.setTextColor(Color.DKGRAY);
+        errorLabelTextView.setVisibility(GONE);
     }
 
     public boolean isPart1FormDone() {
