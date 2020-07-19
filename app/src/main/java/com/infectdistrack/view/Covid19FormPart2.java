@@ -14,18 +14,29 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.infectdistrack.R;
 import com.infectdistrack.model.Covid19Form;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.infectdistrack.model.Constants.ACCESSIBILITE;
 import static com.infectdistrack.model.Constants.BAS;
+import static com.infectdistrack.model.Constants.CENTRE_SANTE;
+import static com.infectdistrack.model.Constants.CLINIQUE_PRIVEE;
+import static com.infectdistrack.model.Constants.CONFIANCE;
 import static com.infectdistrack.model.Constants.ELEVE;
+import static com.infectdistrack.model.Constants.HOPITAL;
 import static com.infectdistrack.model.Constants.MOYEN;
 import static com.infectdistrack.model.Constants.NON;
 import static com.infectdistrack.model.Constants.NOT_KNOW;
+import static com.infectdistrack.model.Constants.NUMERO_VERT;
 import static com.infectdistrack.model.Constants.OUI;
+import static com.infectdistrack.model.Constants.PHARMACIE;
+import static com.infectdistrack.model.Constants.PHOBIE;
+import static com.infectdistrack.model.Constants.SOCIAL;
+import static com.infectdistrack.model.Constants.TRANSPORT;
 import static com.infectdistrack.model.Constants.YES;
 import static com.infectdistrack.model.Utilities.isPhoneNumberValid;
 
@@ -39,9 +50,10 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
     private boolean isDateChanged = false;
     private LinearLayout symptomsLayout, structureMedecinLayout, raisonDePourquoiDuPatientLayout, detailsSabsenterDuTravailLayout,
             detailsDuDernierContactLayout, conditionPreDisposanteLayout;
-    private RadioGroup consulterMedecinRadioGroup, sabsenterDuTravailRadioGroup, dernierContactRadioGroup, niveauSocioEconomiqueRadioGroup, conditionPreDisposanteRadioGroup;
-    private String reponseFromyesConsulter_medecin = "", reponseFromsabsenterDuTravail = "",
-            reposerFromDernierContact = "", reponseFromNiveauSocioEconomique = "", reposerFromConditionPreDisposante = "";
+    private RadioGroup consulterMedecinRadioGroup, structureMedecinRadioGroup, raisonDePourquoiDuPatientRadioGroup, sabsenterDuTravailRadioGroup, dernierContactRadioGroup,
+            niveauSocioEconomiqueRadioGroup, conditionPreDisposanteRadioGroup;
+    private String responseFromConsulterMedecin = "", reponseFromStructureMededin = "", responseFromRaisondePourquoiDuPatient = "", responseFromsabsenterDuTravail = "",
+            resposerFromDernierContact = "", responseFromNiveauSocioEconomique = "", resposerFromConditionPreDisposante = "";
     private NumberPicker nombreDeJoursPicker;
     private EditText phoneNumberDernierContact, autreConditionPreDisposanteEdt;
     private DatePicker dernierContactDatePicker;
@@ -79,6 +91,10 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         conditionPreDisposanteLayout = rootView.findViewById(R.id.layout_for_quelle_condition_pre_disposante);
         consulterMedecinRadioGroup = rootView.findViewById(R.id.radio_group_for_consulter_medecin);
         consulterMedecinRadioGroup.setOnCheckedChangeListener(this);
+        structureMedecinRadioGroup = rootView.findViewById(R.id.radio_group_for_structure_medecin);
+        structureMedecinRadioGroup.setOnCheckedChangeListener(this);
+        raisonDePourquoiDuPatientRadioGroup = rootView.findViewById(R.id.radio_group_for_raison_de_pourquoi_du_patient);
+        raisonDePourquoiDuPatientRadioGroup.setOnCheckedChangeListener(this);
         sabsenterDuTravailRadioGroup = rootView.findViewById(R.id.radio_group_for_sabsenter_du_travail);
         sabsenterDuTravailRadioGroup.setOnCheckedChangeListener(this);
         dernierContactRadioGroup = rootView.findViewById(R.id.radio_group_for_dernier_contact);
@@ -141,52 +157,96 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
                 if (checkedId == R.id.yes_item_from_consulter_medecin) {
                     structureMedecinLayout.setVisibility(VISIBLE);
                     raisonDePourquoiDuPatientLayout.setVisibility(GONE);
-                    reponseFromyesConsulter_medecin = OUI;
+                    responseFromConsulterMedecin = OUI;
                 } else if (checkedId == R.id.no_item_from_consulter_medecin) {
-                    reponseFromyesConsulter_medecin = NON;
+                    responseFromConsulterMedecin = NON;
                     raisonDePourquoiDuPatientLayout.setVisibility(VISIBLE);
                     structureMedecinLayout.setVisibility(GONE);
                 }
             }
             break;
+            case R.id.radio_group_for_structure_medecin: {
+                switch (checkedId) {
+                    case R.id.hopital_item_from_structure_medecin:
+                        reponseFromStructureMededin = HOPITAL;
+                        break;
+                    case R.id.pharmacie_item_from_structure_medecin:
+                        reponseFromStructureMededin = PHARMACIE;
+                        break;
+                    case R.id.centre_de_sante_item_from_structure_medecin:
+                        reponseFromStructureMededin = CENTRE_SANTE;
+                        break;
+                    case R.id.numero_vert_item_from_structure_medecin:
+                        reponseFromStructureMededin = NUMERO_VERT;
+                        break;
+                    case R.id.clinique_prive_item_from_structure_medecin:
+                        reponseFromStructureMededin = CLINIQUE_PRIVEE;
+                        break;
+                    default: {
+                    }
+                }
+            }
+            break;
+            case R.id.radio_group_for_raison_de_pourquoi_du_patient: {
+                switch (checkedId) {
+                    case R.id.confiance_item_from_raison_de_pourquoi_du_patient:
+                        responseFromRaisondePourquoiDuPatient = CONFIANCE;
+                        break;
+                    case R.id.transport_item_from_raison_de_pourquoi_du_patient:
+                        responseFromRaisondePourquoiDuPatient = TRANSPORT;
+                        break;
+                    case R.id.accessibilite_item_from_raison_de_pourquoi_du_patient:
+                        responseFromRaisondePourquoiDuPatient = ACCESSIBILITE;
+                        break;
+                    case R.id.social_item_from_raison_de_pourquoi_du_patient:
+                        responseFromRaisondePourquoiDuPatient = SOCIAL;
+                        break;
+                    case R.id.phobie_item_from_raison_de_pourquoi_du_patient:
+                        responseFromRaisondePourquoiDuPatient = PHOBIE;
+                        break;
+                    default: {
+                    }
+                }
+            }
+            break;
             case R.id.radio_group_for_sabsenter_du_travail: {
                 if (checkedId == R.id.yes_item_from_sabsenter_du_travail) {
-                    reponseFromsabsenterDuTravail = OUI;
+                    responseFromsabsenterDuTravail = OUI;
                     detailsSabsenterDuTravailLayout.setVisibility(VISIBLE);
                 } else if (checkedId == R.id.no_item_from_sabsenter_du_travail) {
-                    reponseFromsabsenterDuTravail = NON;
+                    responseFromsabsenterDuTravail = NON;
                     detailsSabsenterDuTravailLayout.setVisibility(GONE);
                 }
             }
             break;
             case R.id.radio_group_for_dernier_contact: {
                 if (checkedId == R.id.yes_item_from_dernier_contact) {
-                    reposerFromDernierContact = OUI;
+                    resposerFromDernierContact = OUI;
                     detailsDuDernierContactLayout.setVisibility(VISIBLE);
                 } else if (checkedId == R.id.no_item_from_dernier_contact) {
-                    reposerFromDernierContact = NON;
+                    resposerFromDernierContact = NON;
                     detailsDuDernierContactLayout.setVisibility(GONE);
                 } else if (checkedId == R.id.not_know_item_from_dernier_contact) {
-                    reposerFromDernierContact = NOT_KNOW;
+                    resposerFromDernierContact = NOT_KNOW;
                     detailsDuDernierContactLayout.setVisibility(GONE);
                 }
             }
             break;
             case R.id.radio_group_for_niveau_socio_economique: {
                 if (checkedId == R.id.bas_item_from_niveau_socio_economique)
-                    reponseFromNiveauSocioEconomique = BAS;
+                    responseFromNiveauSocioEconomique = BAS;
                 else if (checkedId == R.id.moyen_item_from_niveau_socio_economique)
-                    reponseFromNiveauSocioEconomique = MOYEN;
+                    responseFromNiveauSocioEconomique = MOYEN;
                 else if (checkedId == R.id.eleve_item_from_niveau_socio_economique)
-                    reponseFromNiveauSocioEconomique = ELEVE;
+                    responseFromNiveauSocioEconomique = ELEVE;
             }
             break;
             case R.id.radio_group_for_condition_pre_disposante: {
                 if (checkedId == R.id.yes_item_from_condition_pre_disposante) {
-                    reposerFromConditionPreDisposante = OUI;
+                    resposerFromConditionPreDisposante = OUI;
                     conditionPreDisposanteLayout.setVisibility(VISIBLE);
                 } else if (checkedId == R.id.no_item_from_condition_pre_disposante) {
-                    reposerFromConditionPreDisposante = NON;
+                    resposerFromConditionPreDisposante = NON;
                     conditionPreDisposanteLayout.setVisibility(GONE);
                 }
             }
@@ -197,6 +257,37 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
     }
 
     public boolean isFieldEmpty() {
+
+        // Si le patient a des symptomes
+        if (symptomsLayout.getVisibility() == VISIBLE) {
+            // Si le user ne coche pas les deux radiobuttons relatifs aux symptomes
+            if (responseFromConsulterMedecin.isEmpty() || responseFromsabsenterDuTravail.isEmpty())
+                return true;
+            else { // Si le user coche les deux RadioGroups de symptomes
+
+                // si le patient a visité un médecin
+                if (responseFromConsulterMedecin.equals(OUI)) {
+                    if (reponseFromStructureMededin.isEmpty()) // si le patient ne précise pas la structure du médecin
+                        return true;
+                } else if (responseFromConsulterMedecin.equals(NON)) { // Si le user répond par Non
+                    if (responseFromRaisondePourquoiDuPatient.isEmpty()) // Si le user ne préciser pas le pouqruoiq du patient
+                        return true;
+                } else { // Si la réponse du user n'est ni OUI, ni NON !
+                    Toast.makeText(getActivity(), "Erreur P001", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
+                // si le patient s'est absenté du boulout
+                if (responseFromsabsenterDuTravail.equals(OUI)) {
+                    if (nombreDeJoursPicker.getValue() == 0) // Si le user ne précise pas le nombre de jours
+                        return true;
+                } else if (!responseFromsabsenterDuTravail.equals(NON)) { // Si la réponse du user n'est ni OUI, ni NON !
+                    Toast.makeText(getActivity(), "Erreur P002", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            }
+        }
+
         if (detailsDuDernierContactLayout.getVisibility() == VISIBLE) {
             String phoneNumberFeedback = isPhoneNumberValid(phoneNumberDernierContact.getText().toString());
             if (!phoneNumberFeedback.equals(YES)) {

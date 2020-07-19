@@ -41,7 +41,7 @@ public class Utilities {
     public static String checkInternetConnectionAvailability() {
         String netAddress;
         try {
-            netAddress = new InternetCheckingAsyncTask().execute("google.com").get(400, TimeUnit.MILLISECONDS);
+            netAddress = new InternetCheckingAsyncTask().execute("google.com").get(300, TimeUnit.MILLISECONDS);
             // La vérification ci-dessous provient de la condition (return address != null ? address.getHostAddress() : null) dans la classe InternetCheckingAsyncTask
             return netAddress == null ? DEVICE_NOT_CONNECTED_TO_INTERNET : YES;
             // Si netAddress = null, càd soit le phone n'est pas conencté à Internet, soit l'adresse pinguée n'est pas correcte

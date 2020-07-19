@@ -10,7 +10,10 @@ import java.util.LinkedHashMap;
 public class Constants {
     private static final String TAG = "Constants";
 
-    public static String OUI = "OUI", NON = "NON", NOT_KNOW = "SAIT_PAS", YES = "YES", NO = "NO",
+    public static String YES = "YES", NO = "NO",
+            OUI = "OUI", NON = "NON", NOT_KNOW = "SAIT_PAS",
+            HOPITAL = "HOPITAL", PHARMACIE = "PHARMACIE", CENTRE_SANTE = "CENTRE_SANTE", NUMERO_VERT = "NUMERO_VERT", CLINIQUE_PRIVEE = "CLINIQUE_PRIVE",
+            CONFIANCE = "CONFIANCE", TRANSPORT = "TRANSPORT", ACCESSIBILITE = "ACCESSIBILITE", SOCIAL = "SOCIAL", PHOBIE = "PHOBIE",
             BAS = "BAS", MOYEN = "MOYEN", ELEVE = "ELEVE",
             DEPISTAGE = "DEPISTAGE", CONTROLE = "CONTROLE",
             POSITIF = "POSITIF", NEGATIF = "NEGATIF",
