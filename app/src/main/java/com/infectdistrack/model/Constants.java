@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 public class Constants {
     private static final String TAG = "Constants";
 
-    public static String YES = "YES", NO = "NO",
+    public static final String YES = "YES", NO = "NO",
             OUI = "OUI", NON = "NON", NOT_KNOW = "SAIT_PAS",
             HOPITAL = "HOPITAL", PHARMACIE = "PHARMACIE", CENTRE_SANTE = "CENTRE_SANTE", NUMERO_VERT = "NUMERO_VERT", CLINIQUE_PRIVEE = "CLINIQUE_PRIVE",
             CONFIANCE = "CONFIANCE", TRANSPORT = "TRANSPORT", ACCESSIBILITE = "ACCESSIBILITE", SOCIAL = "SOCIAL", PHOBIE = "PHOBIE",
@@ -25,7 +25,7 @@ public class Constants {
             SOCKET_TIMEOUT_EXCEPTION = "java.net.SocketTimeoutException",
             DEVICE_NOT_CONNECTED_TO_INTERNET = "DEVICE_NOT_CONNECTED_TO_INTERNET";
 
-    public static String POST_METHOD = "POST",
+    public static final String POST_METHOD = "POST",
             SCRIPT_PATH = "https://www.amdrs.org/infectdisdb/",
             LOGIN_SCRIPT_NAME = "login.php",
             ADD_NEW_USER_SCRIPT_NAME = "add_new_user.php",
@@ -46,7 +46,7 @@ public class Constants {
 
     public static final int PASSWORD_SIZE = 8;
 
-    public static String USER_ID_TAG = "id",
+    public static final String USER_ID_TAG = "id",
             USER_FULL_NAME_TAG = "full_name",
             USER_FIRST_LOGIN_TAG = "first_login",
             USER_EMAIL_TAG = "email",
@@ -112,7 +112,7 @@ public class Constants {
 
     static final int READ_TIMEOUT = 10000, CONNECTION_TIMEOUT = 10000;
 
-    static String PARENT_USER_ID = "parentUserID",
+    static final String PARENT_USER_ID = "parentUserID",
             PATIENT_NAME = "patientName",
             PATIENT_PHONE_NUMBER = "patientTel",
             PATIENT_GENDER = "patientgenre",
