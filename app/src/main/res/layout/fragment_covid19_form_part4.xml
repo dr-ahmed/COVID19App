@@ -116,6 +116,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="De quel stade s'agit-il ?" />
+
             <RadioGroup
                 android:id="@+id/radio_group_details_vivant"
                 android:layout_width="wrap_content"
