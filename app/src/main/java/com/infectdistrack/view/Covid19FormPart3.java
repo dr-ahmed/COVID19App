@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +40,8 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
 
     private RadioGroup testCovid19RadioGroup, typeDeTestCovid19RadioGroup, resultatTestTDRRadioGroup, detailsTestTDRRadioGroup, resultatTestPCRRadioGroup,
             resultatTestScannerRadioGroup;
-    private String reponseFromTestCovid19 = "", reponseFromTypeDeTestCovid19 = "", reponseFromResultatTDR = "", reponseFromDetailsTDR = "",
-            reponseFromPCRTest = "", reponseFromScannerTest = "";
+    private String responseFromTestCovid19 = "", responseFromTypeDeTestCovid19 = "", responseFromResultatTDR = "", responseFromDetailsTDR = "",
+            responseFromPCRTest = "", responseFromScannerTest = "";
     private LinearLayout depistageControleLayout, typeEtDateDeTestLayout, resultatTestTDRLayout, detailsTestTDRLayout,
             resultatTestPCRLayout, resultatTestScannerLayout;
     private DatePicker datePicker;
@@ -108,20 +107,20 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
             case R.id.radio_group_for_test_covid19: {
                 if (checkedId == R.id.yes_item_from_test_covid19) {
                     depistageControleLayout.setVisibility(VISIBLE);
-                    reponseFromTestCovid19 = OUI;
+                    responseFromTestCovid19 = OUI;
                 } else if (checkedId == R.id.no_item_from_test_covid19) {
-                    reponseFromTestCovid19 = NON;
+                    responseFromTestCovid19 = NON;
                     depistageControleLayout.setVisibility(GONE);
                 }
             }
             break;
             case R.id.radio_group_for_type_de_test_covid19: {
                 if (checkedId == R.id.depistage_item_from_type_de_test_covid19) {
-                    reponseFromTypeDeTestCovid19 = DEPISTAGE;
+                    responseFromTypeDeTestCovid19 = DEPISTAGE;
                     scannerCheckBox.setVisibility(VISIBLE);
                 } else if (checkedId == R.id.controle_item_from_type_de_test_covid19) {
                     scannerCheckBox.setVisibility(GONE);
-                    reponseFromTypeDeTestCovid19 = CONTROLE;
+                    responseFromTypeDeTestCovid19 = CONTROLE;
                 }
                 // si le user choisit dépistage ou controle est que le typeEtDateDeTestLayout était hidden, affiche-le
                 if (typeEtDateDeTestLayout.getVisibility() == GONE)
@@ -130,35 +129,35 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
             break;
             case R.id.radio_group_for_resultat_test_tdr: {
                 if (checkedId == R.id.positif_item_from_resultat_test_tdr) {
-                    reponseFromResultatTDR = POSITIF;
+                    responseFromResultatTDR = POSITIF;
                     detailsTestTDRLayout.setVisibility(VISIBLE);
                 } else if (checkedId == R.id.negatif_item_from_resultat_test_tdr) {
-                    reponseFromResultatTDR = NEGATIF;
+                    responseFromResultatTDR = NEGATIF;
                     detailsTestTDRLayout.setVisibility(GONE);
                 }
             }
             break;
             case R.id.radio_group_for_details_test_tdr: {
                 if (checkedId == R.id.igm_item_from_details_test_tdr)
-                    reponseFromDetailsTDR = IGM;
+                    responseFromDetailsTDR = IGM;
                 else if (checkedId == R.id.igg_item_from_details_test_tdr)
-                    reponseFromDetailsTDR = IGG;
+                    responseFromDetailsTDR = IGG;
                 else if (checkedId == R.id.not_know_item_from_details_test_tdr)
-                    reponseFromDetailsTDR = NOT_KNOW;
+                    responseFromDetailsTDR = NOT_KNOW;
             }
             break;
             case R.id.radio_group_for_resultat_test_pcr: {
                 if (checkedId == R.id.positif_item_from_resultat_test_pcr)
-                    reponseFromPCRTest = POSITIF;
+                    responseFromPCRTest = POSITIF;
                 else if (checkedId == R.id.negatif_item_from_resultat_test_pcr)
-                    reponseFromPCRTest = NEGATIF;
+                    responseFromPCRTest = NEGATIF;
             }
             break;
             case R.id.radio_group_for_resultat_test_scanner: {
                 if (checkedId == R.id.compatible_item_from_resultat_test_scanner)
-                    reponseFromScannerTest = COMPATIBLE;
+                    responseFromScannerTest = COMPATIBLE;
                 else if (checkedId == R.id.incompatible_item_from_resultat_test_scanner)
-                    reponseFromScannerTest = INCOMPATIBLE;
+                    responseFromScannerTest = INCOMPATIBLE;
             }
             break;
             default: {
@@ -173,10 +172,14 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
             case R.id.tdr_item_from_type_du_test_covid19:
                 resultatTestTDRLayout.setVisibility(isChecked ? VISIBLE : GONE);
                 if (!isChecked) {
-                    detailsTestTDRLayout.setVisibility(GONE);
-                    // si le user décoche le TDR, supprimer les checks des RadioGroups y relatifs
+                    // si le user décoche le TDR, supprimer les checks des RadioGroups y relatifs et remettre à vide leurs reponses
                     resultatTestTDRRadioGroup.clearCheck();
+                    responseFromResultatTDR = "";
                     detailsTestTDRRadioGroup.clearCheck();
+                    responseFromDetailsTDR = "";
+                    // Pour que le detailsTestTDRLayout disparaisse, on doit le faire GONE après le clearCheck de detailsTestTDRRadioGroup
+                    // Pourquoi ? Je pense que le clearCheck fait réparaitre le layout or something like that. Je ne suis pas sur ! :)
+                    detailsTestTDRLayout.setVisibility(GONE);
                 }
                 break;
             case R.id.pcr_item_from_type_du_test_covid19:
@@ -193,43 +196,43 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
 
     public boolean isFieldEmpty() {
         // si le user ne précise pas si le patient a fait ou non un test covid
-        if (reponseFromTestCovid19.isEmpty())
+        if (responseFromTestCovid19.isEmpty())
             return true;
         else { // là, le user a choisi OUI ou NON comme réponse à la première question
             if (depistageControleLayout.getVisibility() == VISIBLE) {
-                if (reponseFromTypeDeTestCovid19.isEmpty()) // si le user ne choisit ni Dépistage, ni Controle
+                if (responseFromTypeDeTestCovid19.isEmpty()) // si le user ne choisit ni Dépistage, ni Controle
                     return true;
                 else {
                     // Si le user choisit Dépistage ou Controle
-                    if (reponseFromTypeDeTestCovid19.equals(DEPISTAGE) || reponseFromTypeDeTestCovid19.equals(CONTROLE)) {
+                    if (responseFromTypeDeTestCovid19.equals(DEPISTAGE) || responseFromTypeDeTestCovid19.equals(CONTROLE)) {
                         // si le user ne précise pas la date du test
                         if (isDateUnchanged)
                             return true;
 
                         // si le user choisit dépistage et ne sélectionne aucun type de test
-                        if (reponseFromTypeDeTestCovid19.equals(DEPISTAGE) && !tdrCheckBox.isChecked()
+                        if (responseFromTypeDeTestCovid19.equals(DEPISTAGE) && !tdrCheckBox.isChecked()
                                 && !pcrCheckBox.isChecked() && !scannerCheckBox.isChecked())
                             return true;
 
                         // si le user choisit controle et ne sélectionne aucun type de test
-                        if (reponseFromTypeDeTestCovid19.equals(CONTROLE) && !tdrCheckBox.isChecked() && !pcrCheckBox.isChecked())
+                        if (responseFromTypeDeTestCovid19.equals(CONTROLE) && !tdrCheckBox.isChecked() && !pcrCheckBox.isChecked())
                             return true;
 
                         // si le user coche le test TDR
                         if (tdrCheckBox.isChecked()) {
-                            if (reponseFromResultatTDR.isEmpty()) // si le user ne précise pas est-ce que le TDR est posifit ou négatif
+                            if (responseFromResultatTDR.isEmpty()) // si le user ne précise pas est-ce que le TDR est posifit ou négatif
                                 return true;
                                 // si le user précise que le TDR est positif mais ne précise pas son type (igg, igm ou ne sait pas)
-                            else if (reponseFromResultatTDR.equals(POSITIF) && reponseFromDetailsTDR.isEmpty())
+                            else if (responseFromResultatTDR.equals(POSITIF) && responseFromDetailsTDR.isEmpty())
                                 return true;
                         }
 
                         // si le user coche le test PCR mais ne précise s'il est posifit ou négatif
-                        if (pcrCheckBox.isChecked() && reponseFromPCRTest.isEmpty())
+                        if (pcrCheckBox.isChecked() && responseFromPCRTest.isEmpty())
                             return true;
 
                         // Si le user choisit Dépistage, coche le test Scanner et ne précise pas s'il est comptabile ou non
-                        if (reponseFromTypeDeTestCovid19.equals(DEPISTAGE) && tdrCheckBox.isChecked() && reponseFromScannerTest.isEmpty())
+                        if (responseFromTypeDeTestCovid19.equals(DEPISTAGE) && scannerCheckBox.isChecked() && responseFromScannerTest.isEmpty())
                             return true;
 
                     } else { // Si la réponse du user n'est ni DEPISTAGE, ni CONTROLE !
