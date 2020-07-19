@@ -6,6 +6,8 @@ import android.view.MotionEvent;
 
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.appbar.AppBarLayout;
+
 public class CustomViewPager extends ViewPager {
 
     private boolean pagingEnabled;
@@ -18,6 +20,9 @@ public class CustomViewPager extends ViewPager {
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                // Lorsque le user swiipe du dernier fragment vers celui qui le precede, le resetErrorLabel permet de
+                // faire disparaitre le message d'erreur affiché sur ce fragment
+                parentActivity.resetErrorLabel();
                 switch (position) {
                     case 0:
                         parentActivity.setFragmentCurrentLabel("Diagnostic clinique");
@@ -102,8 +107,8 @@ public class CustomViewPager extends ViewPager {
             }
             break;
             case 3:
-                pagingEnabled = parentActivity.isPart4FormDone();
-                if (pagingEnabled)
+                boolean part4IsDone = parentActivity.isPart4FormDone();
+                if (part4IsDone)
                     parentActivity.resetErrorLabel();
                 else if (event.getAction() == MotionEvent.ACTION_MOVE)
                     parentActivity.setErrorMessage(NOTICE);

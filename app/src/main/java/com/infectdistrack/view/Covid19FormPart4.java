@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -172,9 +173,16 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
             }
         }
 
+        // Cela permet de mettre à jour la réponse au user concernant le respect des contraintes
+        // Càd : afficher ou de cacher immédiadement le bouton Envoyer, lancer le setError de l'EditText, etc
+        areAllRequiredFieldsCompleted();
     }
 
     public boolean areAllRequiredFieldsCompleted() {
+        // First, make hidden the submit button and then check,
+        // si toutes les contraintes sont vérifiées, afficher le bouton avant le return true à la fin, sinon, le bouton deumeure caché :)
+        submitBtn.setVisibility(GONE);
+
         // si le user ne précise pas le statut actuel du patient
         switch (statutActuelValue) {
             case EMPTY_STRING:
@@ -200,23 +208,26 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
                 }
                 break;
             case VIVANT:
+                Log.e(TAG, "detailsVivant : " + detailsVivant);
                 switch (detailsVivant) {
+                    case EMPTY_STRING:
+                        return false;
+                    case HOSPITALISE:
+                        // si le user ne précise pas la date d'admission ou s'il ne choisit pas la structure sanitaire
+                        if (isDateAdmissionUnchanged || structureSanitairePourHospitalisation.getSelectedItem().toString().equals(EMPTY_STRING))
+                            return false;
+                        break;
                     case CONFINE_A_DOMICILE:
-                        GUERI:
+                    case GUERI:
                         submitBtn.setVisibility(VISIBLE);
                         return true;
                     case AUTRE:
                         // si le user choisit "Autre"
                         if (autreStatutPourVivantEdt.getText().toString().trim().isEmpty()) {
                             autreStatutPourVivantEdt.requestFocus();
-                            autreStatutPourVivantEdt.setError("De quel \"autre\" s'agit-il ??");
+                            autreStatutPourVivantEdt.setError("De quel \"autre\" s'agit-il ?");
                             return false;
                         }
-                        break;
-                    case HOSPITALISE:
-                        // si le user ne précise pas la date d'admission ou s'il ne choisit pas la structure sanitaire
-                        if (isDateAdmissionUnchanged || structureSanitairePourDeces.getSelectedItem().toString().equals(EMPTY_STRING))
-                            return false;
                         break;
                     default: {
                         Toast.makeText(getActivity(), "Erreur EV002", Toast.LENGTH_SHORT).show();
