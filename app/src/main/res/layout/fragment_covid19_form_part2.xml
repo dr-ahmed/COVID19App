@@ -202,25 +202,25 @@
             android:textColor="#000" />
 
         <RadioGroup
-            android:id="@+id/radio_group_for_dernier_contact"
+            android:id="@+id/radio_group_for_contact_suspect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <RadioButton
-                android:id="@+id/yes_item_from_dernier_contact"
+                android:id="@+id/yes_item_from_contact_suspect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="Oui" />
 
             <RadioButton
-                android:id="@+id/no_item_from_dernier_contact"
+                android:id="@+id/no_item_from_contact_suspect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Non" />
 
             <RadioButton
-                android:id="@+id/not_know_item_from_dernier_contact"
+                android:id="@+id/not_know_item_from_contact_suspect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Il ne sait pas" />

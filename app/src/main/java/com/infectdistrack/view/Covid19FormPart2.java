@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.infectdistrack.R;
 import com.infectdistrack.model.Covid19Form;
+import com.infectdistrack.model.Utilities;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -47,13 +48,13 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
     private Covid19FormActivity covid19FormActivity;
 
     private View rootView;
-    private boolean isDateChanged = false;
+    private boolean isDateUnchanged = true;
     private LinearLayout symptomsLayout, structureMedecinLayout, raisonDePourquoiDuPatientLayout, detailsSabsenterDuTravailLayout,
             detailsDuDernierContactLayout, conditionPreDisposanteLayout;
     private RadioGroup consulterMedecinRadioGroup, structureMedecinRadioGroup, raisonDePourquoiDuPatientRadioGroup, sabsenterDuTravailRadioGroup, dernierContactRadioGroup,
             niveauSocioEconomiqueRadioGroup, conditionPreDisposanteRadioGroup;
     private String responseFromConsulterMedecin = "", reponseFromStructureMededin = "", responseFromRaisondePourquoiDuPatient = "", responseFromsabsenterDuTravail = "",
-            resposerFromDernierContact = "", responseFromNiveauSocioEconomique = "", resposerFromConditionPreDisposante = "";
+            resposerFromContactSuspect = "", responseFromNiveauSocioEconomique = "", resposerFromConditionPreDisposante = "";
     private NumberPicker nombreDeJoursPicker;
     private EditText phoneNumberDernierContact, autreConditionPreDisposanteEdt;
     private DatePicker dernierContactDatePicker;
@@ -97,7 +98,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         raisonDePourquoiDuPatientRadioGroup.setOnCheckedChangeListener(this);
         sabsenterDuTravailRadioGroup = rootView.findViewById(R.id.radio_group_for_sabsenter_du_travail);
         sabsenterDuTravailRadioGroup.setOnCheckedChangeListener(this);
-        dernierContactRadioGroup = rootView.findViewById(R.id.radio_group_for_dernier_contact);
+        dernierContactRadioGroup = rootView.findViewById(R.id.radio_group_for_contact_suspect);
         dernierContactRadioGroup.setOnCheckedChangeListener(this);
         phoneNumberDernierContact = rootView.findViewById(R.id.phone_number_for_personne_suspecte);
 
@@ -106,6 +107,8 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         nombreDeJoursPicker.setMaxValue(100);
 
         dernierContactDatePicker = rootView.findViewById(R.id.dernier_contact_personne_suspecte_datepicker);
+        int[] calendar = Utilities.getCurrentDayMonthAndYear();
+        dernierContactDatePicker.init(calendar[0], calendar[1], calendar[2], this);
         niveauSocioEconomiqueRadioGroup = rootView.findViewById(R.id.radio_group_for_niveau_socio_economique);
         niveauSocioEconomiqueRadioGroup.setOnCheckedChangeListener(this);
         conditionPreDisposanteRadioGroup = rootView.findViewById(R.id.radio_group_for_condition_pre_disposante);
@@ -142,7 +145,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         if (autreConditionChechbox.isChecked()) {
             if (autreConditionPreDisposanteEdt.getText().toString().trim().isEmpty()) {
                 autreConditionPreDisposanteEdt.requestFocus();
-                autreConditionPreDisposanteEdt.setText("Veuillez préciser les autres conditions médicales !");
+                autreConditionPreDisposanteEdt.setError("Veuillez préciser les autres conditions médicales !");
                 return true;
             } else
                 return false;
@@ -219,15 +222,15 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
                 }
             }
             break;
-            case R.id.radio_group_for_dernier_contact: {
-                if (checkedId == R.id.yes_item_from_dernier_contact) {
-                    resposerFromDernierContact = OUI;
+            case R.id.radio_group_for_contact_suspect: {
+                if (checkedId == R.id.yes_item_from_contact_suspect) {
+                    resposerFromContactSuspect = OUI;
                     detailsDuDernierContactLayout.setVisibility(VISIBLE);
-                } else if (checkedId == R.id.no_item_from_dernier_contact) {
-                    resposerFromDernierContact = NON;
+                } else if (checkedId == R.id.no_item_from_contact_suspect) {
+                    resposerFromContactSuspect = NON;
                     detailsDuDernierContactLayout.setVisibility(GONE);
-                } else if (checkedId == R.id.not_know_item_from_dernier_contact) {
-                    resposerFromDernierContact = NOT_KNOW;
+                } else if (checkedId == R.id.not_know_item_from_contact_suspect) {
+                    resposerFromContactSuspect = NOT_KNOW;
                     detailsDuDernierContactLayout.setVisibility(GONE);
                 }
             }
@@ -257,7 +260,6 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
     }
 
     public boolean isFieldEmpty() {
-
         // Si le patient a des symptomes
         if (symptomsLayout.getVisibility() == VISIBLE) {
             // Si le user ne coche pas les deux radiobuttons relatifs aux symptomes
@@ -288,24 +290,34 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
             }
         }
 
+        // si la patient ne répond pas à la question de la personne suspecte
+        if (resposerFromContactSuspect.isEmpty())
+            return true;
+
+        // si le patient avait contacté une personne suspecte
         if (detailsDuDernierContactLayout.getVisibility() == VISIBLE) {
             String phoneNumberFeedback = isPhoneNumberValid(phoneNumberDernierContact.getText().toString());
-            if (!phoneNumberFeedback.equals(YES)) {
+            if (!phoneNumberFeedback.equals(YES)) { // si le numéro de téléphone de la personne suspecte ne correspond pas au regex exigé
                 phoneNumberDernierContact.requestFocus();
                 phoneNumberDernierContact.setError(phoneNumberFeedback);
                 return true;
             }
 
-            if (!isDateChanged)
+            // si le user ne précise pas une date
+            if (isDateUnchanged)
                 return true;
+        }
 
-            if (conditionPreDisposanteLayout.getVisibility() == VISIBLE) {
-                if (!isAtLeastCheckboxChecked())
-                    return true;
-                else if (autreConditionPreDisposanteEdittextIsEmpty())
-                    return true;
-            }
+        // si la user ne choisi pas un niveau socio-économique ou s'il ne répond pas à la question de condition pré-disposante
+        if (responseFromNiveauSocioEconomique.isEmpty() || resposerFromConditionPreDisposante.isEmpty())
+            return true;
 
+        // si le patient a une condition pré-disposante
+        if (conditionPreDisposanteLayout.getVisibility() == VISIBLE) {
+            if (!isAtLeastCheckboxChecked())
+                return true;
+            else if (autreConditionPreDisposanteEdittextIsEmpty())
+                return true;
         }
 
         return false;
@@ -329,7 +341,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         if (view.getId() == R.id.dernier_contact_personne_suspecte_datepicker)
-            isDateChanged = true;
+            isDateUnchanged = false;
     }
 
     @Override
