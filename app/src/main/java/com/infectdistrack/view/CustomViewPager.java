@@ -102,13 +102,12 @@ public class CustomViewPager extends ViewPager {
             }
             break;
             case 3:
-                /*
                 pagingEnabled = parentActivity.isPart4FormDone();
                 if (pagingEnabled)
                     parentActivity.resetErrorLabel();
                 else if (event.getAction() == MotionEvent.ACTION_MOVE)
-                    parentActivity.setErrorMessage("Vous avez raté un champs obligatoire !");
-                */
+                    parentActivity.setErrorMessage(NOTICE);
+
                 return super.onInterceptTouchEvent(event);
             default: {
             }

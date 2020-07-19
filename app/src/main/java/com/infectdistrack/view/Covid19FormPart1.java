@@ -132,7 +132,7 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
                 || convulsionsBox.isChecked() || alterationCeConscienceBox.isChecked() || autresSignesDeGraviteBox.isChecked() || otherSympBox.isChecked();
     }
 
-    public boolean IsCheckboxChecked() {
+    public boolean areAllRequiredFieldsCompleted() {
         if (isAtLeastCheckboxChecked()) {
             return noEdittextIsEmpty();
         } else

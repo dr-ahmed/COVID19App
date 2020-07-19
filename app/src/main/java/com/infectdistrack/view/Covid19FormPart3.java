@@ -203,55 +203,55 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
         }
     }
 
-    public boolean isFieldEmpty() {
+    public boolean areAllRequiredFieldsCompleted() {
         // si le user ne précise pas si le patient a fait ou non un test covid
         if (responseFromTestCovid19.isEmpty())
-            return true;
+            return false;
         else { // là, le user a choisi OUI ou NON comme réponse à la première question
             if (depistageControleLayout.getVisibility() == VISIBLE) {
                 if (responseFromTypeDeTestCovid19.isEmpty()) // si le user ne choisit ni Dépistage, ni Controle
-                    return true;
+                    return false;
                 else {
                     // Si le user choisit Dépistage ou Controle
                     if (responseFromTypeDeTestCovid19.equals(DEPISTAGE) || responseFromTypeDeTestCovid19.equals(CONTROLE)) {
                         // si le user ne précise pas la date du test
                         if (isDateUnchanged)
-                            return true;
+                            return false;
 
                         // si le user choisit dépistage et ne sélectionne aucun type de test
                         if (responseFromTypeDeTestCovid19.equals(DEPISTAGE) && !tdrCheckBox.isChecked()
                                 && !pcrCheckBox.isChecked() && !scannerCheckBox.isChecked())
-                            return true;
+                            return false;
 
                         // si le user choisit controle et ne sélectionne aucun type de test
                         if (responseFromTypeDeTestCovid19.equals(CONTROLE) && !tdrCheckBox.isChecked() && !pcrCheckBox.isChecked())
-                            return true;
+                            return false;
 
                         // si le user coche le test TDR
                         if (tdrCheckBox.isChecked()) {
                             if (responseFromResultatTDR.isEmpty()) // si le user ne précise pas est-ce que le TDR est posifit ou négatif
-                                return true;
+                                return false;
                                 // si le user précise que le TDR est positif mais ne précise pas son type (igg, igm ou ne sait pas)
                             else if (responseFromResultatTDR.equals(POSITIF) && responseFromDetailsTDR.isEmpty())
-                                return true;
+                                return false;
                         }
 
                         // si le user coche le test PCR mais ne précise s'il est posifit ou négatif
                         if (pcrCheckBox.isChecked() && responseFromPCRTest.isEmpty())
-                            return true;
+                            return false;
 
                         // Si le user choisit Dépistage, coche le test Scanner et ne précise pas s'il est comptabile ou non
                         if (responseFromTypeDeTestCovid19.equals(DEPISTAGE) && scannerCheckBox.isChecked() && responseFromScannerTest.isEmpty())
-                            return true;
+                            return false;
 
                     } else { // Si la réponse du user n'est ni DEPISTAGE, ni CONTROLE !
                         Toast.makeText(getActivity(), "Erreur DC001", Toast.LENGTH_SHORT).show();
-                        return true;
+                        return false;
                     }
                 }
             }
         }
-        return false;
+        return true;
     }
 
     @Override

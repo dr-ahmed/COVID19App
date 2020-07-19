@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -115,15 +114,15 @@ public class Covid19FormActivity extends AppCompatActivity {
     }
 
     public boolean isPart1FormDone() {
-        return covid19FormPart1.IsCheckboxChecked();
+        return covid19FormPart1.areAllRequiredFieldsCompleted();
     }
 
     public boolean isPart2FormDone() {
-        return !covid19FormPart2.isFieldEmpty();
+        return covid19FormPart2.areAllRequiredFieldsCompleted();
     }
 
     public boolean isPart3FormDone() {
-        return !covid19FormPart3.isFieldEmpty();
+        return covid19FormPart3.areAllRequiredFieldsCompleted();
     }
 
     public boolean isPart4FormDone() {

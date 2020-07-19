@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.infectdistrack.R;
 import com.infectdistrack.model.Covid19Form;
@@ -161,30 +162,27 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
 
     }
 
-    private void checkSpinners() {
-        /*
-        if (confirmedCasesValue.isEmpty()) {
-            setRedTextview(confirmedCasesTxt);
-            return;
-        } else
-            resetTextview(confirmedCasesTxt, "Cas confirmé de COVID-19");
+    public boolean areAllRequiredFieldsCompleted() {
+        // si le user ne précise pas le statut actuel du patient
+        if (statutActuelValue.isEmpty())
+            return false;
+        else {
 
-        if (evolutionValue.isEmpty()) {
-            setRedTextview(evolutionTxt);
-            return;
-        } else
-            resetTextview(evolutionTxt, "Évolution");
-         */
+        }
 
         submitBtn.setVisibility(VISIBLE);
+        return true;
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.patient_submit_button) {
+            Toast.makeText(getActivity(), "C'est OK !!", Toast.LENGTH_SHORT).show();
+            /*
             setValues();
             Covid19NewFormController covid19NewFormController = new Covid19NewFormController(this);
             covid19NewFormController.insertForm();
+            */
         }
     }
 
@@ -193,9 +191,5 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
         // covid19FormObject.setEvolution(evolutionValue);
 
         //Log.e(TAG, covid19FormObject.toString());
-    }
-
-    public boolean areAllRequiredFieldsCompleted() {
-        return false;
     }
 }

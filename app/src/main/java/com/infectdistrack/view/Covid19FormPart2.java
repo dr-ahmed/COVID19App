@@ -141,16 +141,16 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
                 || immunosuppressionTraitementChechbox.isChecked() || autreConditionChechbox.isChecked();
     }
 
-    private boolean autreConditionPreDisposanteEdittextIsEmpty() {
+    private boolean autreConditionPreDisposanteEdittextIsNotEmpty() {
         if (autreConditionChechbox.isChecked()) {
             if (autreConditionPreDisposanteEdt.getText().toString().trim().isEmpty()) {
                 autreConditionPreDisposanteEdt.requestFocus();
                 autreConditionPreDisposanteEdt.setError("Veuillez préciser les autres conditions médicales !");
-                return true;
-            } else
                 return false;
+            } else
+                return true;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -259,40 +259,40 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         }
     }
 
-    public boolean isFieldEmpty() {
+    public boolean areAllRequiredFieldsCompleted() {
         // Si le patient a des symptomes
         if (symptomsLayout.getVisibility() == VISIBLE) {
             // Si le user ne coche pas les deux radiobuttons relatifs aux symptomes
             if (responseFromConsulterMedecin.isEmpty() || responseFromsabsenterDuTravail.isEmpty())
-                return true;
+                return false;
             else { // Si le user coche les deux RadioGroups de symptomes
 
                 // si le patient a visité un médecin
                 if (responseFromConsulterMedecin.equals(OUI)) {
                     if (reponseFromStructureMededin.isEmpty()) // si le patient ne précise pas la structure du médecin
-                        return true;
+                        return false;
                 } else if (responseFromConsulterMedecin.equals(NON)) { // Si le user répond par Non
                     if (responseFromRaisondePourquoiDuPatient.isEmpty()) // Si le user ne préciser pas le pouqruoiq du patient
-                        return true;
+                        return false;
                 } else { // Si la réponse du user n'est ni OUI, ni NON !
                     Toast.makeText(getActivity(), "Erreur P001", Toast.LENGTH_SHORT).show();
-                    return true;
+                    return false;
                 }
 
                 // si le patient s'est absenté du boulout
                 if (responseFromsabsenterDuTravail.equals(OUI)) {
                     if (nombreDeJoursPicker.getValue() == 0) // Si le user ne précise pas le nombre de jours
-                        return true;
+                        return false;
                 } else if (!responseFromsabsenterDuTravail.equals(NON)) { // Si la réponse du user n'est ni OUI, ni NON !
                     Toast.makeText(getActivity(), "Erreur P002", Toast.LENGTH_SHORT).show();
-                    return true;
+                    return false;
                 }
             }
         }
 
         // si la patient ne répond pas à la question de la personne suspecte
         if (resposerFromContactSuspect.isEmpty())
-            return true;
+            return false;
 
         // si le patient avait contacté une personne suspecte
         if (detailsDuDernierContactLayout.getVisibility() == VISIBLE) {
@@ -300,27 +300,27 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
             if (!phoneNumberFeedback.equals(YES)) { // si le numéro de téléphone de la personne suspecte ne correspond pas au regex exigé
                 phoneNumberDernierContact.requestFocus();
                 phoneNumberDernierContact.setError(phoneNumberFeedback);
-                return true;
+                return false;
             }
 
             // si le user ne précise pas une date
             if (isDateUnchanged)
-                return true;
+                return false;
         }
 
         // si la user ne choisi pas un niveau socio-économique ou s'il ne répond pas à la question de condition pré-disposante
         if (responseFromNiveauSocioEconomique.isEmpty() || resposerFromConditionPreDisposante.isEmpty())
-            return true;
+            return false;
 
         // si le patient a une condition pré-disposante
         if (conditionPreDisposanteLayout.getVisibility() == VISIBLE) {
             if (!isAtLeastCheckboxChecked())
-                return true;
-            else if (autreConditionPreDisposanteEdittextIsEmpty())
-                return true;
+                return false;
+            else if (autreConditionPreDisposanteEdittextIsNotEmpty())
+                return false;
         }
 
-        return false;
+        return true;
     }
 
     public void setValues() {
