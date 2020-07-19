@@ -119,7 +119,16 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
                     responseFromTypeDeTestCovid19 = DEPISTAGE;
                     scannerCheckBox.setVisibility(VISIBLE);
                 } else if (checkedId == R.id.controle_item_from_type_de_test_covid19) {
+                    // set the scanner checkbox as unchecked
+                    scannerCheckBox.setChecked(false);
+                    // Faites disparaitre le checkbox de scanner
                     scannerCheckBox.setVisibility(GONE);
+                    // clear check from the TestScannerRadioGroup
+                    resultatTestScannerRadioGroup.clearCheck();
+                    // set the indicator as default
+                    responseFromScannerTest = "";
+                    // Faites disparaitre le resultatTestScannerLayout du résultat de scanner
+                    resultatTestScannerLayout.setVisibility(GONE);
                     responseFromTypeDeTestCovid19 = CONTROLE;
                 }
                 // si le user choisit dépistage ou controle est que le typeEtDateDeTestLayout était hidden, affiche-le
