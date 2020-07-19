@@ -141,16 +141,16 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
                 || immunosuppressionTraitementChechbox.isChecked() || autreConditionChechbox.isChecked();
     }
 
-    private boolean autreConditionPreDisposanteEdittextIsNotEmpty() {
+    private boolean autreConditionPreDisposanteEdittextIsEmpty() {
         if (autreConditionChechbox.isChecked()) {
             if (autreConditionPreDisposanteEdt.getText().toString().trim().isEmpty()) {
                 autreConditionPreDisposanteEdt.requestFocus();
                 autreConditionPreDisposanteEdt.setError("Veuillez préciser les autres conditions médicales !");
-                return false;
-            } else
                 return true;
+            } else
+                return false;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -316,7 +316,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         if (conditionPreDisposanteLayout.getVisibility() == VISIBLE) {
             if (!isAtLeastCheckboxChecked())
                 return false;
-            else if (autreConditionPreDisposanteEdittextIsNotEmpty())
+            else if (autreConditionPreDisposanteEdittextIsEmpty())
                 return false;
         }
 
