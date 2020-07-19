@@ -17,6 +17,7 @@ public class Constants {
             BAS = "BAS", MOYEN = "MOYEN", ELEVE = "ELEVE",
             DEPISTAGE = "DEPISTAGE", CONTROLE = "CONTROLE",
             POSITIF = "POSITIF", NEGATIF = "NEGATIF",
+            COMPATIBLE = "COMPATIBLE", INCOMPATIBLE = "INCOMPATIBLE",
             IGG = "IGG", IGM = "IGM",
             DECEDE = "DECEDE", VIVANT = "VIVANT",
             DOMICILE = "DOMICILE", STRUCTURE_SANITAIRE = "STRUCTURE_SANITAIRE",

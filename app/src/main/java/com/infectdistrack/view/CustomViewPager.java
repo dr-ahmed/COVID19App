@@ -73,7 +73,6 @@ public class CustomViewPager extends ViewPager {
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     parentActivity.setErrorMessage(NOTICE);
-                    parentActivity.getCovid19FormPart1().IsCheckboxChecked();
                     return pagingEnabled;
                 }
             }
@@ -86,7 +85,6 @@ public class CustomViewPager extends ViewPager {
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     parentActivity.setErrorMessage(NOTICE);
-                    parentActivity.getCovid19FormPart2().isFieldEmpty();
                     return pagingEnabled;
                 }
             }
@@ -99,7 +97,6 @@ public class CustomViewPager extends ViewPager {
                     return super.onInterceptTouchEvent(event);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     parentActivity.setErrorMessage(NOTICE);
-                    parentActivity.getCovid19FormPart3().IsCheckboxChecked();
                     return pagingEnabled;
                 }
             }

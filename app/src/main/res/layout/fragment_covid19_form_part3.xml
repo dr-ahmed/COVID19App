@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Date" />
+                    android:text="Date du test" />
 
                 <DatePicker
                     android:id="@+id/date_test_datepicker"
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Type" />
+                    android:text="Type du test" />
 
                 <CheckBox
                     android:id="@+id/tdr_item_from_type_du_test_covid19"
@@ -109,14 +109,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PCR" />
-
-                <CheckBox
-                    android:id="@+id/scanner_item_from_type_du_test_covid19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CT-scan" />
-
             </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/scanner_item_from_type_du_test_covid19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CT-scan"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/layout_for_resultat_test_tdr"
@@ -210,14 +210,14 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/tdr_item_from_resultat_test_pcr"
+                        android:id="@+id/positif_item_from_resultat_test_pcr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:text="Positif" />
 
                     <RadioButton
-                        android:id="@+id/pcr_item_from_resultat_test_pcr"
+                        android:id="@+id/negatif_item_from_resultat_test_pcr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Négatif" />

@@ -123,7 +123,7 @@ public class Covid19FormActivity extends AppCompatActivity {
     }
 
     public boolean isPart3FormDone() {
-        return covid19FormPart3.IsCheckboxChecked();
+        return !covid19FormPart3.isFieldEmpty();
     }
 
     public boolean isPart4FormDone() {
