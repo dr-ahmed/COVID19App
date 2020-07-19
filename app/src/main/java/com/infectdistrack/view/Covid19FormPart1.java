@@ -162,7 +162,7 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
             symptoms.append(noSympBox.getText());
         } else {
             if (feverBox.isChecked())
-                symptoms.append(feverBox.getText()).append(";");
+                symptoms.append("Fièvre").append(";");
             if (frissonsBox.isChecked())
                 symptoms.append(frissonsBox.getText()).append(";");
             if (touxBox.isChecked())

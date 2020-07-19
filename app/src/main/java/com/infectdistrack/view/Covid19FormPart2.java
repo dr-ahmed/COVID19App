@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,11 +54,12 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
             detailsDuDernierContactLayout, conditionPreDisposanteLayout;
     private RadioGroup consulterMedecinRadioGroup, structureMedecinRadioGroup, raisonDePourquoiDuPatientRadioGroup, sabsenterDuTravailRadioGroup, dernierContactRadioGroup,
             niveauSocioEconomiqueRadioGroup, conditionPreDisposanteRadioGroup;
-    private String responseFromConsulterMedecin = "", reponseFromStructureMededin = "", responseFromRaisondePourquoiDuPatient = "", responseFromsabsenterDuTravail = "",
+    private String responseFromConsulterMedecin = "", responseFromStructureMededin = "", responseFromRaisonAbsence = "", responseFromSabsenterDuTravail = "",
             resposerFromContactSuspect = "", responseFromNiveauSocioEconomique = "", resposerFromConditionPreDisposante = "";
     private NumberPicker nombreDeJoursPicker;
     private EditText phoneNumberDernierContact, autreConditionPreDisposanteEdt;
     private DatePicker dernierContactDatePicker;
+    private String dateDuDernierContact = "";
     private CheckBox asthmeChechbox, autreQuAsthmeChechbox, hypertensionChechbox, nephropathiesChechbox, hepatiqueChechbox, neuromusculaireChechbox, diabeteChechbox,
             cancerChechbox, grossesseChechbox, obesiteChechbox, tabacChechbox, immunosuppressionChechbox, immunosuppressionTraitementChechbox, autreConditionChechbox;
 
@@ -141,6 +143,42 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
                 || immunosuppressionTraitementChechbox.isChecked() || autreConditionChechbox.isChecked();
     }
 
+    private String getListeDesConditionsPreDisposantes() {
+        StringBuilder listeDesConditionsPreDisposantes = new StringBuilder();
+
+        if (asthmeChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(asthmeChechbox.getText()).append(";");
+        if (autreQuAsthmeChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(autreQuAsthmeChechbox.getText()).append(";");
+        if (hypertensionChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(hypertensionChechbox.getText()).append(";");
+        if (nephropathiesChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(nephropathiesChechbox.getText()).append(";");
+        if (hepatiqueChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(hepatiqueChechbox.getText()).append(";");
+        if (neuromusculaireChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(neuromusculaireChechbox.getText()).append(";");
+        if (diabeteChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(diabeteChechbox.getText()).append(";");
+        if (cancerChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(cancerChechbox.getText()).append(";");
+        if (grossesseChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(grossesseChechbox.getText()).append(";");
+        if (obesiteChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(obesiteChechbox.getText()).append(";");
+        if (tabacChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(tabacChechbox.getText()).append(";");
+        if (immunosuppressionChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(immunosuppressionChechbox.getText()).append(";");
+        if (immunosuppressionTraitementChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(immunosuppressionTraitementChechbox.getText()).append(";");
+        if (autreConditionChechbox.isChecked())
+            listeDesConditionsPreDisposantes.append(autreConditionPreDisposanteEdt.getText().toString()).append(";");
+
+        return listeDesConditionsPreDisposantes.toString();
+    }
+
+
     private boolean autreConditionPreDisposanteEdittextIsEmpty() {
         if (autreConditionChechbox.isChecked()) {
             if (autreConditionPreDisposanteEdt.getText().toString().trim().isEmpty()) {
@@ -171,19 +209,19 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
             case R.id.radio_group_for_structure_medecin: {
                 switch (checkedId) {
                     case R.id.hopital_item_from_structure_medecin:
-                        reponseFromStructureMededin = HOPITAL;
+                        responseFromStructureMededin = HOPITAL;
                         break;
                     case R.id.pharmacie_item_from_structure_medecin:
-                        reponseFromStructureMededin = PHARMACIE;
+                        responseFromStructureMededin = PHARMACIE;
                         break;
                     case R.id.centre_de_sante_item_from_structure_medecin:
-                        reponseFromStructureMededin = CENTRE_SANTE;
+                        responseFromStructureMededin = CENTRE_SANTE;
                         break;
                     case R.id.numero_vert_item_from_structure_medecin:
-                        reponseFromStructureMededin = NUMERO_VERT;
+                        responseFromStructureMededin = NUMERO_VERT;
                         break;
                     case R.id.clinique_prive_item_from_structure_medecin:
-                        reponseFromStructureMededin = CLINIQUE_PRIVEE;
+                        responseFromStructureMededin = CLINIQUE_PRIVEE;
                         break;
                     default: {
                     }
@@ -193,19 +231,19 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
             case R.id.radio_group_for_raison_de_pourquoi_du_patient: {
                 switch (checkedId) {
                     case R.id.confiance_item_from_raison_de_pourquoi_du_patient:
-                        responseFromRaisondePourquoiDuPatient = CONFIANCE;
+                        responseFromRaisonAbsence = CONFIANCE;
                         break;
                     case R.id.transport_item_from_raison_de_pourquoi_du_patient:
-                        responseFromRaisondePourquoiDuPatient = TRANSPORT;
+                        responseFromRaisonAbsence = TRANSPORT;
                         break;
                     case R.id.accessibilite_item_from_raison_de_pourquoi_du_patient:
-                        responseFromRaisondePourquoiDuPatient = ACCESSIBILITE;
+                        responseFromRaisonAbsence = ACCESSIBILITE;
                         break;
                     case R.id.social_item_from_raison_de_pourquoi_du_patient:
-                        responseFromRaisondePourquoiDuPatient = SOCIAL;
+                        responseFromRaisonAbsence = SOCIAL;
                         break;
                     case R.id.phobie_item_from_raison_de_pourquoi_du_patient:
-                        responseFromRaisondePourquoiDuPatient = PHOBIE;
+                        responseFromRaisonAbsence = PHOBIE;
                         break;
                     default: {
                     }
@@ -214,10 +252,10 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
             break;
             case R.id.radio_group_for_sabsenter_du_travail: {
                 if (checkedId == R.id.yes_item_from_sabsenter_du_travail) {
-                    responseFromsabsenterDuTravail = OUI;
+                    responseFromSabsenterDuTravail = OUI;
                     detailsSabsenterDuTravailLayout.setVisibility(VISIBLE);
                 } else if (checkedId == R.id.no_item_from_sabsenter_du_travail) {
-                    responseFromsabsenterDuTravail = NON;
+                    responseFromSabsenterDuTravail = NON;
                     detailsSabsenterDuTravailLayout.setVisibility(GONE);
                 }
             }
@@ -263,16 +301,16 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         // Si le patient a des symptomes
         if (symptomsLayout.getVisibility() == VISIBLE) {
             // Si le user ne coche pas les deux radiobuttons relatifs aux symptomes
-            if (responseFromConsulterMedecin.isEmpty() || responseFromsabsenterDuTravail.isEmpty())
+            if (responseFromConsulterMedecin.isEmpty() || responseFromSabsenterDuTravail.isEmpty())
                 return false;
             else { // Si le user coche les deux RadioGroups de symptomes
 
                 // si le patient a visité un médecin
                 if (responseFromConsulterMedecin.equals(OUI)) {
-                    if (reponseFromStructureMededin.isEmpty()) // si le patient ne précise pas la structure du médecin
+                    if (responseFromStructureMededin.isEmpty()) // si le patient ne précise pas la structure du médecin
                         return false;
                 } else if (responseFromConsulterMedecin.equals(NON)) { // Si le user répond par Non
-                    if (responseFromRaisondePourquoiDuPatient.isEmpty()) // Si le user ne préciser pas le pouqruoiq du patient
+                    if (responseFromRaisonAbsence.isEmpty()) // Si le user ne préciser pas le pouqruoiq du patient
                         return false;
                 } else { // Si la réponse du user n'est ni OUI, ni NON !
                     Toast.makeText(getActivity(), "Erreur P001", Toast.LENGTH_SHORT).show();
@@ -280,10 +318,10 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
                 }
 
                 // si le patient s'est absenté du boulout
-                if (responseFromsabsenterDuTravail.equals(OUI)) {
+                if (responseFromSabsenterDuTravail.equals(OUI)) {
                     if (nombreDeJoursPicker.getValue() == 0) // Si le user ne précise pas le nombre de jours
                         return false;
-                } else if (!responseFromsabsenterDuTravail.equals(NON)) { // Si la réponse du user n'est ni OUI, ni NON !
+                } else if (!responseFromSabsenterDuTravail.equals(NON)) { // Si la réponse du user n'est ni OUI, ni NON !
                     Toast.makeText(getActivity(), "Erreur P002", Toast.LENGTH_SHORT).show();
                     return false;
                 }
@@ -323,25 +361,58 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         return true;
     }
 
+    private void resetValues() {
+        covid19FormObject.setConsulterMedecin("");
+        covid19FormObject.setStrucureMedecin("");
+        covid19FormObject.setRaisonAbsence("");
+        covid19FormObject.setSabsenterDuTravail("");
+        covid19FormObject.setCombienDeJours("");
+        covid19FormObject.setContactAvecPersonneSuspecte("");
+        covid19FormObject.setTelPersonneSuspecte("");
+        covid19FormObject.setDateDernierContactPersonneSuspecte("");
+        covid19FormObject.setNiveauSocioEconomique("");
+        covid19FormObject.setConditionPreDisposante("");
+        covid19FormObject.setListeDesConditionsPreDisposantes("");
+    }
+
     public void setValues() {
-        /*
-        covid19FormObject.setName(patientNameEdt.getText().toString());
-        covid19FormObject.setPhoneNumber(patientPhoneNumberEdt.getText().toString());
-        covid19FormObject.setGendre(patientGender);
 
-        String dateOfBirth = patientAgeDatePicker.getDayOfMonth() + "/" + (patientAgeDatePicker.getMonth() + 1) + "/" + patientAgeDatePicker.getYear();
-        covid19FormObject.setAge(dateOfBirth);
-        covid19FormObject.setWilaya(patientWilayaSpinner.getSelectedItem().toString());
-        covid19FormObject.setSuspectedCases(patientSuspectedCasesDescription);
-         */
+        resetValues();
 
-        //Log.e(TAG, covid19FormObject.toString());
+        covid19FormObject.setConsulterMedecin(responseFromConsulterMedecin);
+
+        if (responseFromConsulterMedecin.equals(OUI))
+            covid19FormObject.setStrucureMedecin(responseFromStructureMededin);
+        else
+            covid19FormObject.setRaisonAbsence(responseFromRaisonAbsence);
+
+        covid19FormObject.setSabsenterDuTravail(responseFromSabsenterDuTravail);
+
+        if (covid19FormObject.getSabsenterDuTravail().equals(OUI))
+            covid19FormObject.setCombienDeJours(String.valueOf(nombreDeJoursPicker.getValue()));
+
+        covid19FormObject.setContactAvecPersonneSuspecte(resposerFromContactSuspect);
+
+        if (covid19FormObject.getContactAvecPersonneSuspecte().equals(OUI)) {
+            covid19FormObject.setTelPersonneSuspecte(phoneNumberDernierContact.getText().toString());
+            covid19FormObject.setDateDernierContactPersonneSuspecte(dateDuDernierContact);
+        }
+
+        covid19FormObject.setNiveauSocioEconomique(responseFromNiveauSocioEconomique);
+
+        covid19FormObject.setConditionPreDisposante(resposerFromConditionPreDisposante);
+        if (covid19FormObject.getConditionPreDisposante().equals(OUI))
+            covid19FormObject.setListeDesConditionsPreDisposantes(getListeDesConditionsPreDisposantes());
+
+        Log.e(TAG, covid19FormObject.toString());
     }
 
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        if (view.getId() == R.id.dernier_contact_personne_suspecte_datepicker)
+        if (view.getId() == R.id.dernier_contact_personne_suspecte_datepicker) {
             isDateUnchanged = false;
+            dateDuDernierContact = dayOfMonth + "/" + monthOfYear + "/" + year;
+        }
     }
 
     @Override

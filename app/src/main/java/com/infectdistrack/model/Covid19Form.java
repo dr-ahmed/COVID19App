@@ -1,68 +1,37 @@
 package com.infectdistrack.model;
 
-import androidx.annotation.NonNull;
-
 public class Covid19Form {
-    private Integer id, parentUserId;
-    private String name, phoneNumber, gendre, wilaya, age, suspectedCases, symptoms, terrain, confirmedCovid19Case, evolution;
+    private Integer parentUserID;
+    private String patientID, formID;
+    private String symptoms, consulterMedecin, strucureMedecin, raisonAbsence, sabsenterDuTravail,
+            combienDeJours, contactAvecPersonneSuspecte, telPersonneSuspecte, dateDernierContactPersonneSuspecte,
+            niveauSocioEconomique, conditionPreDisposante, listeDesConditionsPreDisposantes;
 
     public Covid19Form() {
     }
 
-    public Integer getId() {
-        return id;
+    public String getPatientID() {
+        return patientID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPatientID(String patientID) {
+        this.patientID = patientID;
     }
 
-    public Integer getParentUserId() {
-        return parentUserId;
+    public String getFormID() {
+        return formID;
     }
 
-    public void setParentUserId(Integer parentUserId) {
-        this.parentUserId = parentUserId;
+    public void setFormID(String formID) {
+        this.formID = formID;
     }
 
-    public String getAge() {
-        return age;
+    public Integer getParentUserID() {
+        return parentUserID;
     }
 
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getWilaya() {
-        return wilaya;
-    }
-
-    public void setWilaya(String wilaya) {
-        this.wilaya = wilaya;
-    }
-
-    public String getSuspectedCases() {
-        return suspectedCases;
-    }
-
-    public void setSuspectedCases(String suspectedCases) {
-        this.suspectedCases = suspectedCases;
+    public void setParentUserID(Integer parentUserID) {
+        this.parentUserID = parentUserID;
     }
 
     public String getSymptoms() {
@@ -73,51 +42,110 @@ public class Covid19Form {
         this.symptoms = symptoms;
     }
 
-    public String getTerrain() {
-        return terrain;
+    public String getConsulterMedecin() {
+        return consulterMedecin;
     }
 
-    public void setTerrain(String terrain) {
-        this.terrain = terrain;
+    public void setConsulterMedecin(String consulterMedecin) {
+        this.consulterMedecin = consulterMedecin;
     }
 
-    public String getConfirmedCovid19Case() {
-        return confirmedCovid19Case;
+    public String getStrucureMedecin() {
+        return strucureMedecin;
     }
 
-    public void setConfirmedCovid19Case(String confirmedCovid19Case) {
-        this.confirmedCovid19Case = confirmedCovid19Case;
+    public void setStrucureMedecin(String strucureMedecin) {
+        this.strucureMedecin = strucureMedecin;
     }
 
-    public String getEvolution() {
-        return evolution;
+    public String getRaisonAbsence() {
+        return raisonAbsence;
     }
 
-    public void setEvolution(String evolution) {
-        this.evolution = evolution;
+    public void setRaisonAbsence(String raisonAbsence) {
+        this.raisonAbsence = raisonAbsence;
     }
 
-    public String getGendre() {
-        return gendre;
+    public String getSabsenterDuTravail() {
+        return sabsenterDuTravail;
     }
 
-    public void setGendre(String gendre) {
-        this.gendre = gendre;
+    public void setSabsenterDuTravail(String sabsentirDuTravail) {
+        this.sabsenterDuTravail = sabsentirDuTravail;
     }
 
-    @NonNull
+    public String getCombienDeJours() {
+        return combienDeJours;
+    }
+
+    public void setCombienDeJours(String combienDeJours) {
+        this.combienDeJours = combienDeJours;
+    }
+
+    public String getContactAvecPersonneSuspecte() {
+        return contactAvecPersonneSuspecte;
+    }
+
+    public void setContactAvecPersonneSuspecte(String contactAvecPersonneSuspecte) {
+        this.contactAvecPersonneSuspecte = contactAvecPersonneSuspecte;
+    }
+
+    public String getTelPersonneSuspecte() {
+        return telPersonneSuspecte;
+    }
+
+    public void setTelPersonneSuspecte(String telPersonneSuspecte) {
+        this.telPersonneSuspecte = telPersonneSuspecte;
+    }
+
+    public String getDateDernierContactPersonneSuspecte() {
+        return dateDernierContactPersonneSuspecte;
+    }
+
+    public void setDateDernierContactPersonneSuspecte(String dateDernierContactPersonneSuspecte) {
+        this.dateDernierContactPersonneSuspecte = dateDernierContactPersonneSuspecte;
+    }
+
+    public String getNiveauSocioEconomique() {
+        return niveauSocioEconomique;
+    }
+
+    public void setNiveauSocioEconomique(String niveauSocioEconomique) {
+        this.niveauSocioEconomique = niveauSocioEconomique;
+    }
+
+    public String getConditionPreDisposante() {
+        return conditionPreDisposante;
+    }
+
+    public void setConditionPreDisposante(String conditionPreDisposante) {
+        this.conditionPreDisposante = conditionPreDisposante;
+    }
+
+    public String getListeDesConditionsPreDisposantes() {
+        return listeDesConditionsPreDisposantes;
+    }
+
+    public void setListeDesConditionsPreDisposantes(String listeDesConditionsPreDisposantes) {
+        this.listeDesConditionsPreDisposantes = listeDesConditionsPreDisposantes;
+    }
+
     @Override
     public String toString() {
-        return "Parent ID : " + getParentUserId() + "\n"
-                + "Nom : " + getName() + "\n"
-                + "Tel : " + getPhoneNumber() + "\n"
-                + "Genre : " + getGendre() + "\n"
-                + "Age : " + getAge() + "\n"
-                + "Wilaya : " + getWilaya() + "\n"
-                + "Cas suspects : " + getSuspectedCases() + "\n"
+        return "Form ID : " + getFormID() + "\n"
+                + "Parent ID : " + getParentUserID() + "\n"
+                + "Patient ID : " + getPatientID() + "\n"
                 + "Symptômes : " + getSymptoms() + "\n"
-                + "Terrain : " + getTerrain() + "\n"
-                + "Cas confirmé de COVID-19 : " + getConfirmedCovid19Case() + "\n"
-                + "Evolution : " + getEvolution();
+                + "Consulter medecin : " + getConsulterMedecin() + "\n"
+                + "Structure medecin : " + getStrucureMedecin() + "\n"
+                + "RaisonAbsence : " + getRaisonAbsence() + "\n"
+                + "Sabsentir du travail : " + getSabsenterDuTravail() + "\n"
+                + "Combien de jours : " + getCombienDeJours() + "\n"
+                + "Contact avec personne suspecte : " + getContactAvecPersonneSuspecte() + "\n"
+                + "Tel personne suspecte : " + getTelPersonneSuspecte() + "\n"
+                + "Dernier contact : " + getDateDernierContactPersonneSuspecte() + "\n"
+                + "Niveau socio-économique : " + getNiveauSocioEconomique() + "\n"
+                + "Conditions pré-disposantes : " + getConditionPreDisposante() + "\n"
+                + "Liste de conditions pre-dispo : " + getListeDesConditionsPreDisposantes();
     }
 }

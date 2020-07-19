@@ -9,11 +9,18 @@
     tools:context=".view.Covid19FormActivity">
 
     <TextView
+        android:id="@+id/formID_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="ID :" />
+
+    <TextView
         android:id="@+id/fragment_current_label_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="Diagnostic clinique"

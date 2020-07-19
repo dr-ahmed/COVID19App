@@ -42,9 +42,11 @@ public class Covid19NewFormController {
         Covid19NewFormAsyncTask covid19NewFormAsyncTask = new Covid19NewFormAsyncTask(this);
         showProgressDialog(covid19FormPart4.getActivity(), "Insertion du formulaire en cours ...");
 
-        covid19NewFormAsyncTask.execute(String.valueOf(covid19Form.getParentUserId()), covid19Form.getName(), covid19Form.getPhoneNumber(),
+        /*
+        covid19NewFormAsyncTask.execute(String.valueOf(covid19Form.getParentUserID()), covid19Form.getName(), covid19Form.getPhoneNumber(),
                 covid19Form.getGendre(), String.valueOf(covid19Form.getAge()), covid19Form.getWilaya(), covid19Form.getSuspectedCases(),
                 covid19Form.getSymptoms(), covid19Form.getTerrain(), covid19Form.getConfirmedCovid19Case(), covid19Form.getEvolution(), getTodayDate());
+         */
     }
 
     public void onFormAdded(String exceptionInfo, boolean isFormAdded) {

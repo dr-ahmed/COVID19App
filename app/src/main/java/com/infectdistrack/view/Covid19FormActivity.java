@@ -26,7 +26,7 @@ public class Covid19FormActivity extends AppCompatActivity {
 
     private static final String TAG = "COVID19FormActivity";
 
-    private TextView fragmentCurrentLabel, errorLabelTextView;
+    private TextView formdIDTxt, fragmentCurrentLabel, errorLabelTxt;
     private CustomViewPager customViewPager;
     private TabLayout tabLayout;
 
@@ -63,11 +63,27 @@ public class Covid19FormActivity extends AppCompatActivity {
             patient = getIntent().getParcelableExtra(PATIENT_OBJECT_TAG);
 
             covid19CurrentForm = new Covid19Form();
-            covid19CurrentForm.setParentUserId(parentUser.getId());
+            covid19CurrentForm.setParentUserID(parentUser.getId());
+            covid19CurrentForm.setPatientID(patient.getPhoneNumber());
+            StringBuilder formID = new StringBuilder();
+            // Construire l'ID du formulaire
+            formID.append("MAU")
+                    .append(".")
+                    .append(patient.getWilaya().substring(0, 3))
+                    .append(".")
+                    .append(patient.getMoughataa().substring(0, 3))
+                    .append(".")
+                    .append(patient.getPhoneNumber().substring(patient.getPhoneNumber().length() - 2))
+                    .append(".")
+                    .append(parentUser.getId());
+            covid19CurrentForm.setFormID(formID.toString());
         }
 
+        formdIDTxt = findViewById(R.id.formID_txt);
+        String id = "ID : " + covid19CurrentForm.getFormID();
+        formdIDTxt.setText(id);
         fragmentCurrentLabel = findViewById(R.id.fragment_current_label_txt);
-        errorLabelTextView = findViewById(R.id.error_label_txt);
+        errorLabelTxt = findViewById(R.id.error_label_txt);
         tabLayout = findViewById(R.id.tab_layout);
         customViewPager = findViewById(R.id.view_pager);
         customViewPager.setParentActivity(this);
@@ -102,15 +118,15 @@ public class Covid19FormActivity extends AppCompatActivity {
     }
 
     public void setErrorMessage(String message) {
-        errorLabelTextView.setVisibility(View.VISIBLE);
-        errorLabelTextView.setText(message);
-        errorLabelTextView.setTextColor(Color.RED);
+        errorLabelTxt.setVisibility(View.VISIBLE);
+        errorLabelTxt.setText(message);
+        errorLabelTxt.setTextColor(Color.RED);
     }
 
     public void resetErrorLabel() {
-        errorLabelTextView.setText("");
-        errorLabelTextView.setTextColor(Color.DKGRAY);
-        errorLabelTextView.setVisibility(GONE);
+        errorLabelTxt.setText("");
+        errorLabelTxt.setTextColor(Color.DKGRAY);
+        errorLabelTxt.setVisibility(GONE);
     }
 
     public boolean isPart1FormDone() {

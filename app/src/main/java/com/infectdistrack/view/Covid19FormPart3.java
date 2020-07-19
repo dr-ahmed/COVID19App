@@ -274,7 +274,7 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
     }
 
     public void setValues() {
-        covid19FormObject.setTerrain(getPatientTerrain());
+        //covid19FormObject.setTerrain(getPatientTerrain());
         //Log.e(TAG, covid19FormObject.toString());
     }
 }
