@@ -100,10 +100,9 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
             // Si le bundle comprend OPTION_TAG
             if (bundle.getString(OPTION_TAG) != null) {
                 // Si le user choisit l'option Unique, on désactive tous les Views et on affiches les données du patient sur les Views
-
-                doesPatientExist = true;
-
                 if (bundle.getString(OPTION_TAG).equals(UNIQUE_ITEM)) {
+                    doesPatientExist = true;
+
                     phoneNumberEdt.setText(patient.getPhoneNumber());
                     setMaxLengthForPhoneNumberEditText(9);
                     nameEdt.setText(patient.getName());
@@ -125,6 +124,8 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
                     isUserUnique = true;
                 } else // Si le user choisit l'option Associé, on affiche le phone number dans l'edittext et on le désactive. Les autres Views restent enabled
                     if (bundle.getString(OPTION_TAG).equals(ASSOCIATED_ITEM)) {
+                        doesPatientExist = false;
+
                         phoneNumberEdt.setText(patient.getPhoneNumber());
                         setMaxLengthForPhoneNumberEditText(9);
                         birthDateTxt.setVisibility(View.GONE);

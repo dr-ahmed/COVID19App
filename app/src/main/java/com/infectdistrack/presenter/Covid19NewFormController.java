@@ -55,7 +55,7 @@ public class Covid19NewFormController {
         if (!covid19FormActivity.getDoesPatientExist())
             covid19NewFormAsyncTask.execute(patient.getPhoneNumber(), patient.getName(), patient.getGender(),
                     patient.getDateOfBirth(), replaceApostrophe(patient.getWilaya()), replaceApostrophe(patient.getMoughataa()),
-                    covid19Form.getFormID(), String.valueOf(covid19Form.getParentUserID()), replaceApostrophe(covid19Form.getSymptoms()),
+                    replaceApostrophe(covid19Form.getFormID()), String.valueOf(covid19Form.getParentUserID()), replaceApostrophe(covid19Form.getSymptoms()),
                     covid19Form.getConsulterMedecin(), covid19Form.getStrucureMedecin(), covid19Form.getRaisonAbsence(),
                     covid19Form.getSabsenterDuTravail(), covid19Form.getCombienDeJours(), covid19Form.getContactAvecPersonneSuspecte(),
                     covid19Form.getTelPersonneSuspecte(), covid19Form.getDateDernierContactPersonneSuspecte(), covid19Form.getNiveauSocioEconomique(),
@@ -67,7 +67,7 @@ public class Covid19NewFormController {
                     , getTodayDate());
         else
             covid19NewFormAsyncTask.execute(patient.getPhoneNumber(), "", "", "", "", "",
-                    covid19Form.getFormID(), String.valueOf(covid19Form.getParentUserID()), replaceApostrophe(covid19Form.getSymptoms()),
+                    replaceApostrophe(covid19Form.getFormID()), String.valueOf(covid19Form.getParentUserID()), replaceApostrophe(covid19Form.getSymptoms()),
                     covid19Form.getConsulterMedecin(), covid19Form.getStrucureMedecin(), covid19Form.getRaisonAbsence(),
                     covid19Form.getSabsenterDuTravail(), covid19Form.getCombienDeJours(), covid19Form.getContactAvecPersonneSuspecte(),
                     covid19Form.getTelPersonneSuspecte(), covid19Form.getDateDernierContactPersonneSuspecte(), covid19Form.getNiveauSocioEconomique(),
@@ -87,7 +87,7 @@ public class Covid19NewFormController {
             if (exceptionInfo.equals(SOCKET_TIMEOUT_EXCEPTION))
                 showMessage(covid19FormPart4.getActivity(), "Pas de connexion internet", "Merci de vérifier votre connexion internet!");
             else
-                showMessage(covid19FormPart4.getActivity(), "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 007)");
+                showMessage(covid19FormPart4.getActivity(), "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : CNF001)");
             //showMessageUsingDialogFragment(covid19FormPart4.getActivity(), "Exception", "Une erreur s'est produite !\n" + "DETAILS :\n" + exceptionInfo);
         }
     }
