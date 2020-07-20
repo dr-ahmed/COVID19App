@@ -251,10 +251,10 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         if (view.getId() == R.id.datepicker_pour_deces) {
             isDateDecesUnchanged = false;
-            dateDeces = dayOfMonth + "/" + monthOfYear + "/" + year;
+            dateDeces = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
         } else if (view.getId() == R.id.datepicker_pour_hospitalisation) {
             isDateAdmissionUnchanged = false;
-            dateAdmission = dayOfMonth + "/" + monthOfYear + "/" + year;
+            dateAdmission = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
         } else
             Toast.makeText(getActivity(), "Erreur EV003", Toast.LENGTH_SHORT).show();
     }

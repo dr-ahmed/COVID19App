@@ -208,7 +208,7 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
             if (autresSignesDeGraviteBox.isChecked())
                 symptoms.append(autresSignesDeGraviteBox.getText()).append(":").append(autresSignesDeGraviteEdt.getText()).append(";");
             if (otherSympBox.isChecked())
-                symptoms.append(otherSympBox.getText()).append(":").append(otherSympEdt.getText());
+                symptoms.append(otherSympEdt.getText());
         }
 
         return symptoms.toString();

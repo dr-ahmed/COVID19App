@@ -411,7 +411,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         if (view.getId() == R.id.dernier_contact_personne_suspecte_datepicker) {
             isDateUnchanged = false;
-            dateDuDernierContact = dayOfMonth + "/" + monthOfYear + "/" + year;
+            dateDuDernierContact = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
         }
     }
 

@@ -299,7 +299,7 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         if (view.getId() == R.id.date_test_datepicker) {
-            dateTest = dayOfMonth + "/" + monthOfYear + "/" + year;
+            dateTest = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
             isDateUnchanged = false;
         }
     }
