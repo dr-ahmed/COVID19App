@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
     private LinearLayout depistageControleLayout, typeEtDateDeTestLayout, resultatTestTDRLayout, detailsTestTDRLayout,
             resultatTestPCRLayout, resultatTestScannerLayout;
     private DatePicker datePicker;
+    private String dateTest = "";
     private boolean isDateUnchanged = true;
     private CheckBox tdrCheckBox, pcrCheckBox, scannerCheckBox;
 
@@ -254,27 +256,51 @@ public class Covid19FormPart3 extends Fragment implements RadioGroup.OnCheckedCh
         return true;
     }
 
-    @Override
-    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        if (view.getId() == R.id.date_test_datepicker)
-            isDateUnchanged = false;
-    }
-
-    private String getPatientTerrain() {
-        StringBuilder terrain = new StringBuilder();
-
-        /*
-        if (diabeteBox.isChecked())
-            terrain.append("Diabète").append(";");
-        if (grossesseBox.isChecked())
-            terrain.append("Grossesse").append(";");
-         */
-
-        return terrain.toString();
+    private void resetValues() {
+        covid19FormObject.setTestCovid("");
+        covid19FormObject.setTypeTest("");
+        covid19FormObject.setDateTest("");
+        covid19FormObject.setTdr("");
+        covid19FormObject.setPcr("");
+        covid19FormObject.setScanner("");
+        covid19FormObject.setTdrResponse("");
+        covid19FormObject.setTdrDetails("");
+        covid19FormObject.setPcrReponse("");
+        covid19FormObject.setScannerResponse("");
     }
 
     public void setValues() {
-        //covid19FormObject.setTerrain(getPatientTerrain());
-        //Log.e(TAG, covid19FormObject.toString());
+        resetValues();
+
+        covid19FormObject.setTestCovid(responseFromTestCovid19);
+        covid19FormObject.setTypeTest(responseFromTypeDeTestCovid19);
+        covid19FormObject.setDateTest(dateTest);
+
+        if (tdrCheckBox.isChecked()) {
+            covid19FormObject.setTdr("TDR");
+            covid19FormObject.setTdrResponse(responseFromResultatTDR);
+            if (covid19FormObject.getTdrResponse().equals(POSITIF))
+                covid19FormObject.setTdrDetails(responseFromDetailsTDR);
+        }
+
+        if (pcrCheckBox.isChecked()) {
+            covid19FormObject.setPcr("PCR");
+            covid19FormObject.setPcrReponse(responseFromPCRTest);
+        }
+
+        if (scannerCheckBox.isChecked()) {
+            covid19FormObject.setScanner("SCANNER");
+            covid19FormObject.setScannerResponse(responseFromScannerTest);
+        }
+
+        // Log.e(TAG, covid19FormObject.toString());
+    }
+
+    @Override
+    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        if (view.getId() == R.id.date_test_datepicker) {
+            dateTest = dayOfMonth + "/" + monthOfYear + "/" + year;
+            isDateUnchanged = false;
+        }
     }
 }

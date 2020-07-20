@@ -5,7 +5,10 @@ public class Covid19Form {
     private String patientID, formID;
     private String symptoms, consulterMedecin, strucureMedecin, raisonAbsence, sabsenterDuTravail,
             combienDeJours, contactAvecPersonneSuspecte, telPersonneSuspecte, dateDernierContactPersonneSuspecte,
-            niveauSocioEconomique, conditionPreDisposante, listeDesConditionsPreDisposantes;
+            niveauSocioEconomique, conditionPreDisposante, listeDesConditionsPreDisposantes,
+            testCovid, typeTest, DateTest, tdr, pcr, scanner, tdrResponse, tdrDetails, pcrReponse, scannerResponse,
+            statutActuel, detailVivant, dateAdmission, structureSanitaireHospitalisation,
+            dateDeces, lieuDeces, dureeHospitalisation, structureSanitaireDeces;
 
     public Covid19Form() {
     }
@@ -130,6 +133,150 @@ public class Covid19Form {
         this.listeDesConditionsPreDisposantes = listeDesConditionsPreDisposantes;
     }
 
+    public String getTestCovid() {
+        return testCovid;
+    }
+
+    public void setTestCovid(String testCovid) {
+        this.testCovid = testCovid;
+    }
+
+    public String getTypeTest() {
+        return typeTest;
+    }
+
+    public void setTypeTest(String typeTest) {
+        this.typeTest = typeTest;
+    }
+
+    public String getDateTest() {
+        return DateTest;
+    }
+
+    public void setDateTest(String dateTest) {
+        DateTest = dateTest;
+    }
+
+    public String getTdr() {
+        return tdr;
+    }
+
+    public void setTdr(String tdr) {
+        this.tdr = tdr;
+    }
+
+    public String getPcr() {
+        return pcr;
+    }
+
+    public void setPcr(String pcr) {
+        this.pcr = pcr;
+    }
+
+    public String getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(String scanner) {
+        this.scanner = scanner;
+    }
+
+    public String getTdrResponse() {
+        return tdrResponse;
+    }
+
+    public void setTdrResponse(String tdrResponse) {
+        this.tdrResponse = tdrResponse;
+    }
+
+    public String getTdrDetails() {
+        return tdrDetails;
+    }
+
+    public void setTdrDetails(String tdrDetails) {
+        this.tdrDetails = tdrDetails;
+    }
+
+    public String getPcrReponse() {
+        return pcrReponse;
+    }
+
+    public void setPcrReponse(String pcrReponse) {
+        this.pcrReponse = pcrReponse;
+    }
+
+    public String getScannerResponse() {
+        return scannerResponse;
+    }
+
+    public void setScannerResponse(String scannerResponse) {
+        this.scannerResponse = scannerResponse;
+    }
+
+    public String getStatutActuel() {
+        return statutActuel;
+    }
+
+    public void setStatutActuel(String statutActuel) {
+        this.statutActuel = statutActuel;
+    }
+
+    public String getDetailVivant() {
+        return detailVivant;
+    }
+
+    public void setDetailVivant(String detailVivant) {
+        this.detailVivant = detailVivant;
+    }
+
+    public String getDateAdmission() {
+        return dateAdmission;
+    }
+
+    public void setDateAdmission(String dateAdmission) {
+        this.dateAdmission = dateAdmission;
+    }
+
+    public String getStructureSanitaireHospitalisation() {
+        return structureSanitaireHospitalisation;
+    }
+
+    public void setStructureSanitaireHospitalisation(String structureSanitaireHospitalisation) {
+        this.structureSanitaireHospitalisation = structureSanitaireHospitalisation;
+    }
+
+    public String getDateDeces() {
+        return dateDeces;
+    }
+
+    public void setDateDeces(String dateDeces) {
+        this.dateDeces = dateDeces;
+    }
+
+    public String getLieuDeces() {
+        return lieuDeces;
+    }
+
+    public void setLieuDeces(String lieuDeces) {
+        this.lieuDeces = lieuDeces;
+    }
+
+    public String getDureeHospitalisation() {
+        return dureeHospitalisation;
+    }
+
+    public void setDureeHospitalisation(String dureeHospitalisation) {
+        this.dureeHospitalisation = dureeHospitalisation;
+    }
+
+    public String getStructureSanitaireDeces() {
+        return structureSanitaireDeces;
+    }
+
+    public void setStructureSanitaireDeces(String structureSanitaireDeces) {
+        this.structureSanitaireDeces = structureSanitaireDeces;
+    }
+
     @Override
     public String toString() {
         return "Form ID : " + getFormID() + "\n"
@@ -146,6 +293,24 @@ public class Covid19Form {
                 + "Dernier contact : " + getDateDernierContactPersonneSuspecte() + "\n"
                 + "Niveau socio-économique : " + getNiveauSocioEconomique() + "\n"
                 + "Conditions pré-disposantes : " + getConditionPreDisposante() + "\n"
-                + "Liste de conditions pre-dispo : " + getListeDesConditionsPreDisposantes();
+                + "Liste de conditions pre-dispo : " + getListeDesConditionsPreDisposantes() + "\n"
+                + "Test COVID : " + getTestCovid() + "\n"
+                + "Type test : " + getTypeTest() + "\n"
+                + "DateTest : " + getDateTest() + "\n"
+                + "TDR : " + getTdr() + "\n"
+                + "PCR : " + getPcr() + "\n"
+                + "Scanner : " + getScanner() + "\n"
+                + "TDR response : " + getTdrResponse() + "\n"
+                + "TDR details : " + getTdrDetails() + "\n"
+                + "PCR response : " + getPcrReponse() + "\n"
+                + "Scanner response : " + getScannerResponse() + "\n"
+                + "Statut actuel : " + getStatutActuel() + "\n"
+                + "detailsVivant: " + getDetailVivant() + "\n"
+                + "dateAdmission: " + getDateAdmission() + "\n"
+                + "structureSanitaireHospitalisation : " + getStructureSanitaireHospitalisation() + "\n"
+                + "dateDeces : " + getDateDeces() + "\n"
+                + "lieuDeces : " + getLieuDeces() + "\n"
+                + "dureeHospitalisation : " + getDureeHospitalisation() + "\n"
+                + "structureSanitaireDeces : " + getStructureSanitaireDeces();
     }
 }

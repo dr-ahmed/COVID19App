@@ -82,6 +82,7 @@ public class Covid19FormActivity extends AppCompatActivity {
         formdIDTxt = findViewById(R.id.formID_txt);
         String id = "ID : " + covid19CurrentForm.getFormID();
         formdIDTxt.setText(id);
+
         fragmentCurrentLabel = findViewById(R.id.fragment_current_label_txt);
         errorLabelTxt = findViewById(R.id.error_label_txt);
         tabLayout = findViewById(R.id.tab_layout);

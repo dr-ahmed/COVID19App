@@ -22,6 +22,7 @@ import com.infectdistrack.R;
 import com.infectdistrack.model.Covid19Form;
 import com.infectdistrack.model.User;
 import com.infectdistrack.model.Utilities;
+import com.infectdistrack.presenter.Covid19NewFormController;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -44,10 +45,11 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
     private LinearLayout decesLayout, vivantLayout, detailsDecesLayout, detailsHospitalisatinLayout;
     private RadioGroup statutActuelRadioGroup, lieuDuDecesRadioGroup, detailsVivantRadioGroup;
     private String statutActuelValue = "", responseFromLieuDuDeces = "", detailsVivant = "";
-    private DatePicker dateDeces, dateAdmissionPourHospitalisation;
-    private boolean isDateDeceUnchanged = true, isDateAdmissionUnchanged = true;
+    private DatePicker dateDecesPicker, dateAdmissionPicker;
+    private boolean isDateDecesUnchanged = true, isDateAdmissionUnchanged = true;
+    private String dateDeces, dateAdmission;
     private NumberPicker dureeDhospitalisationNumberPicker;
-    private Spinner structureSanitairePourDeces, structureSanitairePourHospitalisation;
+    private Spinner structureSanitaireDecesSpinner, structureSanitaireHospitalisationSpinner;
     private ArrayAdapter<String> structureSanitairePourDecesAdapter, structureSanitairePourHospitalisationAdapter;
     private EditText autreStatutPourVivantEdt;
     private Button submitBtn;
@@ -91,31 +93,31 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
         lieuDuDecesRadioGroup = rootView.findViewById(R.id.radio_group_lieu_du_deces);
         lieuDuDecesRadioGroup.setOnCheckedChangeListener(this);
 
-        dateDeces = rootView.findViewById(R.id.datepicker_pour_deces);
+        dateDecesPicker = rootView.findViewById(R.id.datepicker_pour_deces);
         int[] dateDeces = Utilities.getCurrentDayMonthAndYear();
-        this.dateDeces.init(dateDeces[0], dateDeces[1], dateDeces[2], this);
+        this.dateDecesPicker.init(dateDeces[0], dateDeces[1], dateDeces[2], this);
 
         detailsDecesLayout = rootView.findViewById(R.id.details_deces_layout);
         dureeDhospitalisationNumberPicker = rootView.findViewById(R.id.duree_d_hospitalisation_picker);
         dureeDhospitalisationNumberPicker.setMinValue(0);
         dureeDhospitalisationNumberPicker.setMaxValue(100);
 
-        structureSanitairePourDeces = rootView.findViewById(R.id.structure_sanitaire_pour_deces_spinner);
+        structureSanitaireDecesSpinner = rootView.findViewById(R.id.structure_sanitaire_pour_deces_spinner);
         structureSanitairePourDecesAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, STRUCTURES_SANITAIRES);
-        structureSanitairePourDeces.setAdapter(structureSanitairePourDecesAdapter);
+        structureSanitaireDecesSpinner.setAdapter(structureSanitairePourDecesAdapter);
 
         detailsVivantRadioGroup = rootView.findViewById(R.id.radio_group_details_vivant);
         detailsVivantRadioGroup.setOnCheckedChangeListener(this);
 
-        structureSanitairePourHospitalisation = rootView.findViewById(R.id.structure_sanitaire_pour_hospitalisation_spinner);
+        structureSanitaireHospitalisationSpinner = rootView.findViewById(R.id.structure_sanitaire_pour_hospitalisation_spinner);
         structureSanitairePourHospitalisationAdapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, STRUCTURES_SANITAIRES);
-        structureSanitairePourHospitalisation.setAdapter(structureSanitairePourHospitalisationAdapter);
+        structureSanitaireHospitalisationSpinner.setAdapter(structureSanitairePourHospitalisationAdapter);
 
         detailsHospitalisatinLayout = rootView.findViewById(R.id.details_hospitalisation_layout);
 
-        dateAdmissionPourHospitalisation = rootView.findViewById(R.id.datepicker_pour_hospitalisation);
+        dateAdmissionPicker = rootView.findViewById(R.id.datepicker_pour_hospitalisation);
         int[] dateAdmission = Utilities.getCurrentDayMonthAndYear();
-        dateAdmissionPourHospitalisation.init(dateAdmission[0], dateAdmission[1], dateAdmission[2], this);
+        dateAdmissionPicker.init(dateAdmission[0], dateAdmission[1], dateAdmission[2], this);
 
         autreStatutPourVivantEdt = rootView.findViewById(R.id.autre_a_preciser_pour_vivant_radiobutton);
 
@@ -189,7 +191,7 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
                 return false;
             case DECEDE:
                 // si le user ne précise pas la date du test
-                if (isDateDeceUnchanged)
+                if (isDateDecesUnchanged)
                     return false;
                 // si le user ne choisit pas le lieu du deces (à domicile ou dans une structure sanitaire)
                 if (responseFromLieuDuDeces.isEmpty())
@@ -202,19 +204,18 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
                             return false;
 
                         // si le user ne fournit pas le nom de la structure sanitaire
-                        if (structureSanitairePourDeces.getSelectedItem().toString().equals(EMPTY_STRING))
+                        if (structureSanitaireDecesSpinner.getSelectedItem().toString().equals(EMPTY_STRING))
                             return false;
                     }
                 }
                 break;
             case VIVANT:
-                Log.e(TAG, "detailsVivant : " + detailsVivant);
                 switch (detailsVivant) {
                     case EMPTY_STRING:
                         return false;
                     case HOSPITALISE:
                         // si le user ne précise pas la date d'admission ou s'il ne choisit pas la structure sanitaire
-                        if (isDateAdmissionUnchanged || structureSanitairePourHospitalisation.getSelectedItem().toString().equals(EMPTY_STRING))
+                        if (isDateAdmissionUnchanged || structureSanitaireHospitalisationSpinner.getSelectedItem().toString().equals(EMPTY_STRING))
                             return false;
                         break;
                     case CONFINE_A_DOMICILE:
@@ -248,30 +249,63 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        if (view.getId() == R.id.datepicker_pour_deces)
-            isDateDeceUnchanged = false;
-        else if (view.getId() == R.id.datepicker_pour_hospitalisation)
+        if (view.getId() == R.id.datepicker_pour_deces) {
+            isDateDecesUnchanged = false;
+            dateDeces = dayOfMonth + "/" + monthOfYear + "/" + year;
+        } else if (view.getId() == R.id.datepicker_pour_hospitalisation) {
             isDateAdmissionUnchanged = false;
-        else
+            dateAdmission = dayOfMonth + "/" + monthOfYear + "/" + year;
+        } else
             Toast.makeText(getActivity(), "Erreur EV003", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.patient_submit_button) {
-            Toast.makeText(getActivity(), "C'est OK !!", Toast.LENGTH_SHORT).show();
-            /*
             setValues();
             Covid19NewFormController covid19NewFormController = new Covid19NewFormController(this);
-            covid19NewFormController.insertForm();
-            */
+            //covid19NewFormController.insertForm();
         }
     }
 
-    public void setValues() {
-        // covid19FormObject.setConfirmedCovid19Case(statutActuelValue);
-        // covid19FormObject.setEvolution(evolutionValue);
+    private void resetValues() {
+        covid19FormObject.setStatutActuel("");
+        covid19FormObject.setDetailVivant("");
+        covid19FormObject.setDateAdmission("");
+        covid19FormObject.setStructureSanitaireHospitalisation("");
+        covid19FormObject.setDateDeces("");
+        covid19FormObject.setLieuDeces("");
+        covid19FormObject.setDureeHospitalisation("");
+        covid19FormObject.setStructureSanitaireDeces("");
+    }
 
-        //Log.e(TAG, covid19FormObject.toString());
+    public void setValues() {
+        resetValues();
+
+        covid19FormObject.setStatutActuel(statutActuelValue);
+
+        if (covid19FormObject.getStatutActuel().equals(VIVANT)) {
+            if (detailsVivant.equals(AUTRE))
+                covid19FormObject.setDetailVivant(autreStatutPourVivantEdt.getText().toString());
+            else
+                covid19FormObject.setDetailVivant(detailsVivant);
+        }
+
+        if (covid19FormObject.getDetailVivant().equals(HOSPITALISE)) {
+            covid19FormObject.setDateAdmission(dateAdmission);
+            covid19FormObject.setStructureSanitaireHospitalisation(structureSanitaireHospitalisationSpinner.getSelectedItem().toString());
+        }
+
+        if (covid19FormObject.getStatutActuel().equals(DECEDE)) {
+            covid19FormObject.setDateDeces(dateDeces);
+            covid19FormObject.setLieuDeces(responseFromLieuDuDeces);
+        }
+
+        if (covid19FormObject.getLieuDeces().equals(STRUCTURE_SANITAIRE)) {
+            covid19FormObject.setDureeHospitalisation(String.valueOf(dureeDhospitalisationNumberPicker.getValue()));
+            covid19FormObject.setStructureSanitaireDeces(structureSanitaireDecesSpinner.getSelectedItem().toString());
+        }
+
+        Log.e(TAG, covid19FormObject.toString());
     }
 }

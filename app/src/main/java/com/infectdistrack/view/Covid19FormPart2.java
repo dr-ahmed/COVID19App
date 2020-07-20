@@ -404,7 +404,7 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         if (covid19FormObject.getConditionPreDisposante().equals(OUI))
             covid19FormObject.setListeDesConditionsPreDisposantes(getListeDesConditionsPreDisposantes());
 
-        Log.e(TAG, covid19FormObject.toString());
+        //Log.e(TAG, covid19FormObject.toString());
     }
 
     @Override
