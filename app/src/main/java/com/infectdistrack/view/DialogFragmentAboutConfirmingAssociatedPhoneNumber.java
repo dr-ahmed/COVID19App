@@ -29,8 +29,17 @@ public class DialogFragmentAboutConfirmingAssociatedPhoneNumber extends DialogFr
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder dialogBuiler = new AlertDialog.Builder(getActivity());
         dialogBuiler.setTitle("Demande de confirmation");
-        dialogBuiler.setMessage("Ce numéro est déjà sauvegardé dans la base de données, "
-                + (associatedNumber == 0 ? " aucun identifiant n'y est déjà associé." : associatedNumber + " identifiants y sont déjà associés.")
+
+        String variantMessage = "";
+
+        if (associatedNumber == 0)
+            variantMessage = " aucun identifiant n'y est déjà associé.";
+        else if (associatedNumber == 1)
+            variantMessage = " un seul identifiant y est déjà associé.";
+        else
+            variantMessage = associatedNumber + " identifiants y sont déjà associés.";
+
+        dialogBuiler.setMessage("Ce numéro est déjà sauvegardé dans la base de données, " + variantMessage
                 + "\nVoulez-vous lui associer un nouvel identifiant numéro " + (associatedNumber + 1) + " ?");
         dialogBuiler.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override

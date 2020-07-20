@@ -13,9 +13,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity android:name=".view.PhoneNumberCheckoutActivity" />
-        <activity
-            android:name=".view.PhoneNumberDetailsActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".view.PhoneNumberDetailsActivity" />
         <activity android:name=".view.CommunityWatchActivity" />
         <activity
             android:name=".view.Covid19FormActivity"

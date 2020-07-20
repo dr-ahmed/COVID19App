@@ -53,7 +53,7 @@ public class Covid19NewFormController {
         showProgressDialog(covid19FormPart4.getActivity(), "Insertion du formulaire en cours ...");
 
         if (!covid19FormActivity.getDoesPatientExist())
-            covid19NewFormAsyncTask.execute(patient.getPhoneNumber(), patient.getName(), patient.getGender(),
+            covid19NewFormAsyncTask.execute(patient.getPhoneNumber(), replaceApostrophe(patient.getName()), patient.getGender(),
                     patient.getDateOfBirth(), replaceApostrophe(patient.getWilaya()), replaceApostrophe(patient.getMoughataa()),
                     replaceApostrophe(covid19Form.getFormID()), String.valueOf(covid19Form.getParentUserID()), replaceApostrophe(covid19Form.getSymptoms()),
                     covid19Form.getConsulterMedecin(), covid19Form.getStrucureMedecin(), covid19Form.getRaisonAbsence(),

@@ -46,6 +46,7 @@ public class PhoneNumberCheckoutActivity extends AppCompatActivity implements Vi
         setContentView(R.layout.fragment_phone_number_checkout);
 
         initViews();
+        patientPhoneNumberEdt.requestFocus();
     }
 
     private void initViews() {

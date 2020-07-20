@@ -159,7 +159,7 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
         StringBuilder symptoms = new StringBuilder();
 
         if (noSympBox.isChecked()) {
-            symptoms.append("Aucun symptome");
+            symptoms.append("Aucun symptôme");
         } else {
             if (feverBox.isChecked())
                 symptoms.append("Fièvre").append(";");

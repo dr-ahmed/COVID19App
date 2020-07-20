@@ -76,6 +76,7 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
 
         setWilayasAndMoughataas();
         initViews();
+        nameEdt.requestFocus();
 
         // Si le user saisit un ID qui n'existe pas dans la BD et choisit l'option Unique
         if (getIntent().getStringExtra(OPTION_TAG) != null && getIntent().getStringExtra(OPTION_TAG).equals(UNIQUE_ITEM)
