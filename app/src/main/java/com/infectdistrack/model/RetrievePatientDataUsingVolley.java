@@ -114,6 +114,9 @@ public class RetrievePatientDataUsingVolley {
             else {
                 JSONObject patientAsJSON = result.getJSONObject(PATIENT_MAIN_DATA_HEADER);
 
+                formCount = Integer.parseInt(patientAsJSON.getString(PARENT_ID_TAG));
+                // Log.e(TAG, "formCount : " + formCount);
+
                 if (patientAsJSON.has(DOES_PATIENT_EXIST)) {
                     String doesPatientExist = patientAsJSON.getString(DOES_PATIENT_EXIST);
 
@@ -121,9 +124,6 @@ public class RetrievePatientDataUsingVolley {
                         isAlreadyRegistrated = false;
                     else if (doesPatientExist.equals(YES)) {
                         if (!patientAsJSON.isNull(PATIENT_DATA_HEADER_OBJECT)) {
-
-                            formCount = Integer.parseInt(patientAsJSON.getString(PARENT_ID_TAG));
-                            Log.e(TAG, "formCount : " + formCount);
 
                             JSONObject patientDataObject = patientAsJSON.getJSONObject(PATIENT_DATA_HEADER_OBJECT);
                             // Le LAST_ASSOCIATED_PHONE_NUMBER serait "null" si le user choisit l'option Associé et fournit un ID qui n'existe pas dans la BD
