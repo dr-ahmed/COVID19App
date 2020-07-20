@@ -127,7 +127,7 @@ public class NewUserController {
             if (userIsUnique) {
                 askForConfirmation();
             } else
-                showMessage(newUserActivity, "Email déjà existant", "Désolé, cet email est deja utilsié, veuillez essayer un autre !");
+                showMessage(newUserActivity, "Compte déjà existant", "Le numéro de téléphone ou l'email est déjà utilsié");
         } else {
             if (exceptionInfo.equals(SOCKET_TIMEOUT_EXCEPTION))
                 showMessage(newUserActivity, "Pas de connexion internet", "Merci de vérifier votre connexion internet!");

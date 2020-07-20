@@ -49,16 +49,15 @@ public class NewUserAsyncTask extends AsyncTask<String, Integer, String> {
             String post_data = URLEncoder.encode(USER_FULL_NAME_TAG, ENCODING) + "=" + URLEncoder.encode(params[0], ENCODING)
                     + "&" + URLEncoder.encode(USER_PHONE_NUMBER_TAG, ENCODING) + "=" + URLEncoder.encode(params[1], ENCODING)
                     + "&" + URLEncoder.encode(USER_EMAIL_TAG, ENCODING) + "=" + URLEncoder.encode(params[2], ENCODING)
-                    + "&" + URLEncoder.encode(USER_EMAIL_TAG, ENCODING) + "=" + URLEncoder.encode(params[3], ENCODING)
-                    + "&" + URLEncoder.encode(USER_PASSWORD_TAG, ENCODING) + "=" + URLEncoder.encode(params[4], ENCODING)
-                    + "&" + URLEncoder.encode(USER_CATEGORY_TAG, ENCODING) + "=" + URLEncoder.encode(params[5], ENCODING)
-                    + "&" + URLEncoder.encode(USER_ASSOCIATE_ADMIN_TAG, ENCODING) + "=" + URLEncoder.encode(params[6], ENCODING)
-                    + "&" + URLEncoder.encode(USER_WILAYA_TAG, ENCODING) + "=" + URLEncoder.encode(params[7], ENCODING)
-                    + "&" + URLEncoder.encode(USER_MOUGHATAA_TAG, ENCODING) + "=" + URLEncoder.encode(params[8], ENCODING)
-                    + "&" + URLEncoder.encode(USER_TYPE_TAG, ENCODING) + "=" + URLEncoder.encode(params[9], ENCODING)
-                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_TYPE_TAG, ENCODING) + "=" + URLEncoder.encode(params[10], ENCODING)
-                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_CATEGORY_TAG, ENCODING) + "=" + URLEncoder.encode(params[11], ENCODING)
-                    + "&" + URLEncoder.encode(USER_CREATION_DATE_TAG, ENCODING) + "=" + URLEncoder.encode(params[12], ENCODING);
+                    + "&" + URLEncoder.encode(USER_PASSWORD_TAG, ENCODING) + "=" + URLEncoder.encode(params[3], ENCODING)
+                    + "&" + URLEncoder.encode(USER_CATEGORY_TAG, ENCODING) + "=" + URLEncoder.encode(params[4], ENCODING)
+                    + "&" + URLEncoder.encode(USER_ASSOCIATE_ADMIN_TAG, ENCODING) + "=" + URLEncoder.encode(params[5], ENCODING)
+                    + "&" + URLEncoder.encode(USER_WILAYA_TAG, ENCODING) + "=" + URLEncoder.encode(params[6], ENCODING)
+                    + "&" + URLEncoder.encode(USER_MOUGHATAA_TAG, ENCODING) + "=" + URLEncoder.encode(params[7], ENCODING)
+                    + "&" + URLEncoder.encode(USER_TYPE_TAG, ENCODING) + "=" + URLEncoder.encode(params[8], ENCODING)
+                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_TYPE_TAG, ENCODING) + "=" + URLEncoder.encode(params[9], ENCODING)
+                    + "&" + URLEncoder.encode(USER_ESTABLISHMENT_CATEGORY_TAG, ENCODING) + "=" + URLEncoder.encode(params[10], ENCODING)
+                    + "&" + URLEncoder.encode(USER_CREATION_DATE_TAG, ENCODING) + "=" + URLEncoder.encode(params[11], ENCODING);
 
             bufferedWriter.write(post_data);
             bufferedWriter.flush();

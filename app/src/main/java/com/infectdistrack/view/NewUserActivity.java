@@ -264,6 +264,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
 
     public void resetUIComponents() {
         newUserFullNameEdt.setText("");
+        newUserPhoneNumberEdt.setText("");
         newUserEmailEdt.setText("");
 
         newUserWilayaSpinner.setSelection(0);
