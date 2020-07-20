@@ -159,7 +159,7 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
         StringBuilder symptoms = new StringBuilder();
 
         if (noSympBox.isChecked()) {
-            symptoms.append(noSympBox.getText());
+            symptoms.append("Aucun symptome");
         } else {
             if (feverBox.isChecked())
                 symptoms.append("Fièvre").append(";");
@@ -172,13 +172,13 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
             if (rhumeBox.isChecked())
                 symptoms.append(rhumeBox.getText()).append(";");
             if (fatigueBox.isChecked())
-                symptoms.append(fatigueBox.getText()).append(";");
+                symptoms.append("Fatigue").append(";");
             if (douleursMusculairesBox.isChecked())
-                symptoms.append(douleursMusculairesBox.getText()).append(";");
+                symptoms.append("Myalgie").append(";");
             if (douleursArticulaireBox.isChecked())
-                symptoms.append(douleursArticulaireBox.getText()).append(";");
+                symptoms.append("Arthralgies").append(";");
             if (mauxDeTeteBox.isChecked())
-                symptoms.append(mauxDeTeteBox.getText()).append(";");
+                symptoms.append("Céphalées").append(";");
             if (diarrheeBox.isChecked())
                 symptoms.append(diarrheeBox.getText()).append(";");
             if (nauseesBox.isChecked())
@@ -186,13 +186,13 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
             if (vomissementsBox.isChecked())
                 symptoms.append(vomissementsBox.getText()).append(";");
             if (perteDodoratBox.isChecked())
-                symptoms.append(perteDodoratBox.getText()).append(";");
+                symptoms.append("Anosmie").append(";");
             if (perteDeGoutBox.isChecked())
-                symptoms.append(perteDeGoutBox.getText()).append(";");
+                symptoms.append("Agueusie").append(";");
             if (perteDappetiBox.isChecked())
-                symptoms.append(perteDappetiBox.getText()).append(";");
+                symptoms.append("Anorexie").append(";");
             if (saignementsDeNezBox.isChecked())
-                symptoms.append(saignementsDeNezBox.getText()).append(";");
+                symptoms.append("Epistaxis").append(";");
             if (hemoptysieBox.isChecked())
                 symptoms.append(hemoptysieBox.getText()).append(";");
             if (conjonctiviteBox.isChecked())
@@ -200,7 +200,7 @@ public class Covid19FormPart1 extends Fragment implements CompoundButton.OnCheck
             if (eruptionCutaneeBox.isChecked())
                 symptoms.append(eruptionCutaneeBox.getText()).append(";");
             if (essoufflementBox.isChecked())
-                symptoms.append(essoufflementBox.getText()).append(";");
+                symptoms.append("Dyspnée").append(";");
             if (convulsionsBox.isChecked())
                 symptoms.append(convulsionsBox.getText()).append(";");
             if (alterationCeConscienceBox.isChecked())

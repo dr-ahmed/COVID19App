@@ -149,29 +149,29 @@ public class Covid19FormPart2 extends Fragment implements DatePicker.OnDateChang
         if (asthmeChechbox.isChecked())
             listeDesConditionsPreDisposantes.append(asthmeChechbox.getText()).append(";");
         if (autreQuAsthmeChechbox.isChecked())
-            listeDesConditionsPreDisposantes.append(autreQuAsthmeChechbox.getText()).append(";");
+            listeDesConditionsPreDisposantes.append("Autre qu'asthme").append(";");
         if (hypertensionChechbox.isChecked())
-            listeDesConditionsPreDisposantes.append(hypertensionChechbox.getText()).append(";");
+            listeDesConditionsPreDisposantes.append("Cardiorespiratoire").append(";");
         if (nephropathiesChechbox.isChecked())
             listeDesConditionsPreDisposantes.append(nephropathiesChechbox.getText()).append(";");
         if (hepatiqueChechbox.isChecked())
-            listeDesConditionsPreDisposantes.append(hepatiqueChechbox.getText()).append(";");
+            listeDesConditionsPreDisposantes.append("Hépatique").append(";");
         if (neuromusculaireChechbox.isChecked())
-            listeDesConditionsPreDisposantes.append(neuromusculaireChechbox.getText()).append(";");
+            listeDesConditionsPreDisposantes.append("Neurologique").append(";");
         if (diabeteChechbox.isChecked())
-            listeDesConditionsPreDisposantes.append(diabeteChechbox.getText()).append(";");
+            listeDesConditionsPreDisposantes.append("Diabète").append(";");
         if (cancerChechbox.isChecked())
             listeDesConditionsPreDisposantes.append(cancerChechbox.getText()).append(";");
         if (grossesseChechbox.isChecked())
-            listeDesConditionsPreDisposantes.append(grossesseChechbox.getText()).append(";");
+            listeDesConditionsPreDisposantes.append("Grossesse").append(";");
         if (obesiteChechbox.isChecked())
             listeDesConditionsPreDisposantes.append(obesiteChechbox.getText()).append(";");
         if (tabacChechbox.isChecked())
             listeDesConditionsPreDisposantes.append(tabacChechbox.getText()).append(";");
         if (immunosuppressionChechbox.isChecked())
-            listeDesConditionsPreDisposantes.append(immunosuppressionChechbox.getText()).append(";");
+            listeDesConditionsPreDisposantes.append("Immuno1").append(";");
         if (immunosuppressionTraitementChechbox.isChecked())
-            listeDesConditionsPreDisposantes.append(immunosuppressionTraitementChechbox.getText()).append(";");
+            listeDesConditionsPreDisposantes.append("Immuno2").append(";");
         if (autreConditionChechbox.isChecked())
             listeDesConditionsPreDisposantes.append(autreConditionPreDisposanteEdt.getText().toString()).append(";");
 

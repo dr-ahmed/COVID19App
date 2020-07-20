@@ -15,6 +15,7 @@ import com.infectdistrack.view.DialogFragmentForGoingBackAfterAddingForm;
 import static com.infectdistrack.model.Constants.DEVICE_NOT_CONNECTED_TO_INTERNET;
 import static com.infectdistrack.model.Constants.SOCKET_TIMEOUT_EXCEPTION;
 import static com.infectdistrack.model.Utilities.getTodayDate;
+import static com.infectdistrack.model.Utilities.replaceApostrophe;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 import static com.infectdistrack.presenter.UIBasicController.showMessage;
 import static com.infectdistrack.presenter.UIBasicController.showProgressDialog;
@@ -50,29 +51,31 @@ public class Covid19NewFormController {
         Covid19NewFormAsyncTask covid19NewFormAsyncTask = new Covid19NewFormAsyncTask(this);
         showProgressDialog(covid19FormPart4.getActivity(), "Insertion du formulaire en cours ...");
 
-        if (covid19FormActivity.getDoesPatientExist())
+        if (!covid19FormActivity.getDoesPatientExist())
             covid19NewFormAsyncTask.execute(patient.getPhoneNumber(), patient.getName(), patient.getGender(),
-                    patient.getDateOfBirth(), patient.getWilaya(), patient.getMoughataa(),
-                    covid19Form.getFormID(), String.valueOf(covid19Form.getParentUserID()), covid19Form.getSymptoms(),
+                    patient.getDateOfBirth(), replaceApostrophe(patient.getWilaya()), replaceApostrophe(patient.getMoughataa()),
+                    covid19Form.getFormID(), String.valueOf(covid19Form.getParentUserID()), replaceApostrophe(covid19Form.getSymptoms()),
                     covid19Form.getConsulterMedecin(), covid19Form.getStrucureMedecin(), covid19Form.getRaisonAbsence(),
                     covid19Form.getSabsenterDuTravail(), covid19Form.getCombienDeJours(), covid19Form.getContactAvecPersonneSuspecte(),
                     covid19Form.getTelPersonneSuspecte(), covid19Form.getDateDernierContactPersonneSuspecte(), covid19Form.getNiveauSocioEconomique(),
-                    covid19Form.getConditionPreDisposante(), covid19Form.getListeDesConditionsPreDisposantes(), covid19Form.getTestCovid(),
+                    covid19Form.getConditionPreDisposante(), replaceApostrophe(covid19Form.getListeDesConditionsPreDisposantes()), covid19Form.getTestCovid(),
                     covid19Form.getTypeTest(), covid19Form.getDateTest(), covid19Form.getTdr(), covid19Form.getPcr(), covid19Form.getScanner(),
                     covid19Form.getTdrResponse(), covid19Form.getTdrDetails(), covid19Form.getPcrReponse(), covid19Form.getScannerResponse(),
-                    covid19Form.getStatutActuel(), covid19Form.getDetailVivant(), covid19Form.getDateAdmission(), covid19Form.getStructureSanitaireHospitalisation(),
-                    covid19Form.getDateDeces(), covid19Form.getLieuDeces(), covid19Form.getDureeHospitalisation(), covid19Form.getStructureSanitaireDeces(), getTodayDate());
+                    covid19Form.getStatutActuel(), replaceApostrophe(covid19Form.getDetailVivant()), covid19Form.getDateAdmission(), replaceApostrophe(covid19Form.getStructureSanitaireHospitalisation()),
+                    covid19Form.getDateDeces(), covid19Form.getLieuDeces(), covid19Form.getDureeHospitalisation(), replaceApostrophe(covid19Form.getStructureSanitaireDeces())
+                    , getTodayDate());
         else
             covid19NewFormAsyncTask.execute(patient.getPhoneNumber(), "", "", "", "", "",
-                    covid19Form.getFormID(), String.valueOf(covid19Form.getParentUserID()), covid19Form.getSymptoms(),
+                    covid19Form.getFormID(), String.valueOf(covid19Form.getParentUserID()), replaceApostrophe(covid19Form.getSymptoms()),
                     covid19Form.getConsulterMedecin(), covid19Form.getStrucureMedecin(), covid19Form.getRaisonAbsence(),
                     covid19Form.getSabsenterDuTravail(), covid19Form.getCombienDeJours(), covid19Form.getContactAvecPersonneSuspecte(),
                     covid19Form.getTelPersonneSuspecte(), covid19Form.getDateDernierContactPersonneSuspecte(), covid19Form.getNiveauSocioEconomique(),
-                    covid19Form.getConditionPreDisposante(), covid19Form.getListeDesConditionsPreDisposantes(), covid19Form.getTestCovid(),
+                    covid19Form.getConditionPreDisposante(), replaceApostrophe(covid19Form.getListeDesConditionsPreDisposantes()), covid19Form.getTestCovid(),
                     covid19Form.getTypeTest(), covid19Form.getDateTest(), covid19Form.getTdr(), covid19Form.getPcr(), covid19Form.getScanner(),
                     covid19Form.getTdrResponse(), covid19Form.getTdrDetails(), covid19Form.getPcrReponse(), covid19Form.getScannerResponse(),
-                    covid19Form.getStatutActuel(), covid19Form.getDetailVivant(), covid19Form.getDateAdmission(), covid19Form.getStructureSanitaireHospitalisation(),
-                    covid19Form.getDateDeces(), covid19Form.getLieuDeces(), covid19Form.getDureeHospitalisation(), covid19Form.getStructureSanitaireDeces(), getTodayDate());
+                    covid19Form.getStatutActuel(), replaceApostrophe(covid19Form.getDetailVivant()), covid19Form.getDateAdmission(), replaceApostrophe(covid19Form.getStructureSanitaireHospitalisation()),
+                    covid19Form.getDateDeces(), covid19Form.getLieuDeces(), covid19Form.getDureeHospitalisation(), replaceApostrophe(covid19Form.getStructureSanitaireDeces())
+                    , getTodayDate());
     }
 
     public void onFormAdded(String exceptionInfo, boolean isFormAdded) {
