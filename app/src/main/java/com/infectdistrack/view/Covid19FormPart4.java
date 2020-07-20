@@ -306,6 +306,6 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
             covid19FormObject.setStructureSanitaireDeces(structureSanitaireDecesSpinner.getSelectedItem().toString());
         }
 
-        Log.e(TAG, covid19FormObject.toString());
+        // Log.e(TAG, covid19FormObject.toString());
     }
 }
