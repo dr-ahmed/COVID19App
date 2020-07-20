@@ -286,7 +286,7 @@ public class Covid19Form {
                 + "Consulter medecin : " + getConsulterMedecin() + "\n"
                 + "Structure medecin : " + getStrucureMedecin() + "\n"
                 + "RaisonAbsence : " + getRaisonAbsence() + "\n"
-                + "Sabsentir du travail : " + getSabsenterDuTravail() + "\n"
+                + "Sabsenter du travail : " + getSabsenterDuTravail() + "\n"
                 + "Combien de jours : " + getCombienDeJours() + "\n"
                 + "Contact avec personne suspecte : " + getContactAvecPersonneSuspecte() + "\n"
                 + "Tel personne suspecte : " + getTelPersonneSuspecte() + "\n"

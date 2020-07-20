@@ -31,6 +31,7 @@ import static android.view.View.VISIBLE;
 import static com.infectdistrack.model.Constants.ASSOCIATED_ITEM;
 import static com.infectdistrack.model.Constants.BUNDLE_EXTRA_TAG;
 import static com.infectdistrack.model.Constants.DEFAULT_WILAYA;
+import static com.infectdistrack.model.Constants.DOES_PATIENT_EXIST;
 import static com.infectdistrack.model.Constants.EMPTY_STRING;
 import static com.infectdistrack.model.Constants.OPTION_TAG;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
@@ -59,6 +60,7 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
     private Button cancelBtn, continueBtn;
 
     private Patient patient;
+    private boolean doesPatientExist;
 
     private boolean isUserUnique = false;
     private boolean isDateChanged = false;
@@ -78,6 +80,8 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
         // Si le user saisit un ID qui n'existe pas dans la BD et choisit l'option Unique
         if (getIntent().getStringExtra(OPTION_TAG) != null && getIntent().getStringExtra(OPTION_TAG).equals(UNIQUE_ITEM)
                 && getIntent().getStringExtra(PHONE_NUMBER_TAG) != null) {
+            doesPatientExist = false;
+
             String phoneNumber = getIntent().getStringExtra(PHONE_NUMBER_TAG);
             phoneNumberEdt.setText(phoneNumber);
             setMaxLengthForPhoneNumberEditText(8);
@@ -96,6 +100,9 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
             // Si le bundle comprend OPTION_TAG
             if (bundle.getString(OPTION_TAG) != null) {
                 // Si le user choisit l'option Unique, on désactive tous les Views et on affiches les données du patient sur les Views
+
+                doesPatientExist = true;
+
                 if (bundle.getString(OPTION_TAG).equals(UNIQUE_ITEM)) {
                     phoneNumberEdt.setText(patient.getPhoneNumber());
                     setMaxLengthForPhoneNumberEditText(9);
@@ -226,6 +233,7 @@ public class PhoneNumberDetailsActivity extends AppCompatActivity implements Rad
 
         Intent intent = new Intent(this, Covid19FormActivity.class);
         intent.putExtra(PATIENT_OBJECT_TAG, patient);
+        intent.putExtra(DOES_PATIENT_EXIST, doesPatientExist);
         startActivity(intent);
     }
 

@@ -264,7 +264,7 @@ public class Covid19FormPart4 extends Fragment implements View.OnClickListener, 
         if (v.getId() == R.id.patient_submit_button) {
             setValues();
             Covid19NewFormController covid19NewFormController = new Covid19NewFormController(this);
-            //covid19NewFormController.insertForm();
+            covid19NewFormController.insertForm();
         }
     }
 

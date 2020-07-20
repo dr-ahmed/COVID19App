@@ -61,7 +61,8 @@ public class Constants {
             USER_CREATION_DATE_TAG = "creation_date",
             PHONE_NUMBER_PK_TAG = "phone_number_pk",
             PATIENT_REQUEST_TYPE = "patient_request_type",
-            PATIENT_OBJECT_TAG = "patient_object_tag";
+            PATIENT_OBJECT_TAG = "patient_object_tag",
+            DOES_PATIENT_EXIST = "does_patient_exist";
 
     public static final String EMPTY_STRING = "",
             DEFAULT_WILAYA = "Choisir la wilaya",
@@ -111,19 +112,6 @@ public class Constants {
             USER_TYPE_LIST = new String[]{DEFAULT_TYPE, "Agent d'équipe", "Superviseur", "Point focal", "Médecin", "Thésard", "Autre"};
 
     static final int READ_TIMEOUT = 10000, CONNECTION_TIMEOUT = 10000;
-
-    static final String PARENT_USER_ID = "parentUserID",
-            PATIENT_NAME = "patientName",
-            PATIENT_PHONE_NUMBER = "patientTel",
-            PATIENT_GENDER = "patientgenre",
-            PATIENT_AGE = "patientAge",
-            PATIENT_WILAYA = "patientWilaya",
-            PATIENT_SUSPECTED_CASES = "patientSuspecCase",
-            PATIENT_SYMPTOMS = "patientSymp",
-            PATIENT_TERRAIN = "patientTerrain",
-            PATIENT_COVID19_CONFIRMED = "patientCovidConfirm",
-            PATIENT_EVOLUTION = "patientEvolution",
-            FORM_ADDITION_DATE = "additionDate";
 
     public static User CURRENT_USER;
 }

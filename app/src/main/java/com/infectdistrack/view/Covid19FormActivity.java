@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import static android.view.View.GONE;
 import static com.infectdistrack.model.Constants.CURRENT_USER;
+import static com.infectdistrack.model.Constants.DOES_PATIENT_EXIST;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
 
 public class Covid19FormActivity extends AppCompatActivity {
@@ -40,6 +41,7 @@ public class Covid19FormActivity extends AppCompatActivity {
     private Covid19FormPart4 covid19FormPart4;
 
     private Patient patient;
+    private boolean doesPatientExist;
     private User parentUser;
     private Covid19Form covid19CurrentForm;
 
@@ -61,6 +63,7 @@ public class Covid19FormActivity extends AppCompatActivity {
         } else {
             parentUser = CURRENT_USER;
             patient = getIntent().getParcelableExtra(PATIENT_OBJECT_TAG);
+            setDoesPatientExist(getIntent().getBooleanExtra(DOES_PATIENT_EXIST, false));
 
             covid19CurrentForm = new Covid19Form();
             covid19CurrentForm.setParentUserID(parentUser.getId());
@@ -156,5 +159,21 @@ public class Covid19FormActivity extends AppCompatActivity {
 
     public Covid19FormPart3 getCovid19FormPart3() {
         return covid19FormPart3;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setDoesPatientExist(boolean doesPatientExist) {
+        this.doesPatientExist = doesPatientExist;
+    }
+
+    public boolean getDoesPatientExist() {
+        return doesPatientExist;
+    }
+
+    public User getParentUser() {
+        return parentUser;
     }
 }
