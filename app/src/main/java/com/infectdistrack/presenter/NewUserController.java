@@ -41,6 +41,14 @@ public class NewUserController {
         if (isFieldEmpty(newUserActivity.getNewUserFullNameEdt())
                 || isFieldEmpty(newUserActivity.getNewUserEmailEdt()))
             return;
+
+        String phoneNumberFeedback = isPhoneNumberValid(newUserActivity.getNewUserPhoneNumberEdt().getText().toString());
+        if (!phoneNumberFeedback.equals(YES)) {
+            newUserActivity.getNewUserPhoneNumberEdt().requestFocus();
+            newUserActivity.getNewUserPhoneNumberEdt().setError(phoneNumberFeedback);
+            return;
+        }
+
         if (!isEmailValid(newUserActivity.getNewUserEmailEdt().getText().toString())) {
             newUserActivity.getNewUserEmailEdt().requestFocus();
             newUserActivity.getNewUserEmailEdt().setError("Syntaxe invalide !");
@@ -109,7 +117,8 @@ public class NewUserController {
         showProgressDialog(newUserActivity, "Vérification des informations du compte en cours ...");
 
         CheckDuplicateUserAsyncTask checkDuplicateUserAsyncTask = new CheckDuplicateUserAsyncTask(this);
-        checkDuplicateUserAsyncTask.execute(newUserActivity.getNewUserEmailEdt().getText().toString());
+        checkDuplicateUserAsyncTask.execute(newUserActivity.getNewUserEmailEdt().getText().toString(),
+                newUserActivity.getNewUserPhoneNumberEdt().getText().toString());
     }
 
     public void onCheckDuplicateUserResponse(String exceptionInfo, boolean userIsUnique) {
@@ -137,6 +146,7 @@ public class NewUserController {
         NewUserAsyncTask newUserAsyncTask = new NewUserAsyncTask(this);
         try {
             String fullName = replaceApostrophe(newUserActivity.getNewUser().getFullName()),
+                    phoneNumber = newUserActivity.getNewUser().getPhoneNumber(),
                     email = newUserActivity.getNewUser().getEmail(),
                     password = SHA256(newUserActivity.getNewUser().getPassword()),
                     category = isSuperAdmin ? ADMIN : USER,
@@ -147,7 +157,7 @@ public class NewUserController {
                     establishmentType = replaceApostrophe(newUserActivity.getNewUser().getEstablishmentType()),
                     establishmentCategory = replaceApostrophe(newUserActivity.getNewUser().getEstablishmentCategory());
             showProgressDialog(newUserActivity, "Création du compte en cours ...");
-            newUserAsyncTask.execute(fullName, email, password, category, associateAdmin, wilaya, moughataa,
+            newUserAsyncTask.execute(fullName, phoneNumber, email, password, category, associateAdmin, wilaya, moughataa,
                     userType, establishmentType, establishmentCategory, getTodayDate());
         } catch (NoSuchAlgorithmException e) {
             showMessage(newUserActivity, "Problème survenu", "Désolé, une erreur s'est produite (Code d'erreur : 005)");

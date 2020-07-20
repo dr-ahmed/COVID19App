@@ -19,6 +19,7 @@ import com.infectdistrack.model.Utilities;
 
 import static com.infectdistrack.model.Constants.ASSOCIATED_ITEM;
 import static com.infectdistrack.model.Constants.BUNDLE_EXTRA_TAG;
+import static com.infectdistrack.model.Constants.CURRENT_USER;
 import static com.infectdistrack.model.Constants.DEVICE_NOT_CONNECTED_TO_INTERNET;
 import static com.infectdistrack.model.Constants.NO_INTERNET_CONNECTION;
 import static com.infectdistrack.model.Constants.OPTION_TAG;
@@ -102,6 +103,7 @@ public class PhoneNumberCheckoutActivity extends AppCompatActivity implements Vi
 
             RetrievePatientDataUsingVolley retrievePatientDataUsingVolley = new RetrievePatientDataUsingVolley(this);
             retrievePatientDataUsingVolley.setRequestType(selectedItem);
+            retrievePatientDataUsingVolley.setParentID(String.valueOf(CURRENT_USER.getId()));
             retrievePatientDataUsingVolley.getDataFromServer();
 
         }

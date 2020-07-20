@@ -98,7 +98,7 @@ public class Covid19NewFormController {
 
         Bundle args = new Bundle();
         args.putString("title", "Opération réussie");
-        args.putString("message", "Formulaire inséré avec succès. Voulez-vous retourner à l'interface d'accueil ?");
+        args.putString("message", "Formulaire inséré avec succès. Cliquer sur Retour pour revenir à l'interface d'accueil.");
         dialog.setArguments(args);
 
         ft.add(dialog, "dialogFragmentForGoingBackAfterAddingForm");

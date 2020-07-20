@@ -22,6 +22,7 @@ import static android.view.View.GONE;
 import static com.infectdistrack.model.Constants.CURRENT_USER;
 import static com.infectdistrack.model.Constants.DOES_PATIENT_EXIST;
 import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
+import static com.infectdistrack.model.Constants.formCount;
 
 public class Covid19FormActivity extends AppCompatActivity {
 
@@ -69,6 +70,7 @@ public class Covid19FormActivity extends AppCompatActivity {
             covid19CurrentForm.setParentUserID(parentUser.getId());
             covid19CurrentForm.setPatientID(patient.getPhoneNumber());
             StringBuilder formID = new StringBuilder();
+            int autoIncrementValue = formCount + 1;
             // Construire l'ID du formulaire
             formID.append("MAU")
                     .append(".")
@@ -76,9 +78,11 @@ public class Covid19FormActivity extends AppCompatActivity {
                     .append(".")
                     .append(patient.getMoughataa().substring(0, 3))
                     .append(".")
-                    .append(patient.getPhoneNumber().substring(patient.getPhoneNumber().length() - 2))
+                    .append(patient.getPhoneNumber())
                     .append(".")
-                    .append(parentUser.getId());
+                    .append(parentUser.getPhoneNumber())
+                    .append(".")
+                    .append(autoIncrementValue);
             covid19CurrentForm.setFormID(formID.toString());
         }
 

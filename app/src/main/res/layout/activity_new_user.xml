@@ -43,6 +43,21 @@
                 android:paddingEnd="10dp" />
 
             <EditText
+                android:id="@+id/new_user_phone_number_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:drawableStart="@drawable/ic_username"
+                android:drawableLeft="@drawable/ic_username"
+                android:drawablePadding="10dp"
+                android:hint="Tel"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:padding="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp" />
+
+            <EditText
                 android:id="@+id/new_user_email_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -27,6 +27,7 @@ import static com.infectdistrack.model.Constants.READ_TIMEOUT;
 import static com.infectdistrack.model.Constants.SCRIPT_PATH;
 import static com.infectdistrack.model.Constants.USER_EMAIL_TAG;
 import static com.infectdistrack.model.Constants.USER_PASSWORD_TAG;
+import static com.infectdistrack.model.Constants.USER_PHONE_NUMBER_TAG;
 
 public class CheckDuplicateUserAsyncTask extends AsyncTask<String, Integer, String> {
 
@@ -58,7 +59,8 @@ public class CheckDuplicateUserAsyncTask extends AsyncTask<String, Integer, Stri
             OutputStream outputStream = connection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, ENCODING));
 
-            String post_data = URLEncoder.encode(USER_EMAIL_TAG, ENCODING) + "=" + URLEncoder.encode(params[0], ENCODING);
+            String post_data = URLEncoder.encode(USER_EMAIL_TAG, ENCODING) + "=" + URLEncoder.encode(params[0], ENCODING)
+                    + "&" + URLEncoder.encode(USER_PHONE_NUMBER_TAG, ENCODING) + "=" + URLEncoder.encode(params[1], ENCODING);
             bufferedWriter.write(post_data);
             bufferedWriter.flush();
             bufferedWriter.close();

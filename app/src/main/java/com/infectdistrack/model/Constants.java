@@ -49,6 +49,7 @@ public class Constants {
     public static final String USER_ID_TAG = "id",
             USER_FULL_NAME_TAG = "full_name",
             USER_FIRST_LOGIN_TAG = "first_login",
+            USER_PHONE_NUMBER_TAG = "phone_number",
             USER_EMAIL_TAG = "email",
             USER_PASSWORD_TAG = "password",
             USER_CATEGORY_TAG = "category",
@@ -61,6 +62,7 @@ public class Constants {
             USER_CREATION_DATE_TAG = "creation_date",
             PHONE_NUMBER_PK_TAG = "phone_number_pk",
             PATIENT_REQUEST_TYPE = "patient_request_type",
+            PARENT_ID_TAG = "parent_id",
             PATIENT_OBJECT_TAG = "patient_object_tag",
             DOES_PATIENT_EXIST = "does_patient_exist";
 
@@ -89,13 +91,13 @@ public class Constants {
         wilayasAndMoughataas.put("Gorgol", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Kaédi", "M'Bout", "Maghama", "Monguel")));
         wilayasAndMoughataas.put("Guidimakha", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Ould Yengé", "Sélibabi")));
         wilayasAndMoughataas.put("Hodh Ech Chargui", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Amourj", "Bassikounou", "Djiguenni", "Néma", "Oualata", "Timbedra")));
-        wilayasAndMoughataas.put("Hodh El Gharbi", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Aïoun El Atrouss", "Kobenni", "Tamchekett", "Tintane")));
+        wilayasAndMoughataas.put("Hodh El Gharbi", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Aioun El Atrouss", "Kobenni", "Tamchekett", "Tintane")));
         wilayasAndMoughataas.put("Inchiri", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Akjoujt")));
         wilayasAndMoughataas.put("Nouakchott-Nord", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Dar Naim", "Teyareth", "Toujounine")));
         wilayasAndMoughataas.put("Nouakchott-Ouest", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Ksar", "Sebkha", "Tevragh Zeina")));
         wilayasAndMoughataas.put("Nouakchott-Sud", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Araffat", "ElMina", "Riyadh")));
         wilayasAndMoughataas.put("Tagant", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Moudjeria", "Tichitt", "Tidjikdja")));
-        wilayasAndMoughataas.put("Tiris Zemmour", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Bir Moghreïn", "F'Derick", "Zouerate")));
+        wilayasAndMoughataas.put("Tiris Zemmour", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Bir Moghrein", "F'Derick", "Zouerate")));
         wilayasAndMoughataas.put("Trarza", new ArrayList<>(Arrays.asList(EMPTY_STRING, "Boutilimit", "Keurmacen", "Mederdra", "Ouad Naga", "R'Kiz", "Rosso")));
     }
 
@@ -114,4 +116,5 @@ public class Constants {
     static final int READ_TIMEOUT = 10000, CONNECTION_TIMEOUT = 10000;
 
     public static User CURRENT_USER;
+    public static int formCount = 0;
 }

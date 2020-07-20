@@ -7,18 +7,19 @@ import androidx.annotation.NonNull;
 
 public class User implements Parcelable {
     private Integer id, associate_admin;
-    private String fullName, email, password, category, wilaya, moughataa, userType, establishmentType, establishmentCategory;
+    private String fullName, phoneNumber, email, password, category, wilaya, moughataa, userType, establishmentType, establishmentCategory;
 
-    public User(Integer id, String fullName, String email, String password, String category, Integer associate_admin,
+    public User(Integer id, String fullName, String phoneNumber, String email, String password, String category, Integer associate_admin,
                 String wilaya, String moughataa, String userType, String establishmentType, String establishmentCategory) {
-        this(fullName, email, password, wilaya, moughataa, userType, establishmentType, establishmentCategory);
+        this(fullName, phoneNumber, email, password, wilaya, moughataa, userType, establishmentType, establishmentCategory);
         this.id = id;
         this.category = category;
         this.associate_admin = associate_admin;
     }
 
-    public User(String fullName, String email, String password, String wilaya, String moughataa, String userType, String establishmentType, String establishmentCategory) {
+    public User(String fullName, String phoneNumber, String email, String password, String wilaya, String moughataa, String userType, String establishmentType, String establishmentCategory) {
         this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
         this.wilaya = wilaya;
@@ -35,6 +36,7 @@ public class User implements Parcelable {
     protected User(Parcel in) {
         id = in.readInt();
         fullName = in.readString();
+        phoneNumber = in.readString();
         email = in.readString();
         password = in.readString();
         category = in.readString();
@@ -54,6 +56,14 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getCategory() {
         return category;
@@ -144,6 +154,7 @@ public class User implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(fullName);
+        dest.writeString(phoneNumber);
         dest.writeString(email);
         dest.writeString(password);
         dest.writeString(category);
@@ -156,6 +167,7 @@ public class User implements Parcelable {
     @Override
     public String toString() {
         return "Nom : " + fullName
+                + "\nPhone number : " + phoneNumber
                 + "\nEmail : " + email
                 + "\nWilaya : " + wilaya
                 + "\nMoughataa : " + moughataa

@@ -22,6 +22,7 @@ public class SharedPrefsManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(USER_ID_TAG, user.getId());
         editor.putString(USER_FULL_NAME_TAG, user.getFullName());
+        editor.putString(USER_PHONE_NUMBER_TAG, user.getPhoneNumber());
         editor.putString(USER_EMAIL_TAG, user.getEmail());
         editor.putString(USER_PASSWORD_TAG, user.getPassword());
         editor.putString(USER_CATEGORY_TAG, user.getCategory());
@@ -43,6 +44,7 @@ public class SharedPrefsManager {
         int DEFAULT_INT_VALUE = -1234;
         boolean isIdEmpty = sharedPreferences.getInt(USER_ID_TAG, DEFAULT_INT_VALUE) == DEFAULT_INT_VALUE,
                 isNameEmpty = getDataByTag(sharedPreferences, USER_FULL_NAME_TAG).equals(DEFAULT_STRING_VALUE),
+                isPhoneNumberEmpty = getDataByTag(sharedPreferences, USER_PHONE_NUMBER_TAG).equals(DEFAULT_STRING_VALUE),
                 isEmailEmpty = getDataByTag(sharedPreferences, USER_EMAIL_TAG).equals(DEFAULT_STRING_VALUE),
                 isPasswordEmpty = getDataByTag(sharedPreferences, USER_PASSWORD_TAG).equals(DEFAULT_STRING_VALUE),
                 isCategoryEmpty = getDataByTag(sharedPreferences, USER_CATEGORY_TAG).equals(DEFAULT_STRING_VALUE),
@@ -58,6 +60,7 @@ public class SharedPrefsManager {
                 && !isUserTypeEmpty && !isEstablishmentTypeEmpty && !isEstablishmentCategoryEmpty)
             user = new User(sharedPreferences.getInt(USER_ID_TAG, DEFAULT_INT_VALUE),
                     getDataByTag(sharedPreferences, USER_FULL_NAME_TAG),
+                    getDataByTag(sharedPreferences, USER_PHONE_NUMBER_TAG),
                     getDataByTag(sharedPreferences, USER_EMAIL_TAG),
                     getDataByTag(sharedPreferences, USER_PASSWORD_TAG),
                     getDataByTag(sharedPreferences, USER_CATEGORY_TAG),

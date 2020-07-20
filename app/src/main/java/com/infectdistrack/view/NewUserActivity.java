@@ -41,7 +41,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
     private User parentUser, newUser;
     private static final String TAG = "NewUserActivity";
     private TextView newUserLabelTxt;
-    private EditText newUserFullNameEdt, newUserEmailEdt;
+    private EditText newUserFullNameEdt, newUserPhoneNumberEdt, newUserEmailEdt;
     private LinearLayout moughataaLayout;
     private Spinner newUserWilayaSpinner, newUserMoughataaSpinner, userTypeSpinner;
     private ArrayAdapter<String> wilayaAdapter, moughataaAdapter, userAdapter;
@@ -66,6 +66,7 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
         newUserLabelTxt.setText("Informations du nouvel ".concat(parentUser.getCategory().equals(SUPER_ADMIN) ? ADMIN_LABEL : USER_LABEL));
 
         newUserFullNameEdt = findViewById(R.id.new_user_full_name_edt);
+        newUserPhoneNumberEdt = findViewById(R.id.new_user_phone_number_edt);
         newUserEmailEdt = findViewById(R.id.new_user_email_edt);
 
         newUserWilayaSpinner = findViewById(R.id.new_user_wilaya_spinner);
@@ -115,6 +116,10 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
 
     public EditText getNewUserFullNameEdt() {
         return newUserFullNameEdt;
+    }
+
+    public EditText getNewUserPhoneNumberEdt() {
+        return newUserPhoneNumberEdt;
     }
 
     public EditText getNewUserEmailEdt() {
@@ -173,8 +178,8 @@ public class NewUserActivity extends AppCompatActivity implements AdapterView.On
             else
                 establishmentCategory = otherEstablishmentCategoryEdt.getText().toString();
 
-            newUser = new User(newUserFullNameEdt.getText().toString(), newUserEmailEdt.getText().toString(), generteNewPassword(PASSWORD_SIZE),
-                    getNewUserWilaya(), getNewUserMoughataa(), userType, establishmentType, establishmentCategory);
+            newUser = new User(newUserFullNameEdt.getText().toString(), newUserPhoneNumberEdt.getText().toString(), newUserEmailEdt.getText().toString(),
+                    generteNewPassword(PASSWORD_SIZE), getNewUserWilaya(), getNewUserMoughataa(), userType, establishmentType, establishmentCategory);
             NewUserController newUserController = new NewUserController(this);
             newUserController.onClickAddNewUserButtonController();
         }

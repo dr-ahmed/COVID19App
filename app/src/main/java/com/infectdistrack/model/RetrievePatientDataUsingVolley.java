@@ -19,10 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.infectdistrack.model.Constants.NO_INTERNET_CONNECTION;
+import static com.infectdistrack.model.Constants.PARENT_ID_TAG;
 import static com.infectdistrack.model.Constants.PATIENT_REQUEST_TYPE;
 import static com.infectdistrack.model.Constants.PHONE_NUMBER_PK_TAG;
 import static com.infectdistrack.model.Constants.RETRIEVE_PATIENT_DATA_SCRIPT_NAME;
 import static com.infectdistrack.model.Constants.SCRIPT_PATH;
+import static com.infectdistrack.model.Constants.formCount;
 
 public class RetrievePatientDataUsingVolley {
 
@@ -47,7 +49,7 @@ public class RetrievePatientDataUsingVolley {
     private boolean isAlreadyRegistrated = false;
     private String exceptionInfo = "";
     private Patient patient;
-    private String selectedItem;
+    private String selectedItem, parentID;
 
     public RetrievePatientDataUsingVolley(PhoneNumberCheckoutActivity phoneNumberCheckoutActivity) {
         this.phoneNumberCheckoutActivity = phoneNumberCheckoutActivity;
@@ -56,6 +58,10 @@ public class RetrievePatientDataUsingVolley {
 
     public void setRequestType(String selectedItem) {
         this.selectedItem = selectedItem;
+    }
+
+    public void setParentID(String parentID) {
+        this.parentID = parentID;
     }
 
     public void getDataFromServer() {
@@ -90,6 +96,7 @@ public class RetrievePatientDataUsingVolley {
                 Map<String, String> params = new HashMap<>();
                 params.put(PHONE_NUMBER_PK_TAG, phoneNumberCheckoutActivity.getPhoneNumber());
                 params.put(PATIENT_REQUEST_TYPE, selectedItem);
+                params.put(PARENT_ID_TAG, parentID);
 
                 return params;
             }
@@ -114,6 +121,10 @@ public class RetrievePatientDataUsingVolley {
                         isAlreadyRegistrated = false;
                     else if (doesPatientExist.equals(YES)) {
                         if (!patientAsJSON.isNull(PATIENT_DATA_HEADER_OBJECT)) {
+
+                            formCount = Integer.parseInt(patientAsJSON.getString(PARENT_ID_TAG));
+                            Log.e(TAG, "formCount : " + formCount);
+
                             JSONObject patientDataObject = patientAsJSON.getJSONObject(PATIENT_DATA_HEADER_OBJECT);
                             // Le LAST_ASSOCIATED_PHONE_NUMBER serait "null" si le user choisit l'option Associé et fournit un ID qui n'existe pas dans la BD
                             if (patientDataObject.has(LAST_ASSOCIATED_PHONE_NUMBER) && patientDataObject.getString(LAST_ASSOCIATED_PHONE_NUMBER).equals("null"))

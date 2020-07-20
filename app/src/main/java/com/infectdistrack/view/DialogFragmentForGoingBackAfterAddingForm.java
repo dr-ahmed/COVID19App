@@ -13,6 +13,8 @@ import androidx.fragment.app.DialogFragment;
 import com.infectdistrack.model.SharedPrefsManager;
 import com.infectdistrack.presenter.Covid19NewFormController;
 
+import static com.infectdistrack.model.Constants.DOES_PATIENT_EXIST;
+import static com.infectdistrack.model.Constants.PATIENT_OBJECT_TAG;
 import static com.infectdistrack.presenter.UIBasicController.hideProgressDialog;
 
 public class DialogFragmentForGoingBackAfterAddingForm extends DialogFragment {
@@ -28,24 +30,13 @@ public class DialogFragmentForGoingBackAfterAddingForm extends DialogFragment {
         AlertDialog.Builder dialogBuiler = new AlertDialog.Builder(getActivity());
         dialogBuiler.setMessage(getArguments().getString("message"));
         dialogBuiler.setTitle(getArguments().getString("title"));
-        dialogBuiler.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+        dialogBuiler.setPositiveButton("Retour", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(covid19NewFormController.getCovid19FormPart4().getActivity(), HomeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("currentUser", covid19NewFormController.getCovid19FormPart4().getParentUser());
                 intent.putExtra("currentUserBundle", bundle);
-                startActivity(intent);
-                covid19NewFormController.getCovid19FormPart4().getActivity().finish();
-            }
-        });
-        dialogBuiler.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(covid19NewFormController.getCovid19FormPart4().getActivity(), Covid19FormActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("parentUser", covid19NewFormController.getCovid19FormPart4().getParentUser());
-                intent.putExtra("parentUserBundle", bundle);
                 startActivity(intent);
                 covid19NewFormController.getCovid19FormPart4().getActivity().finish();
             }
